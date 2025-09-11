@@ -78,16 +78,16 @@
             <div class="bg-white flex flex-col rounded-lg border-2 border-[#00000096] xl:w-2/3">
                 <div class="flex flex-col">
                     <!--left head-->
-                    <span class="flex bg-basic gap-3 p-3 rounded-t-md text-white max-sm:text-sm max-sm:w-full items-center">
+                    <span
+                        class="flex bg-basic gap-3 p-3 rounded-t-md text-white max-sm:text-sm max-sm:w-full items-center">
                         <p>Sales Invoice</p>
                         <p>Branch: Colombo</p>
                         <div class="flex gap-2 ml-4">
                             <button id="btnBhanda" type="button"
-                                class="px-4 py-2 rounded-lg bg-white text-basic font-semibold shadow transition">Pooja
-                                Bhanda</button>
+                                class="px-4 py-2 rounded-lg bg-white text-basic font-semibold shadow transition">Service
+                                Packages</button>
                             <button id="btnWatti" type="button"
-                                class="px-4 py-2 rounded-lg bg-basic text-white font-semibold shadow transition">Pooja
-                                Watti</button>
+                                class="px-4 py-2 rounded-lg bg-basic text-white font-semibold shadow transition">Medicines</button>
                         </div>
                     </span>
                     <!--textfields-->
@@ -128,8 +128,8 @@
                             <tr class="bg-white border-2 text-black">
                                 <td scope="row"
                                     class="px-6 py-4 font-medium whitespace-nowrap max-2xl:max-w-[100px] truncate cursor-pointer"
-                                    title="Fruit Basket 1">
-                                    Fruit Basket 1
+                                    title="Basic Health Checkup">
+                                    Basic Health Checkup
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="relative flex items-center w-full">
@@ -270,84 +270,88 @@
                         placeholder="Search for items..." required />
                 </span>
                 <!--pooja bhanda-->
-                <div id="sidebarBhanda" class="hidden grid grid-cols-3 max-xl:grid-cols-5 max-lg:grid-cols-4 max-[600px]:grid-cols-3 max-[400px]:grid-cols-2 gap-3 overflow-y-auto p-3">
+                <div id="sidebarBhanda"
+                    class="hidden grid grid-cols-3 max-xl:grid-cols-5 max-lg:grid-cols-4 max-[600px]:grid-cols-3 max-[400px]:grid-cols-2 gap-3 overflow-y-auto p-3">
                     <div class="bg-basic-offset-3 xl:h-[160px] max-xl:aspect-[4/5] flex flex-col justify-between rounded-md"
                         data-tooltip-target="tooltip-top1" data-tooltip-placement="top">
 
                         <span class="bg-basic h-1/6 rounded-t-md text-white flex justify-center items-center text-sm">
-                            <p class="truncate">PXT-0001</p>
+                            <p class="truncate">PKG-001</p>
                         </span>
                         <div class="flex flex-col justify-between h-5/6 p-1">
                             <div id="tooltip-top1" role="tooltip"
                                 class="absolute z-10 invisible inline-block p-2 text-xs font-medium text-black bg-basic border-white border-[1px] rounded-lg shadow-xs opacity-0 tooltip">
-                                Sri Gana Devi - 16 inch
+                                Basic Health Checkup – Vaccination + General Exam
                                 <div class="tooltip-arrow" data-popper-arrow></div>
                             </div>
-                            <img class="object-contain h-1/2 w-full"
-                                src="../../../images/common/sample-god-statue.jpeg" alt="sample_prod" />
+                            <img class="object-contain h-1/2 w-full" src="../../../images/common/pet-checkup.jpg"
+                                alt="pet_service" />
                             <span class="flex flex-col text-xs text-center h-fit">
-                                <p class="truncate">Sri Gana Devi - 16 inch</p>
-                                <p class="truncate">200.00</p>
+                                <p class="truncate">Basic Health Checkup</p>
+                                <p class="truncate">Rs. 2,000.00</p>
                             </span>
                         </div>
                     </div>
+
                     <div class="bg-basic-offset-3 xl:h-[160px] max-xl:aspect-[4/5] flex flex-col justify-between rounded-md"
                         data-tooltip-target="tooltip-top2" data-tooltip-placement="top">
 
                         <span class="bg-basic h-1/6 rounded-t-md text-white flex justify-center items-center text-sm">
-                            <p class="truncate">PXT-0001</p>
+                            <p class="truncate">PKG-002</p>
                         </span>
                         <div class="flex flex-col justify-between h-5/6 p-1">
                             <div id="tooltip-top2" role="tooltip"
                                 class="absolute z-10 invisible inline-block p-2 text-xs font-medium text-black bg-basic border-white border-[1px] rounded-lg shadow-xs opacity-0 tooltip">
-                                Sri Dedimunda Devi - 16 inch
+                                Dental Care – Cleaning + Oral Exam
                                 <div class="tooltip-arrow" data-popper-arrow></div>
                             </div>
-                            <img class="object-contain h-1/2 w-full"
-                                src="../../../images/common/sample-god-statue.jpeg" alt="sample_prod" />
+                            <img class="object-contain h-1/2 w-full" src="../../../images/common/pet-checkup.jpg"
+                                alt="pet_service" />
                             <span class="flex flex-col text-xs text-center h-fit">
-                                <p class="truncate">Sri Dedimunda Devi - 16 inch</p>
-                                <p class="truncate">200.00</p>
+                                <p class="truncate">Dental Care Package</p>
+                                <p class="truncate">Rs. 3,500.00</p>
                             </span>
                         </div>
                     </div>
+
                     <div class="bg-basic-offset-3 xl:h-[160px] max-xl:aspect-[4/5] flex flex-col justify-between rounded-md"
                         data-tooltip-target="tooltip-top3" data-tooltip-placement="top">
 
                         <span class="bg-basic h-1/6 rounded-t-md text-white flex justify-center items-center text-sm">
-                            <p class="truncate">PXT-0001</p>
+                            <p class="truncate">PKG-003</p>
                         </span>
                         <div class="flex flex-col justify-between h-5/6 p-1">
                             <div id="tooltip-top3" role="tooltip"
                                 class="absolute z-10 invisible inline-block p-2 text-xs font-medium text-black bg-basic border-white border-[1px] rounded-lg shadow-xs opacity-0 tooltip">
-                                Sri Vishnu Devi - 16 inch
+                                Advanced Diagnostic – Blood Test + X-Ray
                                 <div class="tooltip-arrow" data-popper-arrow></div>
                             </div>
-                            <img class="object-contain h-1/2 w-full"
-                                src="../../../images/common/sample-god-statue.jpeg" alt="sample_prod" />
+                            <img class="object-contain h-1/2 w-full" src="../../../images/common/pet-checkup.jpg"
+                                alt="pet_service" />
                             <span class="flex flex-col text-xs text-center h-fit">
-                                <p class="truncate">Sri Vishnu Devi - 16 inch</p>
-                                <p class="truncate">200.00</p>
+                                <p class="truncate">Diagnostic Package</p>
+                                <p class="truncate">Rs. 5,000.00</p>
                             </span>
                         </div>
                     </div>
+
                     <div class="bg-basic-offset-3 xl:h-[160px] max-xl:aspect-[4/5] flex flex-col justify-between rounded-md"
                         data-tooltip-target="tooltip-top4" data-tooltip-placement="top">
 
                         <span class="bg-basic h-1/6 rounded-t-md text-white flex justify-center items-center text-sm">
-                            <p class="truncate">PXT-0001</p>
+                            <p class="truncate">PKG-004</p>
                         </span>
                         <div class="flex flex-col justify-between h-5/6 p-1">
                             <div id="tooltip-top4" role="tooltip"
                                 class="absolute z-10 invisible inline-block p-2 text-xs font-medium text-black bg-basic border-white border-[1px] rounded-lg shadow-xs opacity-0 tooltip">
-                                Sri Katharagama Devi Devi - 16 inch
+                                Emergency Care – First Aid + Stabilization
                                 <div class="tooltip-arrow" data-popper-arrow></div>
                             </div>
-                            <img class="object-contain h-1/2 w-full"
-                                src="../../../images/common/sample-god-statue.jpeg" alt="sample_prod" />
+                            <img class="object-contain h-1/2 w-full" src="../../../images/common/pet-checkup.jpg"
+                                alt="pet_service" />
                             <span class="flex flex-col text-xs text-center h-fit">
-                                <p class="truncate">Sri Katharagama Devi Devi - 16 inch</p>
-                                <p class="truncate">200.00</p>
+                                <p class="truncate">Emergency Care</p>
+                                <p class="truncate">Rs. 7,500.00</p>
                             </span>
                         </div>
                     </div>
@@ -359,119 +363,124 @@
                         data-tooltip-target="tooltip-top5" data-tooltip-placement="top">
 
                         <span class="bg-basic h-1/6 rounded-t-md text-white flex justify-center items-center text-sm">
-                            <p class="truncate">EXT-0001</p>
+                            <p class="truncate">MED-0001</p>
                         </span>
                         <div class="flex flex-col justify-between h-5/6 p-1">
                             <div id="tooltip-top5" role="tooltip"
                                 class="absolute z-10 invisible inline-block p-2 text-xs font-medium text-black bg-basic border-white border-[1px] rounded-lg shadow-xs opacity-0 tooltip">
-                                Fruit Basket
+                                Deworming Tablets – Effective against roundworms & hookworms
                                 <div class="tooltip-arrow" data-popper-arrow></div>
                             </div>
-                            <img class="object-contain h-1/2 w-full"
-                                src="../../../images/common/sample-fruit-basket.jpeg" alt="sample_prod" />
+                            <img class="object-contain h-1/2 w-full" src="../../../images/common/medicine.png"
+                                alt="pet_medicine" />
                             <span class="flex flex-col text-xs text-center h-fit">
-                                <p class="truncate">Fruit Basket</p>
-                                <p class="truncate">200.00</p>
+                                <p class="truncate">Deworming Tablets</p>
+                                <p class="truncate">Rs. 1,200.00</p>
                             </span>
                         </div>
                     </div>
+
                     <div class="bg-basic-offset-3 xl:h-[160px] max-xl:aspect-[4/5] flex flex-col justify-between rounded-md"
                         data-tooltip-target="tooltip-top6" data-tooltip-placement="top">
 
                         <span class="bg-basic h-1/6 rounded-t-md text-white flex justify-center items-center text-sm">
-                            <p class="truncate">EXT-0001</p>
+                            <p class="truncate">MED-0002</p>
                         </span>
                         <div class="flex flex-col justify-between h-5/6 p-1">
                             <div id="tooltip-top6" role="tooltip"
                                 class="absolute z-10 invisible inline-block p-2 text-xs font-medium text-black bg-basic border-white border-[1px] rounded-lg shadow-xs opacity-0 tooltip">
-                                Fruit Basket
+                                Flea & Tick Spray – Long-lasting protection
                                 <div class="tooltip-arrow" data-popper-arrow></div>
                             </div>
-                            <img class="object-contain h-1/2 w-full"
-                                src="../../../images/common/sample-fruit-basket.jpeg" alt="sample_prod" />
+                            <img class="object-contain h-1/2 w-full" src="../../../images/common/medicine.png"
+                                alt="pet_medicine" />
                             <span class="flex flex-col text-xs text-center h-fit">
-                                <p class="truncate">Fruit Basket</p>
-                                <p class="truncate">200.00</p>
+                                <p class="truncate">Flea & Tick Spray</p>
+                                <p class="truncate">Rs. 1,800.00</p>
                             </span>
                         </div>
                     </div>
+
                     <div class="bg-basic-offset-3 xl:h-[160px] max-xl:aspect-[4/5] flex flex-col justify-between rounded-md"
                         data-tooltip-target="tooltip-top7" data-tooltip-placement="top">
 
                         <span class="bg-basic h-1/6 rounded-t-md text-white flex justify-center items-center text-sm">
-                            <p class="truncate">EXT-0001</p>
+                            <p class="truncate">MED-0003</p>
                         </span>
                         <div class="flex flex-col justify-between h-5/6 p-1">
                             <div id="tooltip-top7" role="tooltip"
                                 class="absolute z-10 invisible inline-block p-2 text-xs font-medium text-black bg-basic border-white border-[1px] rounded-lg shadow-xs opacity-0 tooltip">
-                                Fruit Basket
+                                Multivitamin Syrup – Boosts immunity & energy
                                 <div class="tooltip-arrow" data-popper-arrow></div>
                             </div>
-                            <img class="object-contain h-1/2 w-full"
-                                src="../../../images/common/sample-fruit-basket.jpeg" alt="sample_prod" />
+                            <img class="object-contain h-1/2 w-full" src="../../../images/common/medicine.png"
+                                alt="pet_medicine" />
                             <span class="flex flex-col text-xs text-center h-fit">
-                                <p class="truncate">Fruit Basket</p>
-                                <p class="truncate">200.00</p>
+                                <p class="truncate">Multivitamin Syrup</p>
+                                <p class="truncate">Rs. 950.00</p>
                             </span>
                         </div>
                     </div>
+
                     <div class="bg-basic-offset-3 xl:h-[160px] max-xl:aspect-[4/5] flex flex-col justify-between rounded-md"
                         data-tooltip-target="tooltip-top8" data-tooltip-placement="top">
 
                         <span class="bg-basic h-1/6 rounded-t-md text-white flex justify-center items-center text-sm">
-                            <p class="truncate">EXT-0001</p>
+                            <p class="truncate">MED-0004</p>
                         </span>
                         <div class="flex flex-col justify-between h-5/6 p-1">
                             <div id="tooltip-top8" role="tooltip"
                                 class="absolute z-10 invisible inline-block p-2 text-xs font-medium text-black bg-basic border-white border-[1px] rounded-lg shadow-xs opacity-0 tooltip">
-                                Fruit Basket
+                                Antibiotic Ointment – For wounds & skin infections
                                 <div class="tooltip-arrow" data-popper-arrow></div>
                             </div>
-                            <img class="object-contain h-1/2 w-full"
-                                src="../../../images/common/sample-fruit-basket.jpeg" alt="sample_prod" />
+                            <img class="object-contain h-1/2 w-full" src="../../../images/common/medicine.png"
+                                alt="pet_medicine" />
                             <span class="flex flex-col text-xs text-center h-fit">
-                                <p class="truncate">Fruit Basket</p>
-                                <p class="truncate">200.00</p>
+                                <p class="truncate">Antibiotic Ointment</p>
+                                <p class="truncate">Rs. 1,500.00</p>
                             </span>
                         </div>
                     </div>
+
                     <div class="bg-basic-offset-3 xl:h-[160px] max-xl:aspect-[4/5] flex flex-col justify-between rounded-md"
                         data-tooltip-target="tooltip-top9" data-tooltip-placement="top">
 
                         <span class="bg-basic h-1/6 rounded-t-md text-white flex justify-center items-center text-sm">
-                            <p class="truncate">EXT-0001</p>
+                            <p class="truncate">MED-0005</p>
                         </span>
                         <div class="flex flex-col justify-between h-5/6 p-1">
                             <div id="tooltip-top9" role="tooltip"
                                 class="absolute z-10 invisible inline-block p-2 text-xs font-medium text-black bg-basic border-white border-[1px] rounded-lg shadow-xs opacity-0 tooltip">
-                                Fruit Basket
+                                Joint Care Supplements – Supports bones & mobility
                                 <div class="tooltip-arrow" data-popper-arrow></div>
                             </div>
-                            <img class="object-contain h-1/2 w-full"
-                                src="../../../images/common/sample-fruit-basket.jpeg" alt="sample_prod" />
+                            <img class="object-contain h-1/2 w-full" src="../../../images/common/medicine.png"
+                                alt="pet_medicine" />
                             <span class="flex flex-col text-xs text-center h-fit">
-                                <p class="truncate">Fruit Basket</p>
-                                <p class="truncate">200.00</p>
+                                <p class="truncate">Joint Care Supplements</p>
+                                <p class="truncate">Rs. 2,200.00</p>
                             </span>
                         </div>
                     </div>
+
                     <div class="bg-basic-offset-3 xl:h-[160px] max-xl:aspect-[4/5] flex flex-col justify-between rounded-md"
                         data-tooltip-target="tooltip-top10" data-tooltip-placement="top">
 
                         <span class="bg-basic h-1/6 rounded-t-md text-white flex justify-center items-center text-sm">
-                            <p class="truncate">EXT-0001</p>
+                            <p class="truncate">MED-0006</p>
                         </span>
                         <div class="flex flex-col justify-between h-5/6 p-1">
                             <div id="tooltip-top10" role="tooltip"
                                 class="absolute z-10 invisible inline-block p-2 text-xs font-medium text-black bg-basic border-white border-[1px] rounded-lg shadow-xs opacity-0 tooltip">
-                                Fruit Basket
+                                Eye Drops – Relief for eye irritation & infections
                                 <div class="tooltip-arrow" data-popper-arrow></div>
                             </div>
-                            <img class="object-contain h-1/2 w-full"
-                                src="../../../images/common/sample-fruit-basket.jpeg" alt="sample_prod" />
+                            <img class="object-contain h-1/2 w-full" src="../../../images/common/medicine.png"
+                                alt="pet_medicine" />
                             <span class="flex flex-col text-xs text-center h-fit">
-                                <p class="truncate">Fruit Basket</p>
-                                <p class="truncate">200.00</p>
+                                <p class="truncate">Pet Eye Drops</p>
+                                <p class="truncate">Rs. 1,100.00</p>
                             </span>
                         </div>
                     </div>

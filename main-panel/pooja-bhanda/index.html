@@ -27,7 +27,7 @@
         </span>
         <span class="flex items-center gap-3 mr-20 max-lg:mr-0 max-sm:scale-75">
             <!--Logged User-->
-            <h3 class="text-2xl max-md:text-sm text-white">Create a Product</h3>
+            <h3 class="text-2xl max-md:text-sm text-white">Create a Medicine</h3>
             <!--log out btn-->
             <button onclick="window.location.href = '../../';"
                 class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all">
@@ -57,7 +57,7 @@
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m1 9 4-4-4-4" />
                             </svg>
-                            <p class="ms-1 text-sm font-medium text-gray-700 md:ms-2">Create Product</p>
+                            <p class="ms-1 text-sm font-medium text-gray-700 md:ms-2">Create Medicine</p>
                         </div>
                     </li>
                 </ol>
@@ -68,10 +68,10 @@
             <div class="flex flex-col border-2 h-full rounded-lg p-6">
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
-                        <label for="item_name" class="block mb-2 text-sm font-medium text-black">Product Name</label>
+                        <label for="item_name" class="block mb-2 text-sm font-medium text-black">Medicine Name</label>
                         <input type="text" id="item_name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            placeholder="Product name" required />
+                            placeholder="Medicine name" required />
                     </div>
                     <div>
                         <label for="price" class="block mb-2 text-sm font-medium text-black">Price</label>
@@ -115,6 +115,18 @@
                         <input type="number" id="min_quantity" min="0"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             placeholder="Minimum Quantity" required />
+                    </div>
+                </div>
+                <div class="grid gap-6 mb-6 md:grid-cols-2">
+                    <div>
+                        <label for="mfd" class="block mb-2 text-sm font-medium text-black">Manufacture Date</label>
+                        <input type="date" id="mfd" min="0"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
+                    </div>
+                    <div>
+                        <label for="exp" class="block mb-2 text-sm font-medium text-black">Expire Date</label>
+                        <input type="date" id="exp" min="0"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required />
                     </div>
                 </div>
                 <div class="flex items-center justify-center w-full mb-6">
