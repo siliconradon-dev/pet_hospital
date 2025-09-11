@@ -13,8 +13,7 @@
 
 <body class="h-dvh">
   <!--Nav-->
-  <div
-    class="nav bg-basic w-full py-6 flex justify-between items-center max-lg:justify-center max-lg:flex-col">
+  <div class="nav bg-basic w-full py-6 flex justify-between items-center max-lg:justify-center max-lg:flex-col">
     <span class="flex items-center gap-3 ml-20 max-lg:ml-0 max-sm:scale-75">
       <button onclick="history.go ( -1);"
         class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all">
@@ -74,41 +73,36 @@
       <div
         class="grid grid-cols-2 max-[375px]:grid-cols-1 place-content-center [375px]:justify-items-center h-full gap-6 text-white 2xl:scale-[110%]">
         <div onclick="locatePanelItem('addExpense');"
-          class="w-[200px] max-lg:w-[150px]  border-2 border-basic h-[200px] max-lg:h-[150px]  bg-basic text-white rounded-lg flex flex-col gap-3 justify-center items-center hover:scale-90 transition-all cursor-pointer">
-          <div class="w-10 h-10" style="
-                background: url(../../images/main-panel/btn-icons/add-item.svg)
-                  no-repeat;
-                background-size: cover;
-              "></div>
-          <p class="text-center max-sm:text-sm">Add New Expense</p>
+          class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+          <div class="card">
+            <img src="../../images/main-panel/btn-icons/add-item.svg"
+              class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+            <p class="text-center">Add New Expense</p>
+          </div>
         </div>
         <div onclick="locatePanelItem('addExpenseCategory');"
-          class="w-[200px] max-lg:w-[150px]  border-2 border-basic h-[200px] max-lg:h-[150px]  bg-basic text-white rounded-lg flex flex-col gap-3 justify-center items-center hover:scale-90 transition-all cursor-pointer">
-          <div class="w-10 h-10" style="
-                background: url(../../images/main-panel/btn-icons/add-item.svg)
-                  no-repeat;
-                background-size: cover;
-              "></div>
-          <p class="text-center max-sm:text-sm">Add New Expense Category</p>
+          class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+          <div class="card">
+            <img src="../../images/main-panel/btn-icons/add-item.svg"
+              class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+            <p class="text-center">Add New Expense Category</p>
+          </div>
         </div>
         <div onclick="locatePanelItem('expensesList');"
-          class="w-[200px] max-lg:w-[150px]  border-2 border-basic h-[200px] max-lg:h-[150px]  bg-basic text-white rounded-lg flex flex-col gap-3 justify-center items-center hover:scale-90 transition-all cursor-pointer">
-          <div class="w-10 h-10" style="
-                background: url(../../images/main-panel/btn-icons/items.svg)
-                  no-repeat;
-                background-size: cover;
-              "></div>
-          <p class="text-center max-sm:text-sm">Expenses List</p>
+          class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+          <div class="card">
+            <img src="../../images/main-panel/btn-icons/items.svg"
+              class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+            <p class="text-center">Expenses List</p>
+          </div>
         </div>
         <div onclick="locatePanelItem('expenseCategoryList');"
-          class="w-[200px] max-lg:w-[150px]  border-2 border-basic h-[200px] max-lg:h-[150px]  bg-basic text-white rounded-lg flex flex-col gap-3 justify-center items-center hover:scale-90 transition-all cursor-pointer">
-          <div class="w-10 h-10" style="
-                background: url(../../images/main-panel/btn-icons/items.svg)
-                  no-repeat;
-                background-size: contain;
-                background-position: center;
-              "></div>
-          <p class="text-center max-sm:text-sm">Expenses Category List</p>
+          class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+          <div class="card">
+            <img src="../../images/main-panel/btn-icons/items.svg"
+              class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+            <p class="text-center">Expenses Category List</p>
+          </div>
         </div>
       </div>
     </div>
