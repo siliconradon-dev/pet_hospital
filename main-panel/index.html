@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application | Main Panel</title>
+    <link rel="icon" href="../images/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../styles/common.css">
+</head>
+
+<body class="h-dvh max-md:h-fit">
+    <!--Nav-->
+    <div class="nav bg-basic w-full py-6 flex justify-between items-center max-sm:justify-center">
+        <span class=" sm:ml-20">
+            <img src="../images/logo.png" alt="" class="w-[120px] max-md:w-20">
+        </span>
+        <span class="flex gap-3 sm:mr-20 items-center">
+            <!--Logged User-->
+            <h3 class="text-2xl max-sm:text-sm text-white max-sm:mr-0">Welcome to Pet Hospital</h3>
+            <!--log out btn-->
+            <button onclick="window.location.href = '../';"
+                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all">
+                <i class="bi bi-box-arrow-left scale-[1.5]"></i>
+        </span>
+        </button>
+    </div>
+    <!--center-->
+    <div class="grid place-items-center h-5/6 w-full">
+        <!--Main Panel (for max-lg)-->
+        <div
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 w-fit gap-6 h-fit py-6 gap-6 text-white px-12">
+            <div onclick="locatePanelItem('dash');"
+                class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+                <div class="card">
+                    <img src="../images/main-panel/btn-icons/dash.svg"
+                        class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+                    <p class="text-center">Dashboard</p>
+                </div>
+            </div>
+            <div onclick="locatePanelItem('fruit-management');"
+                class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+                <div class="card">
+                    <img src="../images/main-panel/btn-icons/services.png"
+                        class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+                    <p class="text-center">Services Management</p>
+                </div>
+            </div>
+            <div onclick="locatePanelItem('pooja-bhanda');"
+                class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+                <div class="card">
+                    <img src="../images/main-panel/btn-icons/product-management.png"
+                        class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+                    <p class="text-center">Pooja Bhanda Management</p>
+                </div>
+            </div>
+            <div onclick="locatePanelItem('branch-mgmt');"
+                class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+                <div class="card">
+                    <img src="../images/main-panel/btn-icons/warehouse-mgmt.png"
+                        class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+                    <p class="text-center">Branch Management</p>
+                </div>
+            </div>
+            <div onclick="locatePanelItem('expenses');"
+                class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+                <div class="card">
+                    <img src="../images/main-panel/btn-icons/expenses.svg"
+                        class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+                    <p class="text-center">Expenses</p>
+                </div>
+            </div>
+            <div onclick="locatePanelItem('fruit-management/billing');"
+                class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+                <div class="card">
+                    <img src="../images/main-panel/btn-icons/billing.svg"
+                        class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+                    <p class="text-center">Billing</p>
+                </div>
+            </div>
+            <div onclick="locatePanelItem('sales');"
+                class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+                <div class="card">
+                    <img src="../images/main-panel/btn-icons/sales.svg"
+                        class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+                    <p class="text-center">Sales</p>
+                </div>
+            </div>
+            <div onclick="locatePanelItem('supplier-mgmt');"
+                class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+                <div class="card">
+                    <img src="../images/main-panel/btn-icons/supp-mgmt.png"
+                        class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+                    <p class="text-center">Suppliers</p>
+                </div>
+            </div>
+            <div onclick="locatePanelItem('production');"
+                class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+                <div class="card">
+                    <img src="../images/main-panel/btn-icons/production.png"
+                        class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+                    <p class="text-center">Production</p>
+                </div>
+            </div>
+            <div onclick="locatePanelItem('stock');"
+                class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+                <div class="card">
+                    <img src="../images/main-panel/btn-icons/inventory-management.png"
+                        class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+                    <p class="text-center">Stock Management</p>
+                </div>
+            </div>
+            <div onclick="locatePanelItem('users');"
+                class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+                <div class="card">
+                    <img src="../images/main-panel/btn-icons/users.png"
+                        class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+                    <p class="text-center">Users</p>
+                </div>
+            </div>
+            <div onclick="locatePanelItem('#');"
+                class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+                <div class="card">
+                    <img src="../images/main-panel/btn-icons/finance.png"
+                        class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+                    <p class="text-center">Finance Department </p>
+                </div>
+            </div>
+            <div onclick="locatePanelItem('#');"
+                class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+                <div class="card">
+                    <img src="../images/main-panel/btn-icons/hr.png"
+                        class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+                    <p class="text-center">HR Department</p>
+                </div>
+            </div>
+            <div onclick="locatePanelItem('settings');"
+                class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+                <div class="card">
+                    <img src="../images/main-panel/btn-icons/settings.png"
+                        class="w-[105px] h-[105px] max-xl:w-[70px] max-xl:h-[70px]" alt="">
+                    <p class="text-center">Settings</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../scripts/common.js"></script>
+<script>
+    // set page title to appName
+    document.title = `${appName} | Main Panel`;
+</script>
+<script>
+    function locatePanelItem(panelItem) {
+        window.location.href = "../main-panel/" + panelItem;
+    }
+</script>
+
+</html>
