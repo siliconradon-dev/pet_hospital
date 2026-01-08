@@ -105,7 +105,24 @@
         const petCode = urlParams.get('code');
 
         // Load pet data
-        const pets = JSON.parse(localStorage.getItem('pets')) || [];
+        const pets = JSON.parse(localStorage.getItem('pets')) || [{
+                code: 'RP00001',
+                name: 'Max',
+                age: '3',
+                breed: 'Golden Retriever',
+                description: 'Friendly and energetic dog, loves to play fetch and swim. Very good with children and other pets.',
+                image: 'https://images.unsplash.com/photo-1633722715463-d30f4f325e24?w=400',
+                registeredDate: new Date().toISOString()
+            },
+            {
+                code: 'RP00002',
+                name: 'Whiskers',
+                age: '2',
+                breed: 'Persian Cat',
+                description: 'Calm and affectionate cat with beautiful long fur. Enjoys quiet environments and loves to be pampered.',
+                image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400',
+                registeredDate: new Date().toISOString()
+            }];
         const pet = pets.find(p => p.code === petCode);
 
         if (pet) {
