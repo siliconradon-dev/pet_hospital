@@ -378,13 +378,16 @@
         const pet = pets.find(p => p.code === petCode);
         if (!pet) return;
 
-        document.getElementById('profileImage').src = pet.image;
-        document.getElementById('profileName').textContent = pet.name;
-        document.getElementById('profileCode').textContent = `Pet Code: ${pet.code}`;
-        document.getElementById('profileBreed').textContent = pet.breed;
-        document.getElementById('profileAge').textContent = pet.age + ' years';
-        document.getElementById('profileDescription').textContent = pet.description || 'No description available';
-        document.getElementById('profileModal').classList.remove('hidden');
+        // document.getElementById('profileImage').src = pet.image;
+        // document.getElementById('profileName').textContent = pet.name;
+        // document.getElementById('profileCode').textContent = `Pet Code: ${pet.code}`;
+        // document.getElementById('profileBreed').textContent = pet.breed;
+        // document.getElementById('profileAge').textContent = pet.age + ' years';
+        // document.getElementById('profileDescription').textContent = pet.description || 'No description available';
+        // document.getElementById('profileModal').classList.remove('hidden');
+
+        // redirect to profile page
+        window.location.href = `profile.html?code=${petCode}`;
     }
 
     // Close modals
