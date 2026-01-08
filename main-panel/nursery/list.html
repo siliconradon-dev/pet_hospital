@@ -195,6 +195,7 @@
                 </td>
                 <td class="px-4 py-2">
                     <button onclick="viewBooking('${booking.code}')" class="px-3 py-1.5 mr-2 mb-1 text-white bg-blue-600 rounded-lg hover:bg-blue-700">View</button>
+                    <a href="bill.html?code=${booking.code}" target="_blank" class="inline-block px-3 py-1.5 mr-2 mb-1 text-white bg-green-600 rounded-lg hover:bg-green-700">Print Bill</a>
                     ${booking.status === 'Active' 
                         ? `<button onclick="completeBooking('${booking.code}')" class="px-3 py-1.5 mb-1 text-white bg-[#0b2b64] rounded-lg hover:bg-[#568f42]">Complete</button>`
                         : ''}
@@ -359,6 +360,7 @@
                 </div>
 
                 <div class="flex justify-end gap-3">
+                    <a href="bill.html?code=${booking.code}" target="_blank" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Print Bill</a>
                     ${booking.status === 'Active' 
                         ? `<button onclick="completeBooking('${booking.code}'); closeViewModal();" class="px-4 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#568f42]">Mark as Completed</button>`
                         : ''}
