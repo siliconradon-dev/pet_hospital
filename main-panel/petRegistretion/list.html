@@ -147,7 +147,7 @@
             <div class="flex flex-col border-2 h-full rounded-lg p-6">
                 <!--filter section-->
                 <div class="mb-4">
-                    <button onclick="window.location.href='register.html'" class="px-4 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#568f42]">
+                    <button onclick="window.location.href='register.html'" class="px-4 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#65adff]">
                         + Add New Pet
                     </button>
                 </div>
@@ -209,7 +209,7 @@
                         <p class="text-sm text-gray-600 mb-2">Description</p>
                         <p id="profileDescription" class="text-gray-800"></p>
                     </div>
-                    <button onclick="closeProfileModal()" class="px-6 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#568f42]">Close</button>
+                    <button onclick="closeProfileModal()" class="px-6 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#65adff]">Close</button>
                 </div>
             </div>
         </div>
@@ -273,8 +273,8 @@
                 <td class="px-4 py-2">${pet.breed}</td>
                 <td class="px-4 py-2">${pet.age} years</td>
                 <td class="px-4 py-2">
-                    <button onclick="generateQRCode('${pet.code}')" class="px-3 py-1.5 mr-2 mb-1 text-white bg-[#0b2b64] rounded-lg hover:bg-[#568f42]">QR Code</button>
-                    <button onclick="generateBarcode('${pet.code}')" class="px-3 py-1.5 mr-2 mb-1 text-white bg-[#0b2b64] rounded-lg hover:bg-[#568f42]">Barcode</button>
+                    <button onclick="generateQRCode('${pet.code}')" class="px-3 py-1.5 mr-2 mb-1 text-white bg-[#0b2b64] rounded-lg hover:bg-[#65adff]">QR Code</button>
+                    <button onclick="generateBarcode('${pet.code}')" class="px-3 py-1.5 mr-2 mb-1 text-white bg-[#0b2b64] rounded-lg hover:bg-[#65adff]">Barcode</button>
                     <button onclick="viewProfile('${pet.code}')" class="px-3 py-1.5 mb-1 text-white bg-blue-600 rounded-lg hover:bg-blue-700">View Profile</button>
                 </td>
             `;
