@@ -78,7 +78,7 @@
             <div class="flex flex-col border-2 h-full rounded-lg p-6">
                 <!--filter section-->
                 <div class="mb-4 flex justify-between items-center">
-                    <button onclick="window.location.href='register.html'" class="px-4 py-2 bg-[#65ad4e] text-white rounded-lg hover:bg-[#568f42]">
+                    <button onclick="window.location.href='register.html'" class="px-4 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#568f42]">
                         + New Booking
                     </button>
                     <div class="flex gap-2">
@@ -91,7 +91,7 @@
                 <!--table with booking info-->
                 <div class="relative overflow-x-auto">
                     <table id="bookingsTable" class="w-full text-sm text-left text-gray-500 rtl:text-right">
-                        <thead class="text-xs text-white uppercase bg-[#47891E]">
+                        <thead class="text-xs text-white uppercase bg-[#0b2b64]">
                             <tr>
                                 <th scope="col" class="px-4 py-2 rounded-tl-lg">#</th>
                                 <th scope="col" class="px-4 py-2">Booking Code</th>
@@ -196,7 +196,7 @@
                 <td class="px-4 py-2">
                     <button onclick="viewBooking('${booking.code}')" class="px-3 py-1.5 mr-2 mb-1 text-white bg-blue-600 rounded-lg hover:bg-blue-700">View</button>
                     ${booking.status === 'Active' 
-                        ? `<button onclick="completeBooking('${booking.code}')" class="px-3 py-1.5 mb-1 text-white bg-[#65ad4e] rounded-lg hover:bg-[#568f42]">Complete</button>`
+                        ? `<button onclick="completeBooking('${booking.code}')" class="px-3 py-1.5 mb-1 text-white bg-[#0b2b64] rounded-lg hover:bg-[#568f42]">Complete</button>`
                         : ''}
                 </td>
             `;
@@ -222,9 +222,9 @@
         document.querySelectorAll('.filter-btn').forEach(btn => {
             if (btn.dataset.filter === status) {
                 btn.classList.remove('bg-gray-200', 'hover:bg-gray-300');
-                btn.classList.add('bg-[#65ad4e]', 'text-white');
+                btn.classList.add('bg-[#0b2b64]', 'text-white');
             } else {
-                btn.classList.remove('bg-[#65ad4e]', 'text-white');
+                btn.classList.remove('bg-[#0b2b64]', 'text-white');
                 btn.classList.add('bg-gray-200', 'hover:bg-gray-300');
             }
         });
@@ -332,7 +332,7 @@
                     </div>
                 ` : ''}
 
-                <div class="p-6 bg-gradient-to-r from-[#65ad4e] to-[#47891E] rounded-lg text-white">
+                <div class="p-6 bg-gradient-to-r from-[#0b2b64] to-[#0b2b64] rounded-lg text-white">
                     <div class="space-y-2">
                         <div class="flex justify-between items-center">
                             <span class="text-sm">Base Charge:</span>
@@ -360,7 +360,7 @@
 
                 <div class="flex justify-end gap-3">
                     ${booking.status === 'Active' 
-                        ? `<button onclick="completeBooking('${booking.code}'); closeViewModal();" class="px-4 py-2 bg-[#65ad4e] text-white rounded-lg hover:bg-[#568f42]">Mark as Completed</button>`
+                        ? `<button onclick="completeBooking('${booking.code}'); closeViewModal();" class="px-4 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#568f42]">Mark as Completed</button>`
                         : ''}
                     <button onclick="closeViewModal()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">Close</button>
                 </div>

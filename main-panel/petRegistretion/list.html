@@ -75,16 +75,16 @@
                 <!-- Right side buttons -->
                 <span class="w-fit max-md:w-full max-md:justify-center flex gap-3 max-sm:gap-1 max-[350px]:scale-75">
                     <button
-                        class="hidden px-2 py-1.5 text-white bg-[#65ad4e] rounded-lg max-sm:px-2 max-sm:py-1">Copy</button>
-                    <button class="hidden px-2 py-3 text-white bg-[#65ad4e] rounded-lg max-sm:px-2 max-sm:py-1"
+                        class="hidden px-2 py-1.5 text-white bg-[#0b2b64] rounded-lg max-sm:px-2 max-sm:py-1">Copy</button>
+                    <button class="hidden px-2 py-3 text-white bg-[#0b2b64] rounded-lg max-sm:px-2 max-sm:py-1"
                         onclick="exportTableToCSV('item.csv')">CSV</button>
                     <button
-                        class="hidden px-2 py-1.5 text-white bg-[#65ad4e] rounded-lg max-sm:px-2 max-sm:py-1">Excel</button>
+                        class="hidden px-2 py-1.5 text-white bg-[#0b2b64] rounded-lg max-sm:px-2 max-sm:py-1">Excel</button>
                     <button
-                        class="hidden px-2 py-1.5 text-white bg-[#65ad4e] rounded-lg max-sm:px-2 max-sm:py-1">PDF</button>
+                        class="hidden px-2 py-1.5 text-white bg-[#0b2b64] rounded-lg max-sm:px-2 max-sm:py-1">PDF</button>
                     <button data-popover-target="popover-click" data-popover-trigger="click"
                         data-popover-placement="bottom" type="button"
-                        class="px-2 py-3 text-white bg-[#65ad4e] rounded-lg max-sm:px-2 max-sm:py-1">
+                        class="px-2 py-3 text-white bg-[#0b2b64] rounded-lg max-sm:px-2 max-sm:py-1">
                         Column Visibility
                     </button>
                     <div data-popover id="popover-click" role="tooltip"
@@ -147,7 +147,7 @@
             <div class="flex flex-col border-2 h-full rounded-lg p-6">
                 <!--filter section-->
                 <div class="mb-4">
-                    <button onclick="window.location.href='register.html'" class="px-4 py-2 bg-[#65ad4e] text-white rounded-lg hover:bg-[#568f42]">
+                    <button onclick="window.location.href='register.html'" class="px-4 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#568f42]">
                         + Add New Pet
                     </button>
                 </div>
@@ -155,7 +155,7 @@
                 <!--table with pet info-->
                 <div class="relative overflow-x-auto">
                     <table id="petsTable" class="w-full text-sm text-left text-gray-500 rtl:text-right">
-                        <thead class="text-xs text-white uppercase bg-[#47891E]">
+                        <thead class="text-xs text-white uppercase bg-[#0b2b64]">
                             <tr>
                                 <th scope="col" class="px-4 py-2 rounded-tl-lg">#</th>
                                 <th scope="col" class="px-4 py-2">Image</th>
@@ -192,7 +192,7 @@
         <div id="profileModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-500 bg-opacity-50">
             <div class="bg-white rounded-lg p-8 w-full max-w-2xl">
                 <div class="text-center">
-                    <img id="profileImage" src="" alt="Pet Image" class="w-48 h-48 mx-auto rounded-full object-cover border-4 border-[#65ad4e] mb-4">
+                    <img id="profileImage" src="" alt="Pet Image" class="w-48 h-48 mx-auto rounded-full object-cover border-4 border-[#0b2b64] mb-4">
                     <h2 id="profileName" class="text-3xl font-bold text-gray-800 mb-2"></h2>
                     <p id="profileCode" class="text-lg text-gray-600 mb-4"></p>
                     <div class="grid grid-cols-2 gap-4 mb-4">
@@ -209,7 +209,7 @@
                         <p class="text-sm text-gray-600 mb-2">Description</p>
                         <p id="profileDescription" class="text-gray-800"></p>
                     </div>
-                    <button onclick="closeProfileModal()" class="px-6 py-2 bg-[#65ad4e] text-white rounded-lg hover:bg-[#568f42]">Close</button>
+                    <button onclick="closeProfileModal()" class="px-6 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#568f42]">Close</button>
                 </div>
             </div>
         </div>
@@ -273,8 +273,8 @@
                 <td class="px-4 py-2">${pet.breed}</td>
                 <td class="px-4 py-2">${pet.age} years</td>
                 <td class="px-4 py-2">
-                    <button onclick="generateQRCode('${pet.code}')" class="px-3 py-1.5 mr-2 mb-1 text-white bg-[#65ad4e] rounded-lg hover:bg-[#568f42]">QR Code</button>
-                    <button onclick="generateBarcode('${pet.code}')" class="px-3 py-1.5 mr-2 mb-1 text-white bg-[#65ad4e] rounded-lg hover:bg-[#568f42]">Barcode</button>
+                    <button onclick="generateQRCode('${pet.code}')" class="px-3 py-1.5 mr-2 mb-1 text-white bg-[#0b2b64] rounded-lg hover:bg-[#568f42]">QR Code</button>
+                    <button onclick="generateBarcode('${pet.code}')" class="px-3 py-1.5 mr-2 mb-1 text-white bg-[#0b2b64] rounded-lg hover:bg-[#568f42]">Barcode</button>
                     <button onclick="viewProfile('${pet.code}')" class="px-3 py-1.5 mb-1 text-white bg-blue-600 rounded-lg hover:bg-blue-700">View Profile</button>
                 </td>
             `;
