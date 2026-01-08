@@ -8,11 +8,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            background: linear-gradient(135deg, #1e3a5f 0%, #0f2744 100%);
+            background: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .shadow-custom {
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -22,15 +22,8 @@
         <!-- Left Panel - Login Form -->
         <div class="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
             <!-- Logo -->
-            <div class="mb-8">
-                <div class="flex items-center gap-2 mb-2">
-                    <div class="flex gap-1">
-                        <div class="w-4 h-4 bg-blue-900 transform rotate-45"></div>
-                        <div class="w-4 h-4 bg-blue-700 transform rotate-45"></div>
-                    </div>
-                    <span class="text-lg font-bold text-gray-800">Royal Pets Animal Hospital</span>
-                </div>
-                <p class="text-xs text-gray-500 ml-10">Caring for Your Beloved Companions</p>
+            <div class="mb-8 flex justify-center lg:justify-start">
+                <img src="./images/logo.png" alt="Royal Pets Animal Hospital" class="h-16 w-auto object-contain">
             </div>
 
             <!-- Form Heading -->
@@ -96,12 +89,14 @@
         </div>
 
         <!-- Right Panel - Welcome Message -->
-        <div class="w-full lg:w-1/2 bg-gradient-to-br from-blue-900 to-blue-950 p-8 lg:p-12 flex flex-col justify-center items-center text-white text-center">
-            <h2 class="text-4xl lg:text-5xl font-bold mb-6">Welcome Back!</h2>
-            <p class="text-lg lg:text-xl text-blue-100 mb-12 max-w-md">
-                Sign in to access your account and manage your projects, demos, and team activities.
-            </p>
-            <p class="text-sm text-blue-200 mt-auto">
+        <div class="w-full lg:w-1/2 bg-gradient-to-br from-blue-900 to-blue-950 p-8 lg:p-12 flex flex-col justify-center items-center text-white text-center min-h-[400px] lg:min-h-full">
+            <div class="flex-1 flex flex-col justify-center items-center">
+                <h2 class="text-4xl lg:text-5xl font-bold mb-6">Welcome Back!</h2>
+                <p class="text-lg lg:text-xl text-blue-100 mb-8 max-w-md">
+                    Sign in to access your account and manage your projects, demos, and team activities.
+                </p>
+            </div>
+            <p class="text-sm text-blue-200">
                 Powered by Silicon Radon Networks (Pvt) Ltd
             </p>
         </div>
