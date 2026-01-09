@@ -15,7 +15,7 @@
     <!--Nav-->
     <div class="nav bg-basic w-full py-6 flex justify-between items-center max-lg:justify-center max-lg:flex-col">
         <span class="flex items-center gap-3 ml-20 max-lg:ml-0 max-sm:scale-75">
-            <button onclick="history.go ( -1);"
+            <button onclick="history.go(-1);"
                 class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all">
                 <i class="bi bi-chevron-left scale-[1.5]"></i>
             </button>
@@ -317,52 +317,6 @@
                 class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5" 
                 id="medicine_name_${medicineItemCount}" />
             <input type="number" placeholder="Price" min="0" step="0.01" value="${price}"
-                class="w-32 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5" 
-                id="medicine_price_${medicineItemCount}" onchange="calculateTotal()" />
-            <button type="button" onclick="removeItem('medicine_item_${medicineItemCount}')" 
-                class="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-        `;
-        container.appendChild(itemDiv);
-    }
-
-    function addFoodItem() {
-        foodItemCount++;
-        const container = document.getElementById('food_items_container');
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'flex gap-2 items-center p-3 bg-gray-50 rounded-lg';
-        itemDiv.id = `food_item_${foodItemCount}`;
-        itemDiv.innerHTML = `
-            <input type="text" placeholder="Food name" 
-                class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5" 
-                id="food_name_${foodItemCount}" />
-            <input type="number" placeholder="Price" min="0" step="0.01" 
-                class="w-32 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5" 
-                id="food_price_${foodItemCount}" onchange="calculateTotal()" />
-            <button type="button" onclick="removeItem('food_item_${foodItemCount}')" 
-                class="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-        `;
-        container.appendChild(itemDiv);
-    }
-
-    function addMedicineItem() {
-        medicineItemCount++;
-        const container = document.getElementById('medicine_items_container');
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'flex gap-2 items-center p-3 bg-gray-50 rounded-lg';
-        itemDiv.id = `medicine_item_${medicineItemCount}`;
-        itemDiv.innerHTML = `
-            <input type="text" placeholder="Medicine name" 
-                class="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5" 
-                id="medicine_name_${medicineItemCount}" />
-            <input type="number" placeholder="Price" min="0" step="0.01" 
                 class="w-32 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5" 
                 id="medicine_price_${medicineItemCount}" onchange="calculateTotal()" />
             <button type="button" onclick="removeItem('medicine_item_${medicineItemCount}')" 
