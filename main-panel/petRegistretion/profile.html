@@ -7,6 +7,8 @@
     <title>Pet Profile</title>
     <link rel="icon" href="../../images/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
     <link rel="stylesheet" href="../../styles/common.css">
     <style>
         body {
@@ -104,6 +106,46 @@
             </p>
         </div>
 
+        <!-- QR Code & Barcode Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <!-- QR Code -->
+            <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 p-6 rounded-xl shadow-md">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 text-indigo-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm2 2V5h1v1H5zM3 13a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1v-3zm2 2v-1h1v1H5zM13 3a1 1 0 00-1 1v3a1 1 0 001 1h3a1 1 0 001-1V4a1 1 0 00-1-1h-3zm1 2v1h1V5h-1z" clip-rule="evenodd"/>
+                            <path d="M11 4a1 1 0 10-2 0v1a1 1 0 002 0V4zM10 7a1 1 0 011 1v1h2a1 1 0 110 2h-3a1 1 0 01-1-1V8a1 1 0 011-1zM16 9a1 1 0 100 2 1 1 0 000-2zM9 13a1 1 0 011-1h1a1 1 0 110 2v2a1 1 0 11-2 0v-3zM7 11a1 1 0 100-2H4a1 1 0 100 2h3zM17 13a1 1 0 01-1 1h-2a1 1 0 110-2h2a1 1 0 011 1zM16 17a1 1 0 100-2h-3a1 1 0 100 2h3z"/>
+                        </svg>
+                        <span class="text-sm font-medium text-indigo-900">QR Code</span>
+                    </div>
+                    <button onclick="downloadQRCode()" class="px-3 py-1 bg-indigo-600 text-white text-xs rounded-lg hover:bg-indigo-700">
+                        Download
+                    </button>
+                </div>
+                <div class="flex justify-center">
+                    <canvas id="qrCodeCanvas" class="bg-white p-2 rounded-lg"></canvas>
+                </div>
+            </div>
+
+            <!-- Barcode -->
+            <div class="bg-gradient-to-br from-cyan-50 to-cyan-100 p-6 rounded-xl shadow-md">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 text-cyan-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm6 0a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4zm7-1a1 1 0 00-1 1v12a1 1 0 001 1h1a1 1 0 001-1V4a1 1 0 00-1-1h-1z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-sm font-medium text-cyan-900">Barcode</span>
+                    </div>
+                    <button onclick="downloadBarcode()" class="px-3 py-1 bg-cyan-600 text-white text-xs rounded-lg hover:bg-cyan-700">
+                        Download
+                    </button>
+                </div>
+                <div class="flex justify-center">
+                    <svg id="barcodeCanvas" class="bg-white p-2 rounded-lg"></svg>
+                </div>
+            </div>
+        </div>
+
         <!-- Daycare Records Section -->
         <div class="mb-8">
             <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
@@ -117,16 +159,16 @@
             </div>
         </div>
 
-        <!-- Prescription Records Section -->
+        <!-- Medical Records Section -->
         <div class="mb-8">
             <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 <svg class="w-6 h-6 mr-2 text-[#0b2b64]" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd"/>
                 </svg>
-                Prescription Records
+                Medical Records
             </h2>
             <div id="prescriptionRecords" class="space-y-3">
-                <!-- Prescription records will be loaded here -->
+                <!-- Medical records will be loaded here -->
             </div>
         </div>
 
@@ -196,6 +238,10 @@
             // Display allergies
             displayAllergies(pet.allergies);
 
+            // Generate QR Code and Barcode
+            generateQRCode(petCode);
+            generateBarcode(petCode);
+
             // Load and display daycare records
             loadDaycareRecords(petCode);
 
@@ -235,6 +281,68 @@
                     </span>
                 `).join('');
             }
+        }
+
+        // Generate QR Code
+        function generateQRCode(petCode) {
+            const profileURL = window.location.href;
+            const canvas = document.getElementById('qrCodeCanvas');
+            
+            QRCode.toCanvas(canvas, profileURL, { 
+                width: 180, 
+                height: 180,
+                margin: 1
+            }, function (error) {
+                if (error) console.error('Error generating QR code:', error);
+            });
+        }
+
+        // Generate Barcode
+        function generateBarcode(petCode) {
+            const svg = document.getElementById('barcodeCanvas');
+            
+            JsBarcode(svg, petCode, {
+                format: "CODE128",
+                width: 2,
+                height: 80,
+                displayValue: true,
+                fontSize: 14,
+                margin: 5
+            });
+        }
+
+        // Download QR Code
+        function downloadQRCode() {
+            const canvas = document.getElementById('qrCodeCanvas');
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = `${petCode}_QR_Code.png`;
+            link.click();
+        }
+
+        // Download Barcode
+        function downloadBarcode() {
+            const svg = document.getElementById('barcodeCanvas');
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            canvas.width = 250;
+            canvas.height = 120;
+            
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            img.onload = function() {
+                ctx.drawImage(img, 0, 0);
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = `${petCode}_Barcode.png`;
+                link.click();
+            };
+            
+            img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
         }
 
         function loadDaycareRecords(petCode) {
