@@ -199,6 +199,7 @@
                     ${booking.status === 'Active' 
                         ? `<button onclick="completeBooking('${booking.code}')" class="px-3 py-1.5 mb-1 text-white bg-[#0b2b64] rounded-lg hover:bg-[#65adff]">Complete</button>`
                         : ''}
+                    <a href="edit.html?code=${booking.code}" target="_blank" class="inline-block px-3 py-1.5 mr-2 mb-1 text-white bg-yellow-600 rounded-lg hover:bg-yellow-700">Edit Booking</a>
                 </td>
             `;
             tbody.appendChild(row);

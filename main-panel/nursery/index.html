@@ -65,8 +65,8 @@
     </div>
     <!--Main cards-->
     <div class="flex-grow flex items-center justify-center w-full">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 px-6">
-        <!-- Register Daycare Booking Card -->
+      <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-8 px-6">
+
         <div onclick="window.location.href='register.html'"
           class="w-[300px] h-[300px] text-white uppercase text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.05] hover:rotate-[2deg] cardBox cursor-pointer">
           <div class="card flex flex-col items-center justify-center h-full">
@@ -77,7 +77,7 @@
           </div>
         </div>
 
-        <!-- View Daycare Bookings Card -->
+        
         <div onclick="window.location.href='list.html'"
           class="w-[300px] h-[300px] text-white uppercase text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.05] hover:rotate-[-2deg] cardBox cursor-pointer">
           <div class="card flex flex-col items-center justify-center h-full">
@@ -88,10 +88,33 @@
             <p class="text-center">View Daycare Bookings</p>
           </div>
         </div>
+      </div> -->
+      <div
+        class="grid grid-cols-2 max-[375px]:grid-cols-1 place-content-center [375px]:justify-items-center h-full gap-6 text-white 2xl:scale-[110%] ">
+        <div onclick="locatePanelItem('register.html');"
+          class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+          <div class="card">
+            <img src="../../images/main-panel/btn-icons/add-item.svg"
+              class="w-[60px] h-[60px] max-xl:w-[50px] max-xl:h-[50px]" alt="">
+            <p class="text-center mt-2">Register Daycare Booking</p>
+          </div>
+        </div>
+        <div onclick="locatePanelItem('list.html');"
+          class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+          <div class="card">
+            <img src="../../images/main-panel/btn-icons/view-item.svg"
+              class="w-[60px] h-[60px] max-xl:w-[50px] max-xl:h-[50px]" alt="">
+            <p class="text-center mt-2">View Daycare Bookings</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </body>
 <script src="../../scripts/common.js"></script>
-
+<script>
+  function locatePanelItem(panelItem) {
+    window.location.href = "../../main-panel/nursery/" + panelItem;
+  }
+</script>
 </html>
