@@ -83,6 +83,19 @@
             <p id="petDescription" class="text-gray-700 leading-relaxed"></p>
         </div>
 
+        <!-- Allergies Section -->
+        <div class="bg-gradient-to-br from-red-50 to-orange-100 p-6 rounded-xl shadow-md mb-8">
+            <div class="flex items-center mb-3">
+                <svg class="w-6 h-6 text-red-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-sm font-medium text-red-900">Known Allergies</span>
+            </div>
+            <div id="allergiesContainer" class="flex flex-wrap gap-2">
+                <!-- Allergies will be loaded here -->
+            </div>
+        </div>
+
         <!-- Registration Date -->
         <div class="text-center mb-8">
             <p class="text-sm text-gray-500">
@@ -143,7 +156,8 @@
                     breed: 'Golden Retriever',
                     description: 'Friendly and energetic dog, loves to play fetch and swim. Very good with children and other pets.',
                     image: 'https://images.unsplash.com/photo-1633722715463-d30f4f325e24?w=400',
-                    registeredDate: new Date().toISOString()
+                    registeredDate: new Date().toISOString(),
+                    allergies: ['Chicken', 'Dairy Products', 'Pollen']
                 },
                 {
                     code: 'RP00002',
@@ -152,7 +166,8 @@
                     breed: 'Persian Cat',
                     description: 'Calm and affectionate cat with beautiful long fur. Enjoys quiet environments and loves to be pampered.',
                     image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400',
-                    registeredDate: new Date().toISOString()
+                    registeredDate: new Date().toISOString(),
+                    allergies: ['Fish', 'Dust', 'Certain Fragrances']
                 }
             ];
             localStorage.setItem('pets', JSON.stringify(pets));
@@ -178,6 +193,9 @@
             
             document.title = `${pet.name} - Pet Profile`;
 
+            // Display allergies
+            displayAllergies(pet.allergies);
+
             // Load and display daycare records
             loadDaycareRecords(petCode);
 
@@ -196,6 +214,27 @@
                     </button>
                 </div>
             `;
+        }
+
+        function displayAllergies(allergies) {
+            const container = document.getElementById('allergiesContainer');
+            
+            if (!allergies || allergies.length === 0) {
+                container.innerHTML = `
+                    <div class="w-full text-center py-2">
+                        <p class="text-gray-600 text-sm">No known allergies</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = allergies.map(allergy => `
+                    <span class="px-4 py-2 bg-red-200 text-red-900 rounded-full text-sm font-semibold flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd"/>
+                        </svg>
+                        ${allergy}
+                    </span>
+                `).join('');
+            }
         }
 
         function loadDaycareRecords(petCode) {
