@@ -147,7 +147,8 @@
             <div class="flex flex-col border-2 h-full rounded-lg p-6">
                 <!--filter section-->
                 <div class="mb-4">
-                    <button onclick="window.location.href='register.html'" class="px-4 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#65adff]">
+                    <button onclick="window.location.href='register.html'"
+                        class="px-4 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#65adff]">
                         + Add New Pet
                     </button>
                 </div>
@@ -175,24 +176,29 @@
         </div>
 
         <!-- QR/Barcode Modal -->
-        <div id="codeModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-500 bg-opacity-50">
+        <div id="codeModal"
+            class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-500 bg-opacity-50">
             <div class="bg-white rounded-lg p-6 w-full max-w-md">
                 <h2 id="modalTitle" class="text-xl font-semibold mb-4">Generated Code</h2>
                 <div id="codeContainer" class="flex items-center justify-center mb-4 min-h-[200px]">
                     <!-- QR code or barcode will appear here -->
                 </div>
                 <div class="flex justify-end gap-3">
-                    <button id="downloadBtn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Download</button>
-                    <button id="closeModalBtn" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">Close</button>
+                    <button id="downloadBtn"
+                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Download</button>
+                    <button id="closeModalBtn"
+                        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">Close</button>
                 </div>
             </div>
         </div>
 
         <!-- Pet Profile Modal -->
-        <div id="profileModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-500 bg-opacity-50">
+        <div id="profileModal"
+            class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-500 bg-opacity-50">
             <div class="bg-white rounded-lg p-8 w-full max-w-2xl">
                 <div class="text-center">
-                    <img id="profileImage" src="" alt="Pet Image" class="w-48 h-48 mx-auto rounded-full object-cover border-4 border-[#0b2b64] mb-4">
+                    <img id="profileImage" src="" alt="Pet Image"
+                        class="w-48 h-48 mx-auto rounded-full object-cover border-4 border-[#0b2b64] mb-4">
                     <h2 id="profileName" class="text-3xl font-bold text-gray-800 mb-2"></h2>
                     <p id="profileCode" class="text-lg text-gray-600 mb-4"></p>
                     <div class="grid grid-cols-2 gap-4 mb-4">
@@ -209,17 +215,18 @@
                         <p class="text-sm text-gray-600 mb-2">Description</p>
                         <p id="profileDescription" class="text-gray-800"></p>
                     </div>
-                    <button onclick="closeProfileModal()" class="px-6 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#65adff]">Close</button>
+                    <button onclick="closeProfileModal()"
+                        class="px-6 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#65adff]">Close</button>
                 </div>
             </div>
         </div>
-            </div>
-        </div>
-        <div class="flex-grow"></div>
-        <footer
-            class="h-[80px] bg-basic max-md:text-sm max-sm:text-xs max-md:flex-col text-center w-full flex items-center text-white justify-center gap-3">
-            <p>2025 © All Rights Reserved | Application | Powered by Silicon Radon Networks (Pvt) Ltd</p>
-        </footer>
+    </div>
+    </div>
+    <div class="flex-grow"></div>
+    <footer
+        class="h-[80px] bg-basic max-md:text-sm max-sm:text-xs max-md:flex-col text-center w-full flex items-center text-white justify-center gap-3">
+        <p>2025 © All Rights Reserved | Application | Powered by Silicon Radon Networks (Pvt) Ltd</p>
+    </footer>
     </div>
 
 </body>
@@ -240,7 +247,8 @@
                 breed: 'Golden Retriever',
                 description: 'Friendly and energetic dog, loves to play fetch and swim. Very good with children and other pets.',
                 image: 'https://images.unsplash.com/photo-1633722715463-d30f4f325e24?w=400',
-                registeredDate: new Date().toISOString()
+                registeredDate: new Date().toISOString(),
+                allergies: ['Fish', 'Dust', 'Certain Fragrances']
             },
             {
                 code: 'RP00002',
@@ -249,7 +257,8 @@
                 breed: 'Persian Cat',
                 description: 'Calm and affectionate cat with beautiful long fur. Enjoys quiet environments and loves to be pampered.',
                 image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400',
-                registeredDate: new Date().toISOString()
+                registeredDate: new Date().toISOString(),
+                allergies: ['Fish', 'Dust', 'Certain Fragrances']
             }
         ];
         localStorage.setItem('pets', JSON.stringify(pets));
@@ -275,6 +284,7 @@
                 <td class="px-4 py-2">
                     <button onclick="generateQRCode('${pet.code}')" class="px-3 py-1.5 mr-2 mb-1 text-white bg-[#0b2b64] rounded-lg hover:bg-[#65adff]">QR Code</button>
                     <button onclick="generateBarcode('${pet.code}')" class="px-3 py-1.5 mr-2 mb-1 text-white bg-[#0b2b64] rounded-lg hover:bg-[#65adff]">Barcode</button>
+                    <button onclick="window.location.href='allergies.html?code=${pet.code}'" class="px-3 py-1.5 mr-2 mb-1 text-white bg-orange-600 rounded-lg hover:bg-orange-700">Allergies</button>
                     <button onclick="viewProfile('${pet.code}')" class="px-3 py-1.5 mb-1 text-white bg-blue-600 rounded-lg hover:bg-blue-700">View Profile</button>
                 </td>
             `;
@@ -294,7 +304,7 @@
         const qrCodeImg = document.createElement('img');
         codeContainer.appendChild(qrCodeImg);
 
-        QRCode.toDataURL(profileURL, { width: 200, height: 200 }, function(err, url) {
+        QRCode.toDataURL(profileURL, { width: 200, height: 200 }, function (err, url) {
             if (err) {
                 console.error('Error generating QR code:', err);
                 return;
@@ -312,7 +322,7 @@
             const img = new Image();
             img.src = url;
 
-            img.onload = function() {
+            img.onload = function () {
                 ctx.drawImage(img, 25, 25, 200, 200);
                 ctx.textAlign = 'center';
                 ctx.font = '16px Arial';
@@ -322,7 +332,7 @@
                 document.getElementById('modalTitle').innerText = `QR Code for ${pet.name}`;
                 document.getElementById('codeModal').classList.remove('hidden');
 
-                document.getElementById('downloadBtn').onclick = function() {
+                document.getElementById('downloadBtn').onclick = function () {
                     const link = document.createElement('a');
                     link.href = canvas.toDataURL('image/png');
                     link.download = `${petCode}_QR_Code.png`;
@@ -364,7 +374,7 @@
             document.getElementById('modalTitle').innerText = `Barcode for ${pet.name}`;
             document.getElementById('codeModal').classList.remove('hidden');
 
-            document.getElementById('downloadBtn').onclick = function() {
+            document.getElementById('downloadBtn').onclick = function () {
                 const link = document.createElement('a');
                 link.href = canvas.toDataURL('image/png');
                 link.download = `${petCode}_Barcode.png`;
@@ -395,7 +405,7 @@
         document.getElementById('profileModal').classList.add('hidden');
     }
 
-    document.getElementById('closeModalBtn').addEventListener('click', function() {
+    document.getElementById('closeModalBtn').addEventListener('click', function () {
         document.getElementById('codeModal').classList.add('hidden');
     });
 
