@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application | Items</title>
+    <title>Application | Edit Pet</title>
     <link rel="icon" href="../../images/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -27,7 +27,7 @@
         </span>
         <span class="flex items-center gap-3 mr-20 max-lg:mr-0 max-sm:scale-75">
             <!--Logged User-->
-            <h3 class="text-2xl max-md:text-sm text-white">Register Pet</h3>
+            <h3 class="text-2xl max-md:text-sm text-white">Edit Pet</h3>
             <!--log out btn-->
             <button onclick="window.location.href = '../../../';"
                 class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all">
@@ -67,7 +67,7 @@
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m1 9 4-4-4-4" />
                             </svg>
-                            <p class="ms-1 text-sm font-medium text-gray-700 md:ms-2">Register Pet</p>
+                            <p class="ms-1 text-sm font-medium text-gray-700 md:ms-2">Edit Pet</p>
                         </div>
                     </li>
                 </ol>
@@ -76,6 +76,12 @@
         <!--main panel-->
         <div class="p-6">
             <div class="flex flex-col border-2 h-full rounded-lg p-6">
+                <!-- Pet Code Display -->
+                <div class="mb-6 p-4 bg-blue-50 rounded-lg border-2 border-blue-200">
+                    <label class="block mb-1 text-sm font-medium text-blue-900">Pet Code</label>
+                    <p id="pet_code_display" class="text-xl font-bold text-blue-900 font-mono"></p>
+                </div>
+
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
                         <label for="pet_name" class="block mb-2 text-sm font-medium text-black">Pet Name</label>
@@ -131,6 +137,13 @@
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="Description" rows="3"></textarea>
                 </div>
+                
+                <!-- Current Image Display -->
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-black">Current Image</label>
+                    <img id="current_image" src="" alt="Current Pet" class="w-32 h-32 rounded-lg object-cover border-2 border-gray-300">
+                </div>
+
                 <div class="flex items-center justify-center w-full mb-6">
                     <label for="dropzone-file"
                         class="flex flex-col items-center justify-center w-full flex-grow border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
@@ -141,15 +154,15 @@
                                     stroke-width="2"
                                     d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                             </svg>
-                            <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Add image </span>here</p>
+                            <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Change image </span>(optional)</p>
                             <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                         </div>
                         <input id="dropzone-file" type="file" class="hidden" />
                     </label>
                 </div>
                 <div class="flex justify-center items-center w-full gap-4 p-4">
-                    <button type="button" onclick="savePet()" class="py-3 px-6 bg-basic text-white rounded-lg hover:scale-95 transition-all">Save</button>
-                    <button type="button" onclick="resetForm()" class="py-3 px-6 bg-black text-white rounded-lg hover:scale-95 transition-all">Reset</button>
+                    <button type="button" onclick="updatePet()" class="py-3 px-6 bg-green-600 text-white rounded-lg hover:scale-95 transition-all">Update Pet</button>
+                    <button type="button" onclick="window.location.href='list.html'" class="py-3 px-6 bg-gray-600 text-white rounded-lg hover:scale-95 transition-all">Cancel</button>
                 </div>
             </div>
         </div>
@@ -182,6 +195,43 @@
 <script>
     // Sample pets data stored in localStorage
     let pets = JSON.parse(localStorage.getItem('pets')) || [];
+    let currentPet = null;
+    let petCode = '';
+
+    // Load pet data on page load
+    window.onload = function() {
+        // Get pet code from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        petCode = urlParams.get('code');
+
+        if (!petCode) {
+            alert('No pet code provided!');
+            window.location.href = 'list.html';
+            return;
+        }
+
+        // Find the pet
+        currentPet = pets.find(p => p.code === petCode);
+
+        if (!currentPet) {
+            alert('Pet not found!');
+            window.location.href = 'list.html';
+            return;
+        }
+
+        // Load pet data into form
+        loadPetData();
+    };
+
+    function loadPetData() {
+        document.getElementById('pet_code_display').textContent = currentPet.code;
+        document.getElementById('pet_name').value = currentPet.name;
+        document.getElementById('pet_age').value = currentPet.age;
+        document.getElementById('pet_species').value = currentPet.species || '';
+        document.getElementById('pet_breed').value = currentPet.breed;
+        document.getElementById('description').value = currentPet.description || '';
+        document.getElementById('current_image').src = currentPet.image || 'https://via.placeholder.com/150';
+    }
 
     // Breed modal functions
     function openBreedModal() {
@@ -208,7 +258,7 @@
         }
     }
 
-    function savePet() {
+    function updatePet() {
         const petName = document.getElementById('pet_name').value.trim();
         const petAge = document.getElementById('pet_age').value;
         const petSpecies = document.getElementById('pet_species').value;
@@ -221,33 +271,31 @@
             return;
         }
 
-        const petCode = 'RP' + String(pets.length + 1).padStart(5, '0');
+        // Update pet object
+        currentPet.name = petName;
+        currentPet.age = petAge;
+        currentPet.species = petSpecies;
+        currentPet.breed = petBreed;
+        currentPet.description = petDescription;
         
-        const pet = {
-            code: petCode,
-            name: petName,
-            age: petAge,
-            species: petSpecies,
-            breed: petBreed,
-            description: petDescription,
-            image: petImage ? URL.createObjectURL(petImage) : 'https://via.placeholder.com/150',
-            registeredDate: new Date().toISOString(),
-            allergies: []
-        };
+        // Update image only if new one is selected
+        if (petImage) {
+            currentPet.image = URL.createObjectURL(petImage);
+        }
 
-        pets.push(pet);
-        localStorage.setItem('pets', JSON.stringify(pets));
-        alert('Pet registered successfully with code: ' + petCode);
-        resetForm();
-    }
+        currentPet.updatedDate = new Date().toISOString();
 
-    function resetForm() {
-        document.getElementById('pet_name').value = '';
-        document.getElementById('pet_age').value = '';
-        document.getElementById('pet_species').value = '';
-        document.getElementById('pet_breed').value = '';
-        document.getElementById('description').value = '';
-        document.getElementById('dropzone-file').value = '';
+        // Find and update in pets array
+        const petIndex = pets.findIndex(p => p.code === petCode);
+        if (petIndex !== -1) {
+            pets[petIndex] = currentPet;
+            localStorage.setItem('pets', JSON.stringify(pets));
+            
+            alert('Pet updated successfully!');
+            window.location.href = 'list.html';
+        } else {
+            alert('Error updating pet!');
+        }
     }
 </script>
 
