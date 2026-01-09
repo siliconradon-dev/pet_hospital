@@ -265,7 +265,7 @@
                                     <span class="text-gray-600">Duration:</span>
                                     <span class="font-semibold text-gray-800"> ${duration} day(s)</span>
                                 </div>
-                                <div>
+                                <div class="hidden">
                                     <span class="text-gray-600">Total:</span>
                                     <span class="font-semibold text-gray-800"> Rs. ${booking.subTotal.toFixed(2)}</span>
                                 </div>
@@ -339,7 +339,7 @@
                             <div class="mb-2">
                                 <h4 class="font-semibold text-gray-800">${prescription.title}</h4>
                             </div>
-                            <div class="grid grid-cols-2 gap-2 text-sm mb-2">
+                            <div class="grid grid-cols-2 gap-2 text-sm mb-2 hidden">
                                 <div>
                                     <span class="text-gray-600">Consultation:</span>
                                     <span class="font-semibold text-gray-800"> Rs. ${prescription.consultationFee.toFixed(2)}</span>
@@ -349,7 +349,7 @@
                                     <span class="font-semibold text-gray-800"> Rs. ${prescription.medicineTotal.toFixed(2)}</span>
                                 </div>
                             </div>
-                            <div class="text-sm mb-2">
+                            <div class="text-sm mb-2 hidden">
                                 <span class="text-gray-600">Total Amount:</span>
                                 <span class="font-bold text-gray-800"> Rs. ${prescription.totalAmount.toFixed(2)}</span>
                             </div>
