@@ -285,6 +285,7 @@
                     <button onclick="generateQRCode('${pet.code}')" class="px-3 py-1.5 mr-2 mb-1 text-white bg-[#0b2b64] rounded-lg hover:bg-[#65adff]">QR Code</button>
                     <button onclick="generateBarcode('${pet.code}')" class="px-3 py-1.5 mr-2 mb-1 text-white bg-[#0b2b64] rounded-lg hover:bg-[#65adff]">Barcode</button>
                     <button onclick="window.location.href='allergies.html?code=${pet.code}'" class="px-3 py-1.5 mr-2 mb-1 text-white bg-orange-600 rounded-lg hover:bg-orange-700">Allergies</button>
+                    <button onclick="window.location.href='edit.html?code=${pet.code}'" class="px-3 py-1.5 mr-2 mb-1 text-white bg-yellow-600 rounded-lg hover:bg-yellow-700">Edit</button>
                     <button onclick="viewProfile('${pet.code}')" class="px-3 py-1.5 mb-1 text-white bg-blue-600 rounded-lg hover:bg-blue-700">View Profile</button>
                 </td>
             `;

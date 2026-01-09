@@ -53,6 +53,16 @@
 
         <!-- Pet Details -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl shadow-md">
+                <div class="flex items-center mb-2">
+                    <svg class="w-6 h-6 text-purple-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
+                    </svg>
+                    <span class="text-sm font-medium text-purple-900">Species</span>
+                </div>
+                <p id="petSpecies" class="text-2xl font-bold text-purple-900"></p>
+            </div>
+
             <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl shadow-md">
                 <div class="flex items-center mb-2">
                     <svg class="w-6 h-6 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -195,6 +205,7 @@
                     code: 'RP00001',
                     name: 'Max',
                     age: '3',
+                    species: 'Canine (Dog)',
                     breed: 'Golden Retriever',
                     description: 'Friendly and energetic dog, loves to play fetch and swim. Very good with children and other pets.',
                     image: 'https://images.unsplash.com/photo-1633722715463-d30f4f325e24?w=400',
@@ -205,6 +216,7 @@
                     code: 'RP00002',
                     name: 'Whiskers',
                     age: '2',
+                    species: 'Feline (Cat)',
                     breed: 'Persian Cat',
                     description: 'Calm and affectionate cat with beautiful long fur. Enjoys quiet environments and loves to be pampered.',
                     image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400',
@@ -222,6 +234,7 @@
             document.getElementById('petImage').src = pet.image;
             document.getElementById('petName').textContent = pet.name;
             document.getElementById('petCode').textContent = pet.code;
+            document.getElementById('petSpecies').textContent = pet.species || 'Not specified';
             document.getElementById('petBreed').textContent = pet.breed;
             document.getElementById('petAge').textContent = pet.age + ' years';
             document.getElementById('petDescription').textContent = pet.description || 'No description available';
