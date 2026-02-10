@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application | OPD List</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../styles/common.css">
+</head>
+
+<body class="h-dvh flex flex-col">
+    <!--Nav-->
+    <div class="nav bg-basic w-full py-6 flex justify-between items-center max-lg:justify-center max-lg:flex-col">
+        <span class="flex items-center gap-3 ml-20 max-lg:ml-0 max-sm:scale-75">
+            <button onclick="history.go ( -1);"
+                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all">
+                <i class="bi bi-chevron-left scale-[1.5]"></i>
+            </button>
+            <button onclick="window.location.href = '../';"
+                class="p-2 text-basic rounded-lg bg-white flex gap-3 justify-center items-center hover:scale-90 transition-all">
+                <i class="bi bi-house scale-[1.2]"></i>
+                Go to OPD Panel
+            </button>
+        </span>
+        <span class="flex items-center gap-3 mr-20 max-lg:mr-0 max-sm:scale-75">
+            <h3 class="text-2xl max-md:text-sm text-white">OPD List</h3>
+            <button onclick="window.location.href = '../../../';"
+                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all">
+                <i class="bi bi-box-arrow-left scale-[1.5]"></i>
+            </button>
+        </span>
+    </div>
+    <div class="flex-grow flex flex-col overflow-y-auto">
+        <!--breadcrumbs-->
+        <div class="px-12 max-sm:px-6 pt-5">
+            <nav class="flex" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+                    <li class="inline-flex items-center">
+                        <p class="inline-flex items-center text-sm font-medium text-gray-700">
+                            Main Panel
+                        </p>
+                    </li>
+                    <li>
+                        <div class="flex items-center">
+                            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 9 4-4-4-4" />
+                            </svg>
+                            <p class="ms-1 text-sm font-medium text-gray-700 md:ms-2">OPD Management</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex items-center">
+                            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 9 4-4-4-4" />
+                            </svg>
+                            <p class="ms-1 text-sm font-medium text-gray-700 md:ms-2">OPD List</p>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <!--main panel-->
+        <div class="p-6">
+            <div class="flex flex-col border-2 h-full rounded-lg p-6 bg-white shadow-sm">
+                <div class="mb-4 flex justify-between items-center">
+                    <button onclick="window.location.href='create.html'"
+                        class="px-4 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#65adff]">
+                        + New OPD Entry
+                    </button>
+                    <div class="relative">
+                        <input type="text" id="searchInput" onkeyup="searchTable()"
+                            placeholder="Search by Pet ID or Entry Code..."
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 p-2.5">
+                    </div>
+                </div>
+
+                <div class="relative overflow-x-auto">
+                    <table id="opdTable" class="w-full text-sm text-left text-gray-500 rtl:text-right">
+                        <thead class="text-xs text-white uppercase bg-[#0b2b64]">
+                            <tr>
+                                <th scope="col" class="px-4 py-2 rounded-tl-lg">Entry Code</th>
+                                <th scope="col" class="px-4 py-2">Pet Name (ID)</th>
+                                <th scope="col" class="px-4 py-2">Visit Date</th>
+                                <th scope="col" class="px-4 py-2">Diagnosis</th>
+                                <th scope="col" class="px-4 py-2">Weight (kg)</th>
+                                <th scope="col" class="px-4 py-2 rounded-tr-lg">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="opdTableBody">
+                            <!-- OPD data will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer
+        class="h-[80px] bg-basic max-md:text-sm max-sm:text-xs max-md:flex-col text-center w-full flex items-center text-white justify-center gap-3 mt-auto">
+        <p>2025 © All Rights Reserved | Application | Powered by Silicon Radon Networks (Pvt) Ltd</p>
+    </footer>
+
+    <script src="../../scripts/common.js"></script>
+    <script>
+        const pets = JSON.parse(localStorage.getItem('pets')) || [];
+        const opdEntries = JSON.parse(localStorage.getItem('opd_entries')) || [];
+
+        function loadOPDEntries() {
+            const tbody = document.getElementById('opdTableBody');
+            tbody.innerHTML = '';
+
+            if (opdEntries.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-4 text-center">No OPD records found.</td></tr>';
+                return;
+            }
+
+            opdEntries.sort((a, b) => new Date(b.visitDate) - new Date(a.visitDate)).forEach(entry => {
+                const pet = pets.find(p => p.code === entry.petId) || { name: 'Unknown' };
+                const row = document.createElement('tr');
+                row.className = 'text-black bg-white border-b hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="px-4 py-3 font-medium">${entry.code}</td>
+                    <td class="px-4 py-3">${pet.name} (${entry.petId})</td>
+                    <td class="px-4 py-3">${entry.visitDate}</td>
+                    <td class="px-4 py-3">${entry.diagnosis || 'N/A'}</td>
+                    <td class="px-4 py-3">${entry.weight || 'N/A'}</td>
+                    <td class="px-4 py-3">
+                        <button onclick="viewEntry('${entry.code}')" class="px-3 py-1 text-white bg-blue-600 rounded-lg hover:bg-blue-700">View</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function searchTable() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toUpperCase();
+            const table = document.getElementById('opdTable');
+            const tr = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < tr.length; i++) {
+                let found = false;
+                const tds = tr[i].getElementsByTagName('td');
+                for (let j = 0; j < tds.length; j++) {
+                    if (tds[j] && tds[j].innerText.toUpperCase().indexOf(filter) > -1) {
+                        found = true;
+                        break;
+                    }
+                }
+                tr[i].style.display = found ? '' : 'none';
+            }
+        }
+
+        function viewEntry(code) {
+            // Future implementation: show details in a modal or redirection
+            alert('Viewing details for ' + code);
+        }
+
+        loadOPDEntries();
+    </script>
+</body>
+
+</html>
