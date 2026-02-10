@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Application | OPD Management</title>
+    <title>Application | Pharmacy Management</title>
     <link rel="icon" href="../../images/favicon.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../../styles/common.css" />
@@ -50,7 +50,7 @@
                                     stroke-width="2" d="m1 9 4-4-4-4" />
                             </svg>
                             <p class="ms-1 text-sm font-medium text-gray-700 md:ms-2">
-                                OPD Management
+                                Pharmacy Management
                             </p>
                         </div>
                     </li>
@@ -60,48 +60,31 @@
 
         <!--Main Panel-->
         <div class="grid place-items-center h-5/6 w-full">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-fit gap-6 h-fit py-6 text-white px-12">
-                <div onclick="locatePanelItem('create/index.html');"
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-fit gap-6 h-fit py-6 text-white px-12">
+                <div onclick="locatePanelItem('billing/index.html');"
                     class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
                     <div class="card">
                         <img src="../../images/main-panel/btn-icons/add-item.svg"
                             class="w-[60px] h-[60px] max-xl:w-[50px] max-xl:h-[50px]" alt="">
-                        <p class="text-center mt-2">New OPD Entry</p>
+                        <p class="text-center mt-2">Issue Medicine / Bill</p>
                     </div>
                 </div>
-                <div onclick="locatePanelItem('list/index.html');"
+                <div onclick="locatePanelItem('#');"
                     class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
                     <div class="card">
                         <img src="../../images/main-panel/btn-icons/view-item.svg"
                             class="w-[60px] h-[60px] max-xl:w-[50px] max-xl:h-[50px]" alt="">
-                        <p class="text-center mt-2">OPD List</p>
+                        <p class="text-center mt-2">History</p>
                     </div>
                 </div>
-                <!-- Shortcut to Prescriptions -->
-                <div onclick="locatePanelItem('../prescription');"
-                    class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
-                    <div class="card">
-                        <img src="../../images/main-panel/btn-icons/prescription.png"
-                            class="w-[80px] h-[80px] max-xl:w-[60px] max-xl:h-[60px]" alt="">
-                        <p class="text-center mt-2">Prescriptions</p>
-                    </div>
-                </div>
-                <!-- Shortcut to Appointments -->
-                <div onclick="locatePanelItem('../bookings/view');"
-                    class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
-                    <div class="card">
-                        <img src="../../images/main-panel/btn-icons/calendar.png"
-                            class="w-[80px] h-[80px] max-xl:w-[60px] max-xl:h-[60px]" alt="">
-                        <p class="text-center mt-2">Appointments</p>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
 </body>
 <script>
     function locatePanelItem(panelItem) {
-        window.location.href = "../../main-panel/opd/" + panelItem;
+        window.location.href = "../../main-panel/pharmacy/" + panelItem;
     }
 </script>
 
