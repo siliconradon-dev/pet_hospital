@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application | Pharmacy POS</title>
+    <link rel="icon" href="../../../images/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../../styles/common.css">
+</head>
+
+<body class="h-dvh flex flex-col bg-gray-100">
+    <!--Nav-->
+    <div class="nav bg-basic w-full py-4 flex justify-between items-center px-8 shadow-md">
+        <span class="flex items-center gap-4">
+            <button onclick="window.location.href = '../../';"
+                class="rounded-full w-[40px] h-[40px] bg-white text-basic flex justify-center items-center hover:scale-95 transition-all">
+                <i class="bi bi-arrow-left text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold text-white">Pharmacy POS & Billing</h3>
+        </span>
+        <div class="text-white text-sm">
+            <span id="datetime"></span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-grow flex overflow-hidden">
+        <!-- Left Panel: Search & List -->
+        <div class="w-1/3 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200 bg-gray-50">
+                <label for="searchPet" class="block mb-2 text-sm font-medium text-gray-700">Find Pending Bill</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <i class="bi bi-search text-gray-500"></i>
+                    </div>
+                    <input type="text" id="searchPet" onkeyup="filterBills()"
+                        class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                        placeholder="Search Pet Name or ID...">
+                </div>
+            </div>
+            <div class="flex-grow overflow-y-auto" id="billList">
+                <!-- Bill Items will be injected here -->
+                <div class="p-4 text-center text-gray-500 text-sm">Loading pending bills...</div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Invoice / POS View -->
+        <div class="w-2/3 flex flex-col bg-gray-50">
+            <!-- Empty State -->
+            <div id="emptyState" class="flex-grow flex flex-col justify-center items-center text-gray-400">
+                <i class="bi bi-receipt text-6xl mb-4"></i>
+                <p class="text-lg">Select a bill to process payment</p>
+            </div>
+
+            <!-- Invoice Content (Hidden by default) -->
+            <div id="invoicePanel" class="hidden flex-col h-full">
+                <!-- Header -->
+                <div class="bg-white p-6 shadow-sm border-b border-gray-200 flex justify-between items-start">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800" id="invPetName">Pet Name</h2>
+                        <p class="text-gray-500 text-sm">Owner: <span id="invOwner">Owner Name</span></p>
+                        <p class="text-gray-500 text-sm">Ref: <span id="invRef">#REF123</span></p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-gray-500">Date</p>
+                        <p class="font-medium text-gray-800" id="invDate">2026-02-10</p>
+                        <span
+                            class="inline-block mt-2 px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">OPD
+                            Bill</span>
+                    </div>
+                </div>
+
+                <!-- Items List -->
+                <div class="flex-grow overflow-y-auto p-6">
+                    <table class="w-full text-sm text-left text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-100 border-b border-gray-200">
+                            <tr>
+                                <th scope="col" class="px-4 py-3">Service / Item</th>
+                                <th scope="col" class="px-4 py-3 text-right">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invItems">
+                            <!-- Items go here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Footer / Totals -->
+                <div class="bg-white p-6 border-t border-gray-200 shadow-lg">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-xl font-bold text-gray-800">Total Amount</span>
+                        <span class="text-3xl font-bold text-green-600" id="invTotal">0.00</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="cancelSelection()"
+                            class="w-full py-3 px-4 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition-colors">
+                            Cancel
+                        </button>
+                        <button onclick="processPayment()"
+                            class="w-full py-3 px-4 bg-[#0b2b64] text-white font-bold rounded-lg hover:bg-[#1a4bd6] transition-colors shadow-lg flex justify-center items-center gap-2">
+                            <i class="bi bi-credit-card"></i> Pay & Finalize
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../scripts/common.js"></script>
+    <script>
+        // --- Data & State ---
+        const pets = JSON.parse(localStorage.getItem('pets')) || [];
+        const opdEntries = JSON.parse(localStorage.getItem('opd_entries')) || [];
+        let groupedBills = [];
+        let selectedPetId = null;
+
+        // --- Initialization ---
+        function init() {
+            // Group unpaid bills by Pet ID
+            const billMap = {};
+
+            opdEntries.forEach(entry => {
+                if (entry.status !== 'Paid') {
+                    const pet = pets.find(p => p.code === entry.petId) || { name: 'Unknown', owner: 'Unknown' };
+                    let totalVal = parseFloat(entry.totalAmount || 0);
+
+                    if (!billMap[entry.petId]) {
+                        billMap[entry.petId] = {
+                            petId: entry.petId,
+                            petName: pet.name || 'Unknown Pet',
+                            ownerName: pet.owner || 'Unknown Owner',
+                            bills: [],
+                            grandTotal: 0
+                        };
+                    }
+
+                    billMap[entry.petId].bills.push({
+                        ...entry,
+                        displayDate: entry.visitDate || (entry.createdAt ? entry.createdAt.split('T')[0] : 'N/A'),
+                        total: totalVal.toFixed(2)
+                    });
+
+                    billMap[entry.petId].grandTotal += totalVal;
+                }
+            });
+
+            // Convert map to array
+            groupedBills = Object.values(billMap).sort((a, b) => b.grandTotal - a.grandTotal);
+
+            renderBillList(groupedBills);
+            updateDateTime();
+
+            // Clear invoice view on init
+            document.getElementById('invoicePanel').classList.add('hidden');
+            document.getElementById('emptyState').classList.remove('hidden');
+        }
+
+        // --- Render Functions ---
+        function renderBillList(groups) {
+            const listContainer = document.getElementById('billList');
+            listContainer.innerHTML = '';
+
+            if (groups.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="p-8 text-center text-gray-400">
+                        <i class="bi bi-check-circle text-4xl mb-2"></i>
+                        <p>No pending bills found.</p>
+                    </div>`;
+                return;
+            }
+
+            groups.forEach(group => {
+                const item = document.createElement('div');
+                item.className = 'p-4 border-b border-gray-100 hover:bg-blue-50 cursor-pointer transition-colors group';
+                item.onclick = () => selectPetBills(group);
+
+                item.innerHTML = `
+                    <div class="flex justify-between items-start mb-1">
+                        <h4 class="font-bold text-gray-800 group-hover:text-blue-700">${group.petName} <span class="text-xs font-normal text-gray-500">(${group.petId})</span></h4>
+                        <span class="font-bold text-gray-900">${group.grandTotal.toFixed(2)}</span>
+                    </div>
+                    <div class="flex justify-between items-end">
+                        <div class="text-xs text-gray-500">
+                            <p>${group.ownerName}</p>
+                            <p>${group.bills.length} Bill(s) Pending</p>
+                        </div>
+                        <span class="text-xs px-2 py-0.5 rounded bg-orange-100 text-orange-600 font-medium">Click to View</span>
+                    </div>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
+
+        // --- Logic ---
+        function filterBills() {
+            const query = document.getElementById('searchPet').value.toLowerCase();
+            const filtered = groupedBills.filter(g =>
+                g.petName.toLowerCase().includes(query) ||
+                g.petId.toLowerCase().includes(query)
+            );
+            renderBillList(filtered);
+        }
+
+        function selectPetBills(group) {
+            selectedPetId = group.petId;
+
+            // Hide Empty State, Show Invoice
+            document.getElementById('emptyState').classList.add('hidden');
+            document.getElementById('invoicePanel').classList.remove('hidden');
+            document.getElementById('invoicePanel').classList.add('flex');
+
+            // Populate Info
+            document.getElementById('invPetName').textContent = group.petName;
+            document.getElementById('invOwner').textContent = group.ownerName;
+            document.getElementById('invRef').textContent = `${group.bills.length} Bill(s)`;
+            document.getElementById('invDate').textContent = new Date().toISOString().split('T')[0]; // Payment Date
+            document.getElementById('invTotal').textContent = group.grandTotal.toFixed(2);
+
+            // Populate Items (All Bills)
+            const tbody = document.getElementById('invItems');
+            tbody.innerHTML = '';
+
+            group.bills.forEach(bill => {
+                // Header for each Bill
+                tbody.innerHTML += `
+                    <tr class="bg-gray-100 border-b">
+                        <td colspan="2" class="px-4 py-2 font-bold text-xs text-gray-700">
+                            Bill #${bill.code} (${bill.displayDate}) - ${bill.total}
+                        </td>
+                    </tr>
+                `;
+
+                if (bill.services && bill.services.length > 0) {
+                    bill.services.forEach(svc => {
+                        tbody.innerHTML += `
+                            <tr class="bg-white border-b hover:bg-gray-50">
+                                <td class="px-4 py-3 font-medium text-gray-900 pl-8">
+                                    ${svc.title}
+                                    ${svc.description && svc.description !== '-' ? `<div class="text-xs text-gray-500 font-normal">${svc.description}</div>` : ''}
+                                </td>
+                                <td class="px-4 py-3 text-right font-medium text-gray-600">${svc.price}</td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    // Fallback
+                    tbody.innerHTML += `
+                        <tr class="bg-white border-b">
+                            <td class="px-4 py-3 font-medium text-gray-900 pl-8">OPD Consultation & Services</td>
+                            <td class="px-4 py-3 text-right font-medium text-gray-600">${bill.total}</td>
+                        </tr>
+                    `;
+                }
+            });
+        }
+
+        function cancelSelection() {
+            selectedPetId = null;
+            document.getElementById('invoicePanel').classList.add('hidden');
+            document.getElementById('invoicePanel').classList.remove('flex');
+            document.getElementById('emptyState').classList.remove('hidden');
+        }
+
+        function processPayment() {
+            if (!selectedPetId) return;
+
+            // Find group again to be sure
+            const group = groupedBills.find(g => g.petId === selectedPetId);
+            if (!group) return;
+
+            if (confirm(`Confirm payment of ${group.grandTotal.toFixed(2)} for ${group.petName}?`)) {
+                let paidCount = 0;
+
+                // Pay ALL bills for this pet
+                group.bills.forEach(bill => {
+                    const index = opdEntries.findIndex(e => e.code === bill.code);
+                    if (index !== -1) {
+                        opdEntries[index].status = 'Paid';
+                        opdEntries[index].paidAt = new Date().toISOString();
+                        paidCount++;
+                    }
+                });
+
+                if (paidCount > 0) {
+                    localStorage.setItem('opd_entries', JSON.stringify(opdEntries));
+                    alert(`Successfully processed ${paidCount} bill(s)!`);
+
+                    // Refresh
+                    cancelSelection();
+                    init();
+                } else {
+                    alert('Error: No pending bills found to pay.');
+                }
+            }
+        }
+
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('datetime').textContent = now.toLocaleString();
+        }
+
+        // Start
+        init();
+    </script>
+</body>
+
+</html>
