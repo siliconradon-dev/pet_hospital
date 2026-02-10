@@ -70,32 +70,35 @@
             <!--buttons-->
             <div
                 class="grid grid-cols-2 max-[375px]:grid-cols-1 place-content-center [375px]:justify-items-center h-full gap-6 text-white 2xl:scale-[110%] ">
-                <div onclick="locatePanelItem('addStock');"
+                <!-- Pharmacy Stock (Auto Updated) -->
+                <div onclick="locatePanelItem('pharmacy/index.html');" title="Auto-updated from Sales/Purchases"
                     class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
                     <div class="card">
-                        <img src="../../images/main-panel/btn-icons/add-item.svg" alt="" class="w-10 h-10 text-basic">
-                        <p class="text-center max-sm:text-sm mt-2">Add New Stock</p>
+                        <img src="../../images/main-panel/btn-icons/product-management.png" alt=""
+                            class="w-16 h-16 text-basic">
+                        <p class="text-center max-sm:text-sm mt-2">Pharmacy Stock</p>
+                        <span class="text-xs normal-case mt-1 opacity-75">(Auto-Updated)</span>
                     </div>
                 </div>
-                <div onclick="locatePanelItem('stockCount');"
+
+                <!-- OPD Stock (Manual Update) -->
+                <div onclick="locatePanelItem('opd/index.html');" title="Manually update usage"
                     class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
                     <div class="card">
-                        <img src="../../main-panel/stock/images/stock_count.png" alt="" class="w-10 h-10 text-basic">
-                        <p class="text-center max-sm:text-sm mt-2">Stock Count</p>
+                        <img src="../../images/main-panel/btn-icons/inventory-management.png" alt=""
+                            class="w-16 h-16 text-basic">
+                        <p class="text-center max-sm:text-sm mt-2">OPD Stock</p>
+                        <span class="text-xs normal-case mt-1 opacity-75">(Manual Update)</span>
                     </div>
                 </div>
-                <div onclick="locatePanelItem('stockUpdateRecords');"
+
+                <!-- Main Stock Overview -->
+                <div onclick="locatePanelItem('main/index.html');"
                     class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
                     <div class="card">
-                        <img src="../../main-panel/stock/images/stock_update.png" alt="" class="w-10 h-10 text-basic">
-                        <p class="text-center max-sm:text-sm mt-2">Stock Update Records</p>
-                    </div>
-                </div>
-                <div onclick="locatePanelItem('stockCountReport');"
-                    class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
-                    <div class="card">
-                        <img src="../../main-panel/stock/images/stock_count_report.png" alt="" class="w-10 h-10 text-basic">
-                        <p class="text-center max-sm:text-sm mt-2">Stock Count Report</p>
+                        <img src="../../main-panel/stock/images/stock_count_report.png" alt=""
+                            class="w-16 h-16 text-basic">
+                        <p class="text-center max-sm:text-sm mt-2">Main Stock Overview</p>
                     </div>
                 </div>
             </div>

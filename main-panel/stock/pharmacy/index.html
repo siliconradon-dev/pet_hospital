@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application | Pharmacy Stock</title>
+    <link rel="icon" href="../../../images/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../../styles/common.css">
+</head>
+
+<body class="h-dvh flex flex-col bg-gray-50">
+    <!--Nav-->
+    <div class="nav bg-basic w-full py-4 flex justify-between items-center px-8 shadow-md">
+        <span class="flex items-center gap-4">
+            <button onclick="window.location.href = '../';"
+                class="rounded-full w-[40px] h-[40px] bg-white text-basic flex justify-center items-center hover:scale-95 transition-all">
+                <i class="bi bi-arrow-left text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold text-white">Pharmacy Stock (Auto-Updated)</h3>
+        </span>
+        <div class="text-white text-sm">
+            <span id="datetime"></span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-grow p-8 overflow-y-auto">
+        <div class="bg-white rounded-lg shadow-md p-6 max-w-6xl mx-auto">
+
+            <div class="flex justify-between items-center mb-6">
+                <div class="relative w-1/3">
+                    <input type="text" id="searchInput" onkeyup="filterStock()" placeholder="Search Medicine..."
+                        class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                    <i class="bi bi-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+                <div class="text-sm text-gray-500">
+                    <i class="bi bi-info-circle mr-1"></i> Stock decreases automatically when bills are paid.
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Item ID</th>
+                            <th scope="col" class="px-6 py-3">Medicine Name</th>
+                            <th scope="col" class="px-6 py-3">Category</th>
+                            <th scope="col" class="px-6 py-3 text-center">Current Stock</th>
+                            <th scope="col" class="px-6 py-3 text-right">Unit Price</th>
+                            <th scope="col" class="px-6 py-3">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stockTableBody">
+                        <!-- JS Rendered -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../scripts/common.js"></script>
+    <script>
+        // --- Data ---
+        // Seed data if empty
+        let pharmacyStock = JSON.parse(localStorage.getItem('pharmacy_stock')) || [
+            { id: 'MED001', name: 'Paracetamol 500mg', category: 'Tablets', stock: 150, price: 15.00, minLevel: 50 },
+            { id: 'MED002', name: 'Amoxicillin 250mg', category: 'Antibiotic', stock: 45, price: 35.00, minLevel: 20 },
+            { id: 'MED003', name: 'Vitamin C Syrup', category: 'Syrup', stock: 10, price: 450.00, minLevel: 15 },
+            { id: 'MED004', name: 'Betadine Solution', category: 'External', stock: 25, price: 650.00, minLevel: 10 },
+            { id: 'MED005', name: 'Worm Tablet (Dog)', category: 'Tablets', stock: 200, price: 120.00, minLevel: 30 }
+        ];
+
+        // Save immediately to ensure data exists
+        localStorage.setItem('pharmacy_stock', JSON.stringify(pharmacyStock));
+
+        function renderStock(data) {
+            const tbody = document.getElementById('stockTableBody');
+            tbody.innerHTML = '';
+
+            data.forEach(item => {
+                let statusBadge = '<span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">In Stock</span>';
+                if (item.stock <= 0) {
+                    statusBadge = '<span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">Out of Stock</span>';
+                } else if (item.stock <= item.minLevel) {
+                    statusBadge = '<span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">Low Stock</span>';
+                }
+
+                const row = `
+                    <tr class="bg-white border-b hover:bg-gray-50">
+                        <td class="px-6 py-4 font-medium text-gray-900">${item.id}</td>
+                        <td class="px-6 py-4">${item.name}</td>
+                        <td class="px-6 py-4">${item.category}</td>
+                        <td class="px-6 py-4 text-center font-bold text-gray-800">${item.stock}</td>
+                        <td class="px-6 py-4 text-right">${item.price.toFixed(2)}</td>
+                        <td class="px-6 py-4">${statusBadge}</td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function filterStock() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = pharmacyStock.filter(item =>
+                item.name.toLowerCase().includes(query) ||
+                item.id.toLowerCase().includes(query)
+            );
+            renderStock(filtered);
+        }
+
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('datetime').textContent = now.toLocaleString();
+        }
+
+        // Init
+        renderStock(pharmacyStock);
+        updateDateTime();
+        setInterval(updateDateTime, 60000);
+    </script>
+</body>
+
+</html>
