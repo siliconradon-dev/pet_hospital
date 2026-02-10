@@ -68,9 +68,10 @@
         <!--form panel-->
         <div class="p-6">
             <div class="flex flex-col border-2 h-full rounded-lg p-6 bg-white shadow-sm">
+                <!-- Section 1: Pet Details -->
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
-                        <label for="pet_id" class="block mb-2 text-sm font-medium text-black">Pet ID / Code *</label>
+                        <label for="pet_id" class="block mb-2 text-sm font-medium text-black">Pet Name (ID) *</label>
                         <select id="pet_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             required>
@@ -79,58 +80,87 @@
                         </select>
                     </div>
                     <div>
-                        <label for="visit_date" class="block mb-2 text-sm font-medium text-black">Visit Date</label>
+                        <label for="visit_date" class="block mb-2 text-sm font-medium text-black">Visit Date *</label>
                         <input type="date" id="visit_date"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             required />
                     </div>
                 </div>
-                <div class="grid gap-6 mb-6 md:grid-cols-3">
-                    <div>
-                        <label for="temperature" class="block mb-2 text-sm font-medium text-black">Temperature
-                            (°C)</label>
-                        <input type="number" id="temperature" step="0.1"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            placeholder="38.5" />
+
+                <hr class="my-6 border-gray-200">
+
+                <!-- Section 2: Service Details -->
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Add Services</h3>
+                <div class="bg-gray-50 p-6 rounded-lg mb-6 border border-gray-200">
+                    <div class="grid gap-6 mb-6 md:grid-cols-2">
+                        <div>
+                            <label for="service_title" class="block mb-2 text-sm font-medium text-black">Service Title
+                                *</label>
+                            <input type="text" id="service_title"
+                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                placeholder="e.g. Consultation" />
+                        </div>
+                        <div>
+                            <label for="service_price" class="block mb-2 text-sm font-medium text-black">Price *</label>
+                            <input type="number" id="service_price" min="0" step="0.01"
+                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                placeholder="0.00" />
+                        </div>
                     </div>
-                    <div>
-                        <label for="weight" class="block mb-2 text-sm font-medium text-black">Weight (kg)</label>
-                        <input type="number" id="weight" step="0.1"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            placeholder="10.5" />
+                    <div class="grid gap-6 mb-6 md:grid-cols-2">
+                        <div>
+                            <label for="service_desc"
+                                class="block mb-2 text-sm font-medium text-black">Description</label>
+                            <textarea id="service_desc" rows="2"
+                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                placeholder="Service details..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-black">Touch Panel Description (Draw
+                                Here)</label>
+                            <div class="border border-gray-300 rounded-lg overflow-hidden bg-white">
+                                <canvas id="touch_panel_canvas" height="150"
+                                    class="w-full cursor-crosshair touch-none"></canvas>
+                            </div>
+                            <button type="button" onclick="clearCanvas()"
+                                class="text-xs text-red-600 mt-1 hover:underline">Clear Pad</button>
+                        </div>
                     </div>
-                    <div>
-                        <label for="bp" class="block mb-2 text-sm font-medium text-black">Blood Pressure</label>
-                        <input type="text" id="bp"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            placeholder="120/80" />
+                    <button type="button" onclick="addService()"
+                        class="text-white bg-[#0b2b64] hover:bg-[#1a4bd6] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                        <i class="bi bi-plus-lg mr-2"></i>Add Service
+                    </button>
+                </div>
+
+                <!-- Added Services List -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Added Services</h3>
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table class="w-full text-sm text-left text-gray-500">
+                            <thead class="text-xs text-white uppercase bg-[#0b2b64]">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">Service Title</th>
+                                    <th scope="col" class="px-6 py-3">Price</th>
+                                    <th scope="col" class="px-6 py-3">Description</th>
+                                    <th scope="col" class="px-6 py-3">Touch Note</th>
+                                    <th scope="col" class="px-6 py-3">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="services_table_body">
+                                <tr class="bg-white border-b">
+                                    <td colspan="5" class="px-6 py-4 text-center">No services added yet.</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="mb-6">
-                    <label for="symptoms" class="block mb-2 text-sm font-medium text-black">Symptoms</label>
-                    <textarea id="symptoms"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        placeholder="Describe symptoms..." rows="3"></textarea>
-                </div>
-                <div class="mb-6">
-                    <label for="diagnosis" class="block mb-2 text-sm font-medium text-black">Diagnosis</label>
-                    <textarea id="diagnosis"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        placeholder="Enter diagnosis..." rows="3"></textarea>
-                </div>
-                <div class="mb-6">
-                    <label for="treatment" class="block mb-2 text-sm font-medium text-black">Treatment /
-                        Medication</label>
-                    <textarea id="treatment"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        placeholder="Enter treatment plan..." rows="3"></textarea>
-                </div>
-                <div class="flex justify-center items-center w-full gap-4 p-4">
+
+                <div class="flex justify-center items-center w-full gap-4 p-4 mt-4">
                     <button type="button" onclick="saveOPD()"
-                        class="py-3 px-6 bg-basic text-white rounded-lg hover:scale-95 transition-all">Save
+                        class="py-3 px-6 bg-basic text-white rounded-lg hover:scale-95 transition-all w-1/4">Save
                         Entry</button>
                     <button type="button" onclick="resetForm()"
-                        class="py-3 px-6 bg-black text-white rounded-lg hover:scale-95 transition-all">Reset</button>
+                        class="py-3 px-6 bg-black text-white rounded-lg hover:scale-95 transition-all w-1/4">Reset</button>
                 </div>
             </div>
         </div>
@@ -141,10 +171,105 @@
         </footer>
     </div>
 
-    <script src="../../../scripts/common.js"></script>
+    <script>
+        // --- Canvas Drawing Logic ---
+        const canvas = document.getElementById('touch_panel_canvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        function resizeCanvas() {
+            // Make canvas width responsive to parent, keep height fixed
+            // Save current content if needed, but for simplicity we reset on drastic resize
+            if (canvas.width !== canvas.parentElement.clientWidth) {
+                canvas.width = canvas.parentElement.clientWidth;
+            }
+            // Style setup
+            ctx.lineWidth = 2;
+            ctx.lineJoin = 'round';
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#000000';
+        }
+
+        // Initial resize
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            // Handle touch or mouse
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return {
+                x: clientX - rect.left,
+                y: clientY - rect.top
+            };
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const pos = getPos(e);
+            lastX = pos.x;
+            lastY = pos.y;
+            // Draw a dot
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(lastX, lastY);
+            ctx.stroke();
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            e.preventDefault(); // Stop scrolling when touching canvas
+
+            const pos = getPos(e);
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+
+            lastX = pos.x;
+            lastY = pos.y;
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Mouse Events
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        // Touch Events
+        canvas.addEventListener('touchstart', startDrawing, { passive: false });
+        canvas.addEventListener('touchmove', draw, { passive: false });
+        canvas.addEventListener('touchend', stopDrawing);
+
+    </script>
     <script>
         // Set default date to today
         document.getElementById('visit_date').valueAsDate = new Date();
+
+        // Seed Test Data if empty
+        if (!localStorage.getItem('pets')) {
+            const testPets = [
+                { code: 'P001', name: 'Buddy', owner: 'John Doe', type: 'Dog' },
+                { code: 'P002', name: 'Luna', owner: 'Jane Smith', type: 'Cat' },
+                { code: 'P003', name: 'Max', owner: 'Mike Ross', type: 'Dog' },
+                { code: 'P004', name: 'Bella', owner: 'Rachel Green', type: 'Bird' },
+                { code: 'P005', name: 'Charlie', owner: 'Emily Blunt', type: 'Cat' },
+                { code: 'P006', name: 'Rocky', owner: 'Chris Evans', type: 'Hamster' }
+            ];
+            localStorage.setItem('pets', JSON.stringify(testPets));
+            console.log('Test data seeded for Pets');
+        }
 
         // Load pets for the dropdown
         const pets = JSON.parse(localStorage.getItem('pets')) || [];
@@ -156,32 +281,124 @@
             petSelect.appendChild(option);
         });
 
+        // Services Array
+        let services = [];
+
+        function addService() {
+            const title = document.getElementById('service_title').value.trim();
+            const price = document.getElementById('service_price').value.trim();
+            const desc = document.getElementById('service_desc').value.trim();
+
+            // Check if canvas is blank
+            const canvas = document.getElementById('touch_panel_canvas');
+            const isCanvasBlank = !canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data.some(channel => channel !== 0);
+            const tpImage = isCanvasBlank ? null : canvas.toDataURL();
+
+            if (!title) {
+                alert("Service Title is required!");
+                return;
+            }
+            if (!price) {
+                alert("Price is required!");
+                return;
+            }
+
+            const service = {
+                id: Date.now(),
+                title: title,
+                price: parseFloat(price).toFixed(2),
+                description: desc || '-',
+                touchPanelImage: tpImage // Store Base64 Image
+            };
+
+            services.unshift(service); // Add to beginning to show "uadata udata" (set on top)
+            renderServices();
+            clearServiceForm();
+        }
+
+        function removeService(id) {
+            services = services.filter(s => s.id !== id);
+            renderServices();
+        }
+
+        function renderServices() {
+            const tbody = document.getElementById('services_table_body');
+            tbody.innerHTML = '';
+
+            if (services.length === 0) {
+                tbody.innerHTML = '<tr class="bg-white border-b"><td colspan="5" class="px-6 py-4 text-center">No services added yet.</td></tr>';
+                return;
+            }
+
+            let total = 0;
+
+            services.forEach(service => {
+                total += parseFloat(service.price);
+                const row = document.createElement('tr');
+                row.className = 'bg-white border-b hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="px-6 py-4 font-medium text-gray-900">${service.title}</td>
+                    <td class="px-6 py-4 font-medium text-green-600">${service.price}</td>
+                    <td class="px-6 py-4 block max-w-xs truncate" title="${service.description}">${service.description}</td>
+                    <td class="px-6 py-4">
+                        ${service.touchPanelImage
+                        ? `<img src="${service.touchPanelImage}" class="h-12 border rounded bg-white" alt="Note">`
+                        : '<span class="text-gray-400 text-xs">No Drawing</span>'}
+                    </td>
+                    <td class="px-6 py-4">
+                        <button onclick="removeService(${service.id})" class="font-medium text-red-600 hover:scale-110 transition-transform">
+                            <i class="bi bi-trash3 text-lg"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Add Total Row
+            const totalRow = document.createElement('tr');
+            totalRow.className = 'bg-gray-100 font-bold text-gray-900 border-t-2 border-gray-300';
+            totalRow.innerHTML = `
+                <td class="px-6 py-4 text-right">Total Amount:</td>
+                <td class="px-6 py-4 text-green-700 text-lg">${total.toFixed(2)}</td>
+                <td colspan="3"></td>
+            `;
+            tbody.appendChild(totalRow);
+        }
+
+        function clearServiceForm() {
+            document.getElementById('service_title').value = '';
+            document.getElementById('service_price').value = '';
+            document.getElementById('service_desc').value = '';
+            clearCanvas();
+            document.getElementById('service_title').focus();
+        }
+
         function saveOPD() {
             const petId = document.getElementById('pet_id').value;
             const visitDate = document.getElementById('visit_date').value;
-            const symptoms = document.getElementById('symptoms').value.trim();
-            const diagnosis = document.getElementById('diagnosis').value.trim();
-            const treatment = document.getElementById('treatment').value.trim();
-            const temperature = document.getElementById('temperature').value;
-            const weight = document.getElementById('weight').value;
 
             if (!petId || !visitDate) {
                 alert('Please select a pet and visit date');
                 return;
             }
 
+            if (services.length === 0) {
+                if (!confirm("No services added. Do you want to save this entry without services?")) {
+                    return;
+                }
+            }
+
             const opdEntries = JSON.parse(localStorage.getItem('opd_entries')) || [];
             const entryCode = 'OPD' + String(opdEntries.length + 1).padStart(5, '0');
+
+            const totalAmount = services.reduce((sum, s) => sum + parseFloat(s.price), 0);
 
             const entry = {
                 code: entryCode,
                 petId: petId,
                 visitDate: visitDate,
-                symptoms: symptoms,
-                diagnosis: diagnosis,
-                treatment: treatment,
-                temperature: temperature,
-                weight: weight,
+                services: services,
+                totalAmount: totalAmount.toFixed(2),
                 createdAt: new Date().toISOString()
             };
 
@@ -194,12 +411,9 @@
         function resetForm() {
             document.getElementById('pet_id').value = '';
             document.getElementById('visit_date').valueAsDate = new Date();
-            document.getElementById('symptoms').value = '';
-            document.getElementById('diagnosis').value = '';
-            document.getElementById('treatment').value = '';
-            document.getElementById('temperature').value = '';
-            document.getElementById('weight').value = '';
-            document.getElementById('bp').value = '';
+            services = [];
+            renderServices();
+            clearServiceForm();
         }
     </script>
 </body>

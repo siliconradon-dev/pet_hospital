@@ -87,8 +87,8 @@
                                 <th scope="col" class="px-4 py-2 rounded-tl-lg">Entry Code</th>
                                 <th scope="col" class="px-4 py-2">Pet Name (ID)</th>
                                 <th scope="col" class="px-4 py-2">Visit Date</th>
-                                <th scope="col" class="px-4 py-2">Diagnosis</th>
-                                <th scope="col" class="px-4 py-2">Weight (kg)</th>
+                                <th scope="col" class="px-4 py-2">Services</th>
+                                <th scope="col" class="px-4 py-2">Total Amount</th>
                                 <th scope="col" class="px-4 py-2 rounded-tr-lg">Actions</th>
                             </tr>
                         </thead>
@@ -121,14 +121,18 @@
 
             opdEntries.sort((a, b) => new Date(b.visitDate) - new Date(a.visitDate)).forEach(entry => {
                 const pet = pets.find(p => p.code === entry.petId) || { name: 'Unknown' };
+                // Handle legacy data or new data structure
+                const serviceCount = entry.services ? entry.services.length : (entry.diagnosis ? 'Legacy' : 0);
+                const totalAmount = entry.totalAmount ? entry.totalAmount : '0.00';
+
                 const row = document.createElement('tr');
                 row.className = 'text-black bg-white border-b hover:bg-gray-50';
                 row.innerHTML = `
                     <td class="px-4 py-3 font-medium">${entry.code}</td>
                     <td class="px-4 py-3">${pet.name} (${entry.petId})</td>
                     <td class="px-4 py-3">${entry.visitDate}</td>
-                    <td class="px-4 py-3">${entry.diagnosis || 'N/A'}</td>
-                    <td class="px-4 py-3">${entry.weight || 'N/A'}</td>
+                    <td class="px-4 py-3">${serviceCount}</td>
+                    <td class="px-4 py-3">${totalAmount}</td>
                     <td class="px-4 py-3">
                         <button onclick="viewEntry('${entry.code}')" class="px-3 py-1 text-white bg-blue-600 rounded-lg hover:bg-blue-700">View</button>
                     </td>
