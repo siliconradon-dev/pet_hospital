@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application | OPD Stock</title>
+    <link rel="icon" href="../../../images/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../../styles/common.css">
+</head>
+
+<body class="h-dvh flex flex-col bg-gray-50">
+    <!--Nav-->
+    <div class="nav bg-basic w-full py-4 flex justify-between items-center px-8 shadow-md">
+        <span class="flex items-center gap-4">
+            <button onclick="window.location.href = '../';"
+                class="rounded-full w-[40px] h-[40px] bg-white text-basic flex justify-center items-center hover:scale-95 transition-all">
+                <i class="bi bi-arrow-left text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold text-white">OPD Consumables Stock (Manual)</h3>
+        </span>
+        <div class="text-white text-sm">
+            <span id="datetime"></span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-grow p-8 overflow-y-auto w-full">
+        <div class="bg-white rounded-lg shadow-md p-6 max-w-6xl mx-auto">
+
+            <div class="flex justify-between items-center mb-6">
+                <div class="relative w-1/3">
+                    <input type="text" id="searchInput" onkeyup="filterStock()" placeholder="Search Item..."
+                        class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                    <i class="bi bi-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+                <button onclick="openModal()"
+                    class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium">
+                    <i class="bi bi-plus-lg mr-1"></i> Update Usage / Add Stock
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Item ID</th>
+                            <th scope="col" class="px-6 py-3">Consumable Name</th>
+                            <th scope="col" class="px-6 py-3">Unit Type</th>
+                            <th scope="col" class="px-6 py-3 text-center">Current Quantity</th>
+                            <th scope="col" class="px-6 py-3">Last Updated</th>
+                            <th scope="col" class="px-6 py-3 text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stockTableBody">
+                        <!-- JS Rendered -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Manual Update -->
+    <div id="updateModal" class="fixed inset-0 bg-black bg-opacity-50 hidden place-items-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h3 class="text-xl font-bold text-gray-800">Manual Stock Adjustment</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600"><i
+                        class="bi bi-x-lg"></i></button>
+            </div>
+
+            <form id="stockForm" onsubmit="saveStockUpdate(event)">
+                <input type="hidden" id="itemId">
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Select Item</label>
+                    <select id="itemSelect" onchange="loadItemDetails()"
+                        class="w-full border rounded p-2 text-gray-700">
+                        <!-- Populated via JS -->
+                    </select>
+                </div>
+
+                <div class="mb-4 bg-gray-50 p-3 rounded text-sm text-gray-600">
+                    <p>Current Stock: <span id="currentStockDisplay" class="font-bold text-gray-800">0</span> <span
+                            id="unitDisplay"></span></p>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Action</label>
+                    <div class="flex gap-4">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="actionType" value="add" checked>
+                            <span class="text-green-600 font-medium">Add (+)</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="actionType" value="remove">
+                            <span class="text-red-600 font-medium">Remove / Use (-)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
+                    <input type="number" id="updateQty" min="1" required class="w-full border rounded p-2"
+                        placeholder="Enter amount">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Reason (Optional)</label>
+                    <input type="text" id="updateReason" class="w-full border rounded p-2"
+                        placeholder="e.g. Daily usage">
+                </div>
+
+                <div class="flex justify-end gap-2 mt-6">
+                    <button type="button" onclick="closeModal()"
+                        class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Save
+                        Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../../../scripts/common.js"></script>
+    <script>
+        // --- Data ---
+        // Seed data for OPD consumables
+        let opdStock = JSON.parse(localStorage.getItem('opd_stock')) || [
+            { id: 'CON001', name: 'Cotton Wool Roll', unit: 'Rolls', stock: 50, lastUpdate: new Date().toISOString() },
+            { id: 'CON002', name: 'Surgical Spirit', unit: 'Bottles (500ml)', stock: 12, lastUpdate: new Date().toISOString() },
+            { id: 'CON003', name: 'Disposable Syringes (5ml)', unit: 'Box', stock: 5, lastUpdate: new Date().toISOString() },
+            { id: 'CON004', name: 'Gloves (Latex)', unit: 'Box (100pcs)', stock: 20, lastUpdate: new Date().toISOString() },
+            { id: 'CON005', name: 'Bandage Roll', unit: 'Rolls', stock: 30, lastUpdate: new Date().toISOString() }
+        ];
+
+        // Save immediately
+        localStorage.setItem('opd_stock', JSON.stringify(opdStock));
+
+        function renderStock(data) {
+            const tbody = document.getElementById('stockTableBody');
+            tbody.innerHTML = '';
+
+            data.forEach(item => {
+                const dateStr = new Date(item.lastUpdate).toLocaleString();
+
+                const row = document.createElement('tr');
+                row.className = 'bg-white border-b hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="px-6 py-4 font-medium text-gray-900">${item.id}</td>
+                    <td class="px-6 py-4">${item.name}</td>
+                    <td class="px-6 py-4">${item.unit}</td>
+                    <td class="px-6 py-4 text-center font-bold text-gray-800 text-lg">${item.stock}</td>
+                    <td class="px-6 py-4 text-xs text-gray-500">${dateStr}</td>
+                    <td class="px-6 py-4 text-center">
+                        <button onclick="openModal('${item.id}')" class="text-blue-600 hover:text-blue-800 font-medium text-sm">Adjust</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // --- Logic ---
+        function filterStock() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = opdStock.filter(item =>
+                item.name.toLowerCase().includes(query) ||
+                item.id.toLowerCase().includes(query)
+            );
+            renderStock(filtered);
+        }
+
+        // --- Modal ---
+        const modal = document.getElementById('updateModal');
+
+        function openModal(preSelectedId = null) {
+            const select = document.getElementById('itemSelect');
+            select.innerHTML = '';
+
+            opdStock.forEach(item => {
+                const opt = document.createElement('option');
+                opt.value = item.id;
+                opt.text = `${item.name} (${item.unit})`;
+                if (item.id === preSelectedId) opt.selected = true;
+                select.appendChild(opt);
+            });
+
+            loadItemDetails(); // Refresh view
+
+            document.getElementById('updateQty').value = '';
+            document.getElementById('updateReason').value = '';
+
+            modal.classList.remove('hidden');
+            modal.classList.add('grid');
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('grid');
+        }
+
+        function loadItemDetails() {
+            const id = document.getElementById('itemSelect').value;
+            const item = opdStock.find(i => i.id === id);
+            if (item) {
+                document.getElementById('currentStockDisplay').innerText = item.stock;
+                document.getElementById('unitDisplay').innerText = item.unit;
+            }
+        }
+
+        function saveStockUpdate(e) {
+            e.preventDefault();
+            const id = document.getElementById('itemSelect').value;
+            const action = document.querySelector('input[name="actionType"]:checked').value;
+            const qty = parseInt(document.getElementById('updateQty').value);
+
+            if (isNaN(qty) || qty <= 0) {
+                alert('Please enter a valid quantity');
+                return;
+            }
+
+            const index = opdStock.findIndex(i => i.id === id);
+            if (index !== -1) {
+                if (action === 'add') {
+                    opdStock[index].stock += qty;
+                } else {
+                    if (opdStock[index].stock < qty) {
+                        alert('Error: Cannot remove more than current stock!');
+                        return;
+                    }
+                    opdStock[index].stock -= qty;
+                }
+
+                opdStock[index].lastUpdate = new Date().toISOString();
+                localStorage.setItem('opd_stock', JSON.stringify(opdStock));
+
+                alert('Stock Updated Successfully!');
+                closeModal();
+                renderStock(opdStock);
+            }
+        }
+
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('datetime').textContent = now.toLocaleString();
+        }
+
+        // Init
+        renderStock(opdStock);
+        updateDateTime();
+    </script>
+</body>
+
+</html>

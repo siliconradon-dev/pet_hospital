@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application | Pet Hospital Ward</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../styles/common.css">
+    <style>
+        .cage-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .cage-card {
+            aspect-ratio: 1 / 1;
+            transition: all 0.3s ease;
+        }
+
+        /* Row 1 (Top): 13, 14, 15, 16 */
+        .cage-13 {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        .cage-14 {
+            grid-column: 3;
+            grid-row: 1;
+        }
+
+        .cage-15 {
+            grid-column: 4;
+            grid-row: 1;
+        }
+
+        .cage-16 {
+            grid-column: 5;
+            grid-row: 1;
+        }
+
+        /* Row 2 (Middle): 7, 8, 9, 10, 11, 12 */
+        .cage-7 {
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        .cage-8 {
+            grid-column: 2;
+            grid-row: 2;
+        }
+
+        .cage-9 {
+            grid-column: 3;
+            grid-row: 2;
+        }
+
+        .cage-10 {
+            grid-column: 4;
+            grid-row: 2;
+        }
+
+        .cage-11 {
+            grid-column: 5;
+            grid-row: 2;
+        }
+
+        .cage-12 {
+            grid-column: 6;
+            grid-row: 2;
+        }
+
+        /* Row 3 (Bottom): 1, 2, 3, 4, 5, 6 */
+        .cage-1 {
+            grid-column: 1;
+            grid-row: 3;
+        }
+
+        .cage-2 {
+            grid-column: 2;
+            grid-row: 3;
+        }
+
+        .cage-3 {
+            grid-column: 3;
+            grid-row: 3;
+        }
+
+        .cage-4 {
+            grid-column: 4;
+            grid-row: 3;
+        }
+
+        .cage-5 {
+            grid-column: 5;
+            grid-row: 3;
+        }
+
+        .cage-6 {
+            grid-column: 6;
+            grid-row: 3;
+        }
+
+        /* Double Cage Spanning */
+        /* If 11 is double, it merges with 12 */
+        .cage-double-11 {
+            grid-column: 5 / span 2;
+            grid-row: 2;
+            aspect-ratio: 2 / 1;
+        }
+
+        /* If 13 is double, it merges with 14 */
+        .cage-double-13 {
+            grid-column: 2 / span 2;
+            grid-row: 1;
+            aspect-ratio: 2 / 1;
+        }
+
+        /* If 15 is double, it merges with 16 */
+        .cage-double-15 {
+            grid-column: 4 / span 2;
+            grid-row: 1;
+            aspect-ratio: 2 / 1;
+        }
+
+        .status-free {
+            background-color: #d1fae5;
+            border-color: #10b981;
+            color: #065f46;
+        }
+
+        .status-occupied {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+    </style>
+</head>
+
+<body class="h-dvh flex flex-col bg-gray-50">
+    <!--Nav-->
+    <div class="nav bg-basic w-full py-4 flex justify-between items-center px-8 shadow-md">
+        <span class="flex items-center gap-4">
+            <button onclick="window.location.href = '../../';"
+                class="rounded-full w-[40px] h-[40px] bg-white text-basic flex justify-center items-center hover:scale-95 transition-all">
+                <i class="bi bi-arrow-left text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold text-white">Pet Hospital Ward</h3>
+        </span>
+        <div class="text-white text-sm">
+            <span id="datetime"></span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-grow overflow-y-auto p-8">
+
+        <div class="flex justify-between items-center max-w-[1000px] mx-auto mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">Cage View</h2>
+            <div class="flex gap-4 text-sm">
+                <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 bg-green-100 border border-green-500 rounded"></div> Vacant
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 bg-red-100 border border-red-500 rounded"></div> Occupied
+                </div>
+            </div>
+        </div>
+
+        <!-- Cage Grid -->
+        <div id="cageContainer" class="cage-grid">
+            <!-- Rendered by JS -->
+        </div>
+
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden place-items-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h3 class="text-xl font-bold text-gray-800">Update Cage <span id="modalCageNum"></span></h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600"><i
+                        class="bi bi-x-lg"></i></button>
+            </div>
+
+            <form id="bookingForm" onsubmit="saveBooking(event)">
+                <input type="hidden" id="cageId">
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <select id="cageStatus" onchange="toggleFormFields()"
+                        class="w-full border rounded p-2 text-gray-700">
+                        <option value="vacant">Vacant</option>
+                        <option value="occupied">Occupied</option>
+                    </select>
+                </div>
+
+                <div id="occupiedFields" class="hidden">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Pet Name / ID</label>
+                        <input type="text" id="petName" class="w-full border rounded p-2"
+                            placeholder="e.g. Rex (DOG001)">
+                    </div>
+
+                    <!-- Double Cage Option (Only for 11-16) -->
+                    <div class="mb-4 hidden" id="doubleCageOption">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Cage Type</label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="cageType" value="single" checked
+                                    onchange="checkDoubleAvailability()">
+                                <span>Single</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="cageType" value="double" id="doubleRadio"
+                                    onchange="checkDoubleAvailability()">
+                                <span>Double (Merge with <span id="pairCageNum"></span>)</span>
+                            </label>
+                        </div>
+                        <p id="doubleError" class="text-xs text-red-500 mt-1 hidden">Adjacent cage is occupied!</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Admitted Date</label>
+                        <input type="date" id="admitDate" class="w-full border rounded p-2 text-gray-700">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Food Plan</label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="foodPlan" value="with_food" checked>
+                                <span>With Food</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="foodPlan" value="without_food">
+                                <span>Without Food</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Advance Payment (LKR)</label>
+                        <input type="number" id="advancePay" class="w-full border rounded p-2" placeholder="0.00">
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-2 mt-6">
+                    <button type="button" onclick="closeModal()"
+                        class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-basic text-white rounded hover:bg-opacity-90">Save
+                        Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../../scripts/common.js"></script>
+    <script>
+        // --- Data ---
+        // Pairs for Double Cabins: 11-12, 13-14, 15-16
+        const DOUBLE_PAIRS = {
+            11: 12, 12: 11,
+            13: 14, 14: 13,
+            15: 16, 16: 15
+        };
+        const FLEXIBLE_CAGES = [11, 12, 13, 14, 15, 16];
+
+        let cages = JSON.parse(localStorage.getItem('hospital_cages')) || [];
+
+        // Initialize if empty
+        if (cages.length === 0) {
+            for (let i = 1; i <= 16; i++) {
+                cages.push({
+                    id: i,
+                    status: 'vacant', // vacant, occupied
+                    type: 'single', // single, double
+                    petName: '',
+                    admitDate: '', // Added admitDate
+                    food: 'with_food',
+                    advance: '',
+                    joinedWith: null // if double, ID of other cage
+                });
+            }
+            saveData();
+        }
+
+        // --- Render ---
+        function renderCages() {
+            const container = document.getElementById('cageContainer');
+            container.innerHTML = '';
+
+            // Layout Order: 
+            // We need to render them in DOM order, but CSS Grid places them visually.
+            // visual: Top(13-16), Middle(7-12), Bottom(1-6)
+            // But DOM flow is usually 1..16. CSS Grid handles position.
+            // We'll iterate 1 to 16.
+
+            // However, if a cage is "Secondary" in a double relationship, we might skip rendering it 
+            // and let the "Primary" span 2 columns.
+            // Let's define "Primary" as the smaller number in the pair (e.g. 11, 13, 15).
+
+            const processedIds = new Set();
+
+            // We need to loop carefully to handle merged cells.
+            // Let's sort simply by ID 1..16, but skip if already handled.
+
+            // To make visual layout correct with default flow filling grid:
+            // Top Row (13,14,15,16) -> First in DOM if we want them at top without specific row lines? 
+            // No, using specific grid-columns. 
+            // Let's rely on specific classes for 13-16 to place them. 
+            // But CSS Grid auto-placement fills rows. 
+            // Actually, to get the "Pyramid" shape (4 top, 6 mid, 6 bot), we should define Grid Template Areas or explicit Rows.
+            // Let's use explicit row placement for simplicity.
+
+            // Row 1 (Top): 13, 14, 15, 16
+            // Row 2 (Mid): 7, 8, 9, 10, 11, 12
+            // Row 3 (Bot): 1, 2, 3, 4, 5, 6
+            // Wait, standard numbering usually goes Top->Bottom or Bottom->Top? 
+            // The user image shows 1 at bottom-left. 16 at top-right.
+            // So visually:
+            // [ . ][13][14][15][16][ . ]  (Row 1)
+            // [ 7 ][ 8 ][ 9 ][10][11][12]  (Row 2)
+            // [ 1 ][ 2 ][ 3 ][ 4 ][ 5 ][ 6 ]  (Row 3)
+
+            // Let's build a rendering list in that order.
+            const visualOrder = [
+                13, 14, 15, 16,
+                7, 8, 9, 10, 11, 12,
+                1, 2, 3, 4, 5, 6
+            ];
+
+            visualOrder.forEach(id => {
+                if (processedIds.has(id)) return;
+
+                const cage = cages.find(c => c.id === id);
+
+                // Check if part of a double booking
+                let isDouble = cage.type === 'double';
+                let spanClass = '';
+
+                if (isDouble && cage.joinedWith) {
+                    // Check if this is the "primary" (left-most/smaller ID) of the pair to render
+                    // Pairs: 11-12 (11 is pri), 13-14 (13 is pri), 15-16 (15 is pri)
+                    const isPrimary = id < cage.joinedWith;
+
+                    if (isPrimary) {
+                        spanClass = `cage-double-${id}`; // Custom class to span 2 cols
+                        processedIds.add(cage.joinedWith); // Mark secondary as processed
+                    } else {
+                        // Should have been processed by primary. If we are here, something is odd or order diff.
+                        // But since we process in visual order:
+                        // 13 before 14 -> OK.
+                        // 11 before 12 -> OK.
+                        // 15 before 16 -> OK.
+                        return;
+                    }
+                }
+
+                // Grid Placement Classes
+                let gridClass = '';
+                if (!isDouble) {
+                    // Always assign specific grid position class for single cages
+                    gridClass = `cage-${id}`;
+                } else {
+                    // If double, the spanClass handles placement for the primary.
+                    // But we might need row placement if not handled by spanClass?
+                    // Actually, spanClass (cage-double-XX) has grid-row defined in CSS now.
+                }
+
+                // Status Styles
+                const statusClass = cage.status === 'occupied'
+                    ? 'status-occupied shadow-inner'
+                    : 'status-free hover:shadow-lg cursor-pointer';
+
+                const card = document.createElement('div');
+                card.className = `cage-card border-2 rounded-xl p-4 flex flex-col justify-between relative ${statusClass} ${spanClass} ${gridClass}`;
+                card.onclick = () => openModal(cage.id);
+
+                // Content
+                let icon = cage.status === 'occupied' ? (cage.type === 'double' ? 'shield-lock-fill' : 'shield-lock') : 'box-seam';
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <span class="font-bold text-2xl opacity-50">${id}</span>
+                        <i class="bi bi-${icon} text-xl"></i>
+                    </div>
+                    
+                    <div class="text-center">
+                        ${cage.status === 'occupied'
+                        ? `<h4 class="font-bold text-lg truncate">${cage.petName}</h4>
+                               ${cage.admitDate ? `<p class="text-xs text-blue-800 font-medium mb-1">Admitted: ${cage.admitDate}</p>` : ''}
+                               <span class="text-xs uppercase tracking-wider font-bold opacity-75">${cage.type}</span>`
+                        : '<span class="text-sm font-medium opacity-50">VACANT</span>'
+                    }
+                    </div>
+
+                    <div class="flex justify-between items-end text-xs font-medium">
+                        <span>${cage.status === 'occupied' ? (cage.food === 'with_food' ? '🍔 With Food' : '🚫 No Food') : ''}</span>
+                        ${cage.advance ? `<span class="bg-white bg-opacity-50 px-1 rounded text-green-700">Adv: ${cage.advance}</span>` : ''}
+                    </div>
+                `;
+
+                container.appendChild(card);
+                processedIds.add(id);
+            });
+        }
+
+        // --- Modal Logic ---
+        const modal = document.getElementById('bookingModal');
+        let currentCageId = null;
+
+        function openModal(id) {
+            currentCageId = id;
+            const cage = cages.find(c => c.id === id);
+
+            document.getElementById('modalCageNum').innerText = id;
+            document.getElementById('cageId').value = id;
+            document.getElementById('cageStatus').value = cage.status;
+
+            // Populate fields if occupied
+            document.getElementById('petName').value = cage.petName || '';
+            document.getElementById('admitDate').value = cage.admitDate || new Date().toISOString().split('T')[0]; // Default to today
+            document.getElementById('advancePay').value = cage.advance || '';
+
+            // Set Radios
+            setRadioValue('foodPlan', cage.food || 'with_food');
+            setRadioValue('cageType', cage.type || 'single');
+
+            // Double Logic
+            const doubleOption = document.getElementById('doubleCageOption');
+            const doubleError = document.getElementById('doubleError');
+
+            if (FLEXIBLE_CAGES.includes(id)) {
+                doubleOption.classList.remove('hidden');
+                document.getElementById('pairCageNum').innerText = DOUBLE_PAIRS[id];
+                doubleError.classList.add('hidden');
+
+                // If opening an already double-booked cage, check radio
+                if (cage.type === 'double') {
+                    document.getElementById('doubleRadio').checked = true;
+                } else {
+                    document.querySelector('input[name="cageType"][value="single"]').checked = true;
+                }
+            } else {
+                doubleOption.classList.add('hidden');
+            }
+
+            toggleFormFields();
+            modal.classList.remove('hidden');
+            modal.classList.add('grid');
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('grid');
+        }
+
+        function toggleFormFields() {
+            const status = document.getElementById('cageStatus').value;
+            const fields = document.getElementById('occupiedFields');
+            if (status === 'occupied') {
+                fields.classList.remove('hidden');
+                checkDoubleAvailability();
+            } else {
+                fields.classList.add('hidden');
+            }
+        }
+
+        function checkDoubleAvailability() {
+            const id = parseInt(document.getElementById('cageId').value);
+            const type = document.querySelector('input[name="cageType"]:checked').value;
+            const doubleError = document.getElementById('doubleError');
+            const saveBtn = document.querySelector('#bookingForm button[type="submit"]');
+
+            if (type === 'double' && FLEXIBLE_CAGES.includes(id)) {
+                const pairId = DOUBLE_PAIRS[id];
+                const pairCage = cages.find(c => c.id === pairId);
+                const selfCage = cages.find(c => c.id === id);
+
+                // If pair is occupied AND NOT by us (joinedWith check), then error
+                // joinedWith check handles editing an existing double booking
+                if (pairCage.status === 'occupied' && pairCage.joinedWith !== id) {
+                    doubleError.classList.remove('hidden');
+                    saveBtn.disabled = true;
+                    saveBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    doubleError.classList.add('hidden');
+                    saveBtn.disabled = false;
+                    saveBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            } else {
+                doubleError.classList.add('hidden');
+                saveBtn.disabled = false;
+                saveBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        function saveBooking(e) {
+            e.preventDefault();
+
+            const id = parseInt(document.getElementById('cageId').value);
+            const status = document.getElementById('cageStatus').value;
+            let cage = cages.find(c => c.id === id);
+
+            if (status === 'vacant') {
+                // If clearing a double booking, free the other half too
+                if (cage.type === 'double' && cage.joinedWith) {
+                    const pair = cages.find(c => c.id === cage.joinedWith);
+                    clearCage(pair);
+                }
+                clearCage(cage);
+            } else {
+                // Occupying
+                const petName = document.getElementById('petName').value;
+                const admitDate = document.getElementById('admitDate').value;
+                const type = FLEXIBLE_CAGES.includes(id) ? document.querySelector('input[name="cageType"]:checked').value : 'single';
+                const food = document.querySelector('input[name="foodPlan"]:checked').value;
+                const advance = document.getElementById('advancePay').value;
+
+                if (type === 'double') {
+                    const pairId = DOUBLE_PAIRS[id];
+                    let pairCage = cages.find(c => c.id === pairId);
+
+                    // Update Both
+                    updateCage(cage, status, type, petName, admitDate, food, advance, pairId);
+                    updateCage(pairCage, status, type, petName, admitDate, food, advance, id);
+                } else {
+                    // If switching from Double to Single, free the pair
+                    if (cage.type === 'double' && cage.joinedWith) {
+                        let oldPair = cages.find(c => c.id === cage.joinedWith);
+                        clearCage(oldPair);
+                    }
+                    updateCage(cage, status, type, petName, admitDate, food, advance, null);
+                }
+            }
+
+            saveData();
+            renderCages();
+            closeModal();
+            updateDateTime();
+        }
+
+        function updateCage(cage, status, type, petName, admitDate, food, advance, joinedWith) {
+            cage.status = status;
+            cage.type = type;
+            cage.petName = petName;
+            cage.admitDate = admitDate;
+            cage.food = food;
+            cage.advance = advance;
+            cage.joinedWith = joinedWith;
+            cage.updatedAt = new Date().toISOString();
+        }
+
+        function clearCage(cage) {
+            cage.status = 'vacant';
+            cage.type = 'single';
+            cage.petName = '';
+            cage.admitDate = '';
+            cage.food = 'with_food';
+            cage.advance = '';
+            cage.joinedWith = null;
+            cage.updatedAt = null;
+        }
+
+        function saveData() {
+            localStorage.setItem('hospital_cages', JSON.stringify(cages));
+        }
+
+        function setRadioValue(name, value) {
+            const radios = document.getElementsByName(name);
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].value === value) {
+                    radios[i].checked = true;
+                }
+            }
+        }
+
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('datetime').textContent = now.toLocaleString();
+        }
+
+        // Init
+        renderCages();
+        updateDateTime();
+        setInterval(updateDateTime, 60000);
+    </script>
+</body>
+
+</html>
