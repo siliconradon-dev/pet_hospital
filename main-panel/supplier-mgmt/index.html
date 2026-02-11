@@ -4,196 +4,450 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application | Product Management</title>
+    <title>Application | Supplier Management</title>
     <link rel="icon" href="../../images/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../../styles/common.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 
-<body class="min-h-dvh flex flex-col">
-    <!--Nav-->
+<body class="bg-gray-50 h-screen flex flex-col overflow-hidden">
+
+    <!-- Nav / Header -->
     <div
-        class="nav bg-basic w-full py-6 flex justify-between items-center max-lg:justify-center max-lg:flex-col">
-        <span class="flex items-center gap-3 ml-20 max-lg:ml-0 max-sm:scale-75">
-            <button onclick="history.go(-1);"
-                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all">
+        class="nav bg-basic w-full py-6 flex justify-between items-center px-8 max-lg:justify-center max-lg:flex-col shrink-0 z-20">
+        <span class="flex items-center gap-3 max-lg:ml-0 max-sm:scale-75">
+            <button onclick="window.location.href = '../';"
+                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all shadow-md">
                 <i class="bi bi-chevron-left scale-[1.5]"></i>
             </button>
+            <button onclick="window.location.href = '../';"
+                class="p-2 text-basic rounded-lg bg-white flex gap-3 justify-center items-center hover:scale-90 transition-all shadow-md font-bold text-sm sm:text-base">
+                <i class="bi bi-house scale-[1.2]"></i>
+                <span class="hidden sm:inline">Main Panel</span>
+            </button>
         </span>
-        <span class="flex items-center gap-3 mr-20 max-lg:mr-0 max-sm:scale-75">
-            <h3 class="text-2xl max-md:text-sm text-white">Welcome User</h3>
-            <button onclick="window.location.href = '../../../';"
-                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all">
+
+        <span class="flex items-center gap-3 mt-4 lg:mt-0 max-sm:scale-75">
+            <h3 class="text-xl sm:text-2xl font-bold text-white uppercase tracking-wider text-center">Supplier
+                Management</h3>
+            <button onclick="openAddModal()"
+                class="bg-white text-basic px-4 py-2 rounded-lg text-sm font-bold hover:scale-95 transition-all flex items-center gap-2 shadow-md">
+                <i class="bi bi-plus-lg"></i> New Supplier
+            </button>
+            <button onclick="window.location.href = '../../';"
+                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all shadow-md">
                 <i class="bi bi-box-arrow-left scale-[1.5]"></i>
             </button>
         </span>
     </div>
 
-    <!--content-->
-    <div class="flex flex-col flex-grow">
-        <!-- Breadcrumbs -->
-        <div class="px-12 max-sm:px-6 pt-5">
-            <nav class="flex" aria-label="Breadcrumb">
-                <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
-                    <li class="inline-flex items-center">
-                        <p class="inline-flex items-center text-sm font-medium text-gray-700">
-                            <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor" viewBox="0 0 20 20">
-                                <path
-                                    d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
-                            </svg>
-                            Main Panel
-                        </p>
-                    </li>
-                    <li aria-current="page">
-                        <div class="flex items-center">
-                            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m1 9 4-4-4-4" />
-                            </svg>
-                            <p class="ms-1 text-sm font-medium text-gray-700 md:ms-2">Supplier Management</p>
-                        </div>
-                    </li>
-                </ol>
-            </nav>
-        </div>
+    <!-- Main Content -->
+    <div class="flex-grow flex overflow-hidden">
 
-        <!-- Add Supplier Form -->
-        <div class="px-12 max-sm:px-6 pt-5">
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h2 class="text-xl font-bold mb-4">Add New Supplier</h2>
-                <form id="supplierForm">
-                    <div class="mb-4">
-                        <label for="supplierName" class="block text-sm font-medium text-gray-700 mb-1">Supplier Name
-                            *</label>
-                        <input type="text" id="supplierName" required
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            placeholder="Enter supplier name">
-                    </div>
-                    <div class="flex justify-end gap-3 mt-6">
-                        <button type="button"
-                            class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100">Cancel</button>
-                        <button type="submit"
-                            class="px-6 py-2 bg-basic text-white rounded-lg hover:bg-opacity-90">Add
-                            Supplier</button>
-                    </div>
-                </form>
+        <!-- Sidebar: Supplier List -->
+        <div class="w-1/3 bg-white border-r border-gray-200 flex flex-col z-10 shadow-lg">
+
+            <!-- Search Header -->
+            <div class="p-6 border-b border-gray-100 bg-gray-50/50">
+                <div class="relative">
+                    <i class="bi bi-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="searchSupplier" onkeyup="renderSupplierList()"
+                        placeholder="Search Suppliers by Name..."
+                        class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl text-sm bg-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all">
+                </div>
+            </div>
+
+            <div id="supplierList" class="flex-grow overflow-y-auto px-4 py-2 space-y-2 custom-scrollbar">
+                <!-- List Items Injected Here -->
+            </div>
+
+            <div class="p-4 bg-gray-50 border-t border-gray-200 text-xs text-center text-gray-400">
+                Found <span id="supplierCount">0</span> Suppliers
             </div>
         </div>
 
-        <!-- Suppliers Table -->
-        <div class="px-12 max-sm:px-6 pt-5 overflow-y-auto bg-white flex flex-col">
-            <div class="relative overflow-x-auto">
-                <table id="suppliersTable" class="w-full text-sm text-left rtl:text-right text-gray-500">
-                    <thead class="text-xs text-white uppercase bg-basic">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 rounded-tl-lg">ID</th>
-                            <th scope="col" class="px-6 py-3">Name</th>
-                            <th scope="col" class="px-6 py-3 rounded-tr-lg">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="bg-white border-2 text-black">
-                            <td class="px-6 py-4">SUP-001</td>
-                            <td class="px-6 py-4 font-medium">Healthguard Pharmacy.</td>
-                            <td class="px-6 py-4 flex gap-2">
-                                <button data-modal-target="editModal" data-modal-toggle="editModal"
-                                    class="p-2 border rounded-lg hover:bg-gray-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20"
-                                        fill="currentColor">
-                                        <path
-                                            d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                    </svg>
-                                </button>
-                                <button class="p-2 border rounded-lg hover:bg-gray-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20"
-                                        fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-2 text-black">
-                            <td class="px-6 py-4">SUP-002</td>
-                            <td class="px-6 py-4 font-medium">Wellmart Pharmacy.</td>
-                            <td class="px-6 py-4 flex gap-2">
-                                <button data-modal-target="editModal" data-modal-toggle="editModal"
-                                    class="p-2 border rounded-lg hover:bg-gray-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20"
-                                        fill="currentColor">
-                                        <path
-                                            d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                    </svg>
-                                </button>
-                                <button class="p-2 border rounded-lg hover:bg-gray-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20"
-                                        fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <!-- Main Panel: Supplier Details & Ledger -->
+        <div class="w-2/3 bg-gray-50 flex flex-col relative">
+
+            <!-- Empty State -->
+            <div id="emptyState" class="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
+                <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="bi bi-person-rolodex text-5xl text-gray-300"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-600">No Supplier Selected</h3>
+                <p class="text-sm mt-2">Select a supplier from the list to view their ledger.</p>
+            </div>
+
+            <!-- Details View -->
+            <div id="detailsPanel" class="hidden flex-col h-full overflow-hidden">
+                <!-- Top Info Card -->
+                <div class="bg-white p-8 border-b border-gray-200 shadow-sm relative z-10">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-16 h-16 rounded-xl bg-blue-50 flex items-center justify-center text-basic text-2xl font-bold">
+                                <i class="bi bi-building"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-3xl font-bold text-gray-800 tracking-tight" id="viewName">Supplier Name
+                                </h2>
+                                <p class="text-sm text-gray-500 flex items-center gap-2 mt-1">
+                                    <i class="bi bi-telephone"></i> <span id="viewContact">Contact Info</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="text-right bg-gray-50 px-6 py-3 rounded-xl border border-gray-100">
+                            <div class="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Net Balance</div>
+                            <div class="text-3xl font-bold tracking-tight" id="viewBalance">0.00</div>
+                            <div class="text-xs font-bold mt-1 uppercase tracker-status" id="balanceLabel">To Pay</div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4">
+                        <button onclick="openTransactionModal('payment')"
+                            class="py-3 bg-green-50 text-green-700 rounded-xl font-bold hover:bg-green-100 transition-colors border border-green-100 flex items-center justify-center gap-2">
+                            <i class="bi bi-arrow-up-right-circle text-lg"></i> Record Payment (Out)
+                        </button>
+                        <button onclick="openTransactionModal('invoice')"
+                            class="py-3 bg-orange-50 text-orange-700 rounded-xl font-bold hover:bg-orange-100 transition-colors border border-orange-100 flex items-center justify-center gap-2">
+                            <i class="bi bi-arrow-down-left-circle text-lg"></i> Receive Goods (In)
+                        </button>
+                        <button onclick="deleteSupplier()"
+                            class="py-3 bg-red-50 text-red-600 rounded-xl font-bold hover:bg-red-100 transition-colors border border-red-100 flex items-center justify-center gap-2">
+                            <i class="bi bi-trash"></i> Delete Supplier
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Transaction History -->
+                <div class="flex-grow overflow-y-auto p-8 custom-scrollbar bg-gray-50">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-sm font-bold text-gray-500 uppercase tracking-widest">Transaction History</h3>
+                        <button onclick="window.print()"
+                            class="text-xs text-blue-600 hover:underline flex items-center gap-1">
+                            <i class="bi bi-printer"></i> Print Statement
+                        </button>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <table class="w-full text-sm text-left">
+                            <thead class="text-xs text-gray-500 uppercase bg-gray-50 border-b border-gray-100">
+                                <tr>
+                                    <th class="px-6 py-4 font-semibold">Date</th>
+                                    <th class="px-6 py-4 font-semibold">Description</th>
+                                    <th class="px-6 py-4 font-semibold text-right text-gray-600">Debt (In)</th>
+                                    <th class="px-6 py-4 font-semibold text-right text-gray-600">Credit (Out)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactionTable" class="divide-y divide-gray-100">
+                                <!-- Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!--footer-->
-    <footer
-        class="h-[80px] bg-basic max-md:text-sm max-sm:text-xs max-md:flex-col text-center w-full flex items-center text-white justify-center gap-3">
-        <p></p>
-    </footer>
-    <!-- Edit Modal -->
-    <div id="editModal" tabindex="-1" aria-hidden="true"
-        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-md max-h-full">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow">
-                <!-- Modal header -->
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
-                    <h3 class="text-xl font-semibold text-gray-900">
-                        Edit <span id="editModalTitle"></span>
-                    </h3>
-                    <button type="button"
-                        class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-                        data-modal-hide="editModal">
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                        <span class="sr-only">Close modal</span>
+    <!-- Add Supplier Modal -->
+    <div id="addSupplierModal"
+        class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex justify-center items-center backdrop-blur-sm">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all scale-100">
+            <div class="bg-basic px-6 py-4 flex justify-between items-center">
+                <h3 class="text-white font-bold text-lg">Add New Supplier</h3>
+                <button onclick="closeModals()"
+                    class="text-white hover:bg-white/20 rounded-full p-1 w-8 h-8 flex items-center justify-center transition-colors">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <form id="addForm" onsubmit="saveSupplier(event)" class="p-6">
+                <div class="mb-5">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Supplier Name / Company</label>
+                    <input type="text" id="inpName" required
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition-all"
+                        placeholder="e.g. Healthguard Pharma">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Contact Number</label>
+                    <input type="text" id="inpContact"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition-all"
+                        placeholder="e.g. 011-2345678">
+                </div>
+                <div class="flex justify-end gap-3">
+                    <button type="button" onclick="closeModals()"
+                        class="px-5 py-2.5 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition-colors">Cancel</button>
+                    <button type="submit"
+                        class="px-5 py-2.5 bg-basic text-white rounded-lg font-bold shadow-lg hover:bg-opacity-90 transition-all flex items-center gap-2">
+                        <i class="bi bi-check-lg"></i> Save Supplier
                     </button>
                 </div>
-                <!-- Modal body -->
-                <div class="p-4 md:p-5">
-                    <form id="editForm">
-                        <input type="hidden" id="editItemId">
-                        <div class="mb-4">
-                            <label for="editItemName" class="block mb-2 text-sm font-medium text-gray-900">Name</label>
-                            <input type="text" name="editItemName" id="editItemName"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                required>
-                        </div>
-                        <button type="submit"
-                            class="w-full text-white bg-basic hover:bg-opacity-90 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                            Save Changes
-                        </button>
-                    </form>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+
+    <!-- Transaction Modal -->
+    <div id="transactionModal"
+        class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex justify-center items-center backdrop-blur-sm">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all scale-100">
+            <div class="bg-basic px-6 py-4 flex justify-between items-center">
+                <h3 class="text-white font-bold text-lg" id="transModalTitle">Log Transaction</h3>
+                <button onclick="closeModals()"
+                    class="text-white hover:bg-white/20 rounded-full p-1 w-8 h-8 flex items-center justify-center transition-colors">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <form id="transForm" onsubmit="saveTransaction(event)" class="p-6">
+                <input type="hidden" id="transType">
+                <div class="mb-5">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Transaction Date</label>
+                    <input type="date" id="transDate" required
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 bg-gray-50 outline-none">
+                </div>
+                <div class="mb-5">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Amount (LKR)</label>
+                    <input type="number" id="transAmount" step="0.01" required
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none font-mono text-lg"
+                        placeholder="0.00">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Reference / Description</label>
+                    <input type="text" id="transDesc" required
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none"
+                        placeholder="e.g. Invoice #8821">
+                </div>
+                <div class="flex justify-end gap-3">
+                    <button type="button" onclick="closeModals()"
+                        class="px-5 py-2.5 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition-colors">Cancel</button>
+                    <button type="submit"
+                        class="px-5 py-2.5 bg-green-600 text-white rounded-lg font-bold shadow-lg hover:bg-green-700 transition-all flex items-center gap-2">
+                        <i class="bi bi-save"></i> Record Entry
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="../../scripts/common.js"></script>
+    <script>
+        // --- Data ---
+        let suppliers = JSON.parse(localStorage.getItem('suppliers_ledger')) || [
+            { id: 1, name: 'Healthguard Pharmacy', contact: '011-2334455', transactions: [] },
+            { id: 2, name: 'Wellmart Distributors', contact: '077-1234567', transactions: [] }
+        ];
+
+        // Mocking transactions if empty for demo
+        if (suppliers[0].transactions.length === 0) {
+            suppliers[0].transactions = [
+                { id: 1, date: '2026-02-01', type: 'invoice', amount: 50000, desc: 'Stock Replenishment #Inv001' },
+                { id: 2, date: '2026-02-05', type: 'payment', amount: 20000, desc: 'Partial Payment' }
+            ];
+            saveData();
+        }
+
+        let selectedSupplierId = null;
+
+        // --- Render ---
+        function renderSupplierList() {
+            const list = document.getElementById('supplierList');
+            const search = document.getElementById('searchSupplier').value.toLowerCase();
+            list.innerHTML = '';
+
+            const filtered = suppliers.filter(s => s.name.toLowerCase().includes(search));
+            document.getElementById('supplierCount').innerText = filtered.length;
+
+            filtered.forEach(s => {
+                const balance = calculateBalance(s);
+                const isSelected = s.id === selectedSupplierId;
+
+                const item = document.createElement('div');
+                item.className = `p-4 rounded-xl cursor-pointer transition-all border ${isSelected ? 'bg-blue-50 border-blue-200 shadow-sm' : 'bg-white border-transparent hover:bg-gray-50'}`;
+                item.onclick = () => selectSupplier(s.id);
+
+                item.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-gray-800 ${isSelected ? 'text-blue-800' : ''}">${s.name}</h4>
+                        <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${balance > 0 ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600'}">
+                            ${balance > 0 ? 'Due' : 'Credit'}
+                        </span>
+                    </div>
+                    <div class="flex justify-between items-end">
+                        <p class="text-xs text-gray-500 flex items-center gap-1"><i class="bi bi-telephone"></i> ${s.contact || 'N/A'}</p>
+                        <span class="font-mono font-bold text-sm text-gray-700">${Math.abs(balance).toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function selectSupplier(id) {
+            selectedSupplierId = id;
+            renderSupplierList(); // Refresh highlighting
+
+            const supplier = suppliers.find(s => s.id === id);
+            if (!supplier) return;
+
+            // Update Details View
+            document.getElementById('emptyState').classList.add('hidden');
+            const detailsPanel = document.getElementById('detailsPanel');
+            detailsPanel.classList.remove('hidden');
+            detailsPanel.classList.add('flex');
+
+            document.getElementById('viewName').textContent = supplier.name;
+            document.getElementById('viewContact').textContent = supplier.contact || 'No Contact Info';
+
+            const bal = calculateBalance(supplier);
+            const balEl = document.getElementById('viewBalance');
+            const lblEl = document.getElementById('balanceLabel'); // Corrected ID
+
+            balEl.innerText = Math.abs(bal).toLocaleString('en-US', { minimumFractionDigits: 2 });
+
+            if (bal > 0) {
+                balEl.className = 'text-3xl font-bold text-red-600 tracking-tight';
+                lblEl.innerText = 'Total Amount to Pay (Due)';
+                lblEl.className = 'text-xs font-bold mt-1 uppercase text-red-600 bg-red-50 px-2 py-1 rounded inline-block';
+            } else if (bal < 0) {
+                balEl.className = 'text-3xl font-bold text-green-600 tracking-tight';
+                lblEl.innerText = 'Advance / Credit Available';
+                lblEl.className = 'text-xs font-bold mt-1 uppercase text-green-600 bg-green-50 px-2 py-1 rounded inline-block';
+            } else {
+                balEl.className = 'text-3xl font-bold text-gray-400 tracking-tight';
+                lblEl.innerText = 'Fully Settled';
+                lblEl.className = 'text-xs font-bold mt-1 uppercase text-gray-500 bg-gray-100 px-2 py-1 rounded inline-block';
+            }
+
+            renderTransactions(supplier);
+        }
+
+        function renderTransactions(supplier) {
+            const tbody = document.getElementById('transactionTable');
+            tbody.innerHTML = '';
+
+            // Sort by date desc
+            const sorted = [...supplier.transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            if (sorted.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="px-6 py-12 text-center text-gray-400 flex flex-col items-center"><i class="bi bi-journal-x text-3xl mb-2"></i><span>No transactions recorded yet.</span></td></tr>';
+                return;
+            }
+
+            sorted.forEach(t => {
+                const tr = document.createElement('tr');
+                tr.className = "bg-white hover:bg-blue-50/50 transition-colors group";
+
+                const isInvoice = t.type === 'invoice';
+
+                tr.innerHTML = `
+                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">${t.date}</td>
+                    <td class="px-6 py-4">
+                        <span class="block text-gray-800 font-medium">${t.desc}</span>
+                        <span class="text-[10px] ${isInvoice ? 'text-orange-600 bg-orange-50' : 'text-green-600 bg-green-50'} px-2 py-0.5 rounded uppercase font-bold tracking-wider">${t.type}</span>
+                    </td>
+                    <td class="px-6 py-4 text-right font-mono text-sm ${isInvoice ? 'text-gray-900 font-bold' : 'text-gray-300'}">
+                        ${isInvoice ? parseFloat(t.amount).toLocaleString('en-US', { minimumFractionDigits: 2 }) : '-'}
+                    </td>
+                    <td class="px-6 py-4 text-right font-mono text-sm ${!isInvoice ? 'text-green-600 font-bold' : 'text-gray-300'}">
+                        ${!isInvoice ? parseFloat(t.amount).toLocaleString('en-US', { minimumFractionDigits: 2 }) : '-'}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // --- Logic ---
+        function calculateBalance(supplier) {
+            let bal = 0;
+            supplier.transactions.forEach(t => {
+                if (t.type === 'invoice') bal += parseFloat(t.amount);
+                else if (t.type === 'payment') bal -= parseFloat(t.amount);
+            });
+            return bal;
+        }
+
+        function saveData() {
+            localStorage.setItem('suppliers_ledger', JSON.stringify(suppliers));
+        }
+
+        function openAddModal() {
+            document.getElementById('addSupplierModal').classList.remove('hidden');
+        }
+
+        function closeModals() {
+            document.getElementById('addSupplierModal').classList.add('hidden');
+            document.getElementById('transactionModal').classList.add('hidden');
+        }
+
+        function saveSupplier(e) {
+            e.preventDefault();
+            const name = document.getElementById('inpName').value;
+            const contact = document.getElementById('inpContact').value;
+
+            suppliers.push({
+                id: Date.now(),
+                name,
+                contact,
+                transactions: []
+            });
+            saveData();
+            closeModals();
+            renderSupplierList();
+            document.getElementById('addForm').reset();
+
+            // Auto Select New
+            selectSupplier(suppliers[suppliers.length - 1].id);
+        }
+
+        function deleteSupplier() {
+            if (!selectedSupplierId) return;
+            if (confirm("Delete this supplier and all history? This cannot be undone.")) {
+                suppliers = suppliers.filter(s => s.id !== selectedSupplierId);
+                saveData();
+                selectedSupplierId = null;
+                document.getElementById('detailsPanel').classList.add('hidden');
+                document.getElementById('detailsPanel').classList.remove('flex');
+                document.getElementById('emptyState').classList.remove('hidden');
+                renderSupplierList();
+            }
+        }
+
+        // Transactions
+        function openTransactionModal(type) {
+            document.getElementById('transType').value = type;
+            document.getElementById('transModalTitle').innerText = type === 'invoice' ? 'New Invoice (Bill Received)' : 'New Payment (Cash Out)';
+            document.getElementById('transDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('transactionModal').classList.remove('hidden');
+        }
+
+        function saveTransaction(e) {
+            e.preventDefault();
+            const supplier = suppliers.find(s => s.id === selectedSupplierId);
+            if (!supplier) return;
+
+            const type = document.getElementById('transType').value;
+            const date = document.getElementById('transDate').value;
+            const amount = parseFloat(document.getElementById('transAmount').value);
+            const desc = document.getElementById('transDesc').value;
+
+            supplier.transactions.push({
+                id: Date.now(),
+                date,
+                type,
+                amount,
+                desc
+            });
+
+            saveData();
+            closeModals();
+            selectSupplier(selectedSupplierId); // Refresh view
+            document.getElementById('transForm').reset();
+        }
+
+        // Init
+        renderSupplierList();
+
+    </script>
 </body>
 
 </html>

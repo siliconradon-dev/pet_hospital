@@ -8,115 +8,181 @@
     <link rel="icon" href="../../../images/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../../../styles/common.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 
 <body class="h-dvh flex flex-col bg-gray-50">
+
     <!--Nav-->
-    <div class="nav bg-basic w-full py-4 flex justify-between items-center px-8 shadow-md">
-        <span class="flex items-center gap-4">
+    <div
+        class="nav bg-basic w-full py-6 flex justify-between items-center px-8 max-lg:justify-center max-lg:flex-col shrink-0 z-20">
+        <span class="flex items-center gap-3 max-lg:ml-0 max-sm:scale-75">
             <button onclick="window.location.href = '../';"
-                class="rounded-full w-[40px] h-[40px] bg-white text-basic flex justify-center items-center hover:scale-95 transition-all">
-                <i class="bi bi-arrow-left text-xl"></i>
+                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all shadow-md">
+                <i class="bi bi-chevron-left scale-[1.5]"></i>
             </button>
-            <h3 class="text-xl font-bold text-white">OPD Consumables Stock (Manual)</h3>
+            <button onclick="window.location.href = '../../../';"
+                class="p-2 text-basic rounded-lg bg-white flex gap-3 justify-center items-center hover:scale-90 transition-all shadow-md font-bold text-sm sm:text-base">
+                <i class="bi bi-house scale-[1.2]"></i>
+                <span class="hidden sm:inline">Main Panel</span>
+            </button>
         </span>
-        <div class="text-white text-sm">
-            <span id="datetime"></span>
-        </div>
+        <span class="flex items-center gap-3 max-lg:mr-0 max-sm:scale-75 mt-4 lg:mt-0">
+            <h3 class="text-xl sm:text-2xl font-bold text-white uppercase tracking-wider text-center">OPD Consumables
+                Stock</h3>
+            <button onclick="window.location.href = '../../../';"
+                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all shadow-md">
+                <i class="bi bi-box-arrow-left scale-[1.5]"></i>
+            </button>
+        </span>
     </div>
 
     <!-- Main Content -->
-    <div class="flex-grow p-8 overflow-y-auto w-full">
-        <div class="bg-white rounded-lg shadow-md p-6 max-w-6xl mx-auto">
+    <div class="flex-grow flex flex-col items-center w-full overflow-hidden">
 
-            <div class="flex justify-between items-center mb-6">
-                <div class="relative w-1/3">
-                    <input type="text" id="searchInput" onkeyup="filterStock()" placeholder="Search Item..."
-                        class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500">
-                    <i class="bi bi-search absolute left-3 top-3 text-gray-400"></i>
+        <!-- Breadcrumbs -->
+        <div class="px-12 max-sm:px-6 py-6 w-full max-w-6xl">
+            <nav class="flex" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+                    <li class="inline-flex items-center">
+                        <a href="../../stock/index.html"
+                            class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
+                            <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
+                            </svg>
+                            Stock Management
+                        </a>
+                    </li>
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 9 4-4-4-4" />
+                            </svg>
+                            <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2">OPD Stock</span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="flex-grow w-full max-w-6xl px-12 max-sm:px-6 pb-20 overflow-y-auto custom-scrollbar">
+            <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
+
+                <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+                    <div class="relative w-full md:w-1/2">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <i class="bi bi-search text-gray-400 text-lg"></i>
+                        </div>
+                        <input type="text" id="searchInput" onkeyup="filterStock()" placeholder="Search consumables..."
+                            class="block w-full p-3 pl-10 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm">
+                    </div>
+                    <button onclick="openModal()"
+                        class="w-full md:w-auto px-5 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 text-sm">
+                        <i class="bi bi-plus-lg"></i> Update / Add Stock
+                    </button>
                 </div>
-                <button onclick="openModal()"
-                    class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium">
-                    <i class="bi bi-plus-lg mr-1"></i> Update Usage / Add Stock
-                </button>
-            </div>
 
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-100">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">Item ID</th>
-                            <th scope="col" class="px-6 py-3">Consumable Name</th>
-                            <th scope="col" class="px-6 py-3">Unit Type</th>
-                            <th scope="col" class="px-6 py-3 text-center">Current Quantity</th>
-                            <th scope="col" class="px-6 py-3">Last Updated</th>
-                            <th scope="col" class="px-6 py-3 text-center">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="stockTableBody">
-                        <!-- JS Rendered -->
-                    </tbody>
-                </table>
+                <div class="overflow-x-auto rounded-lg border border-gray-200">
+                    <table class="w-full text-sm text-left text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b border-gray-200">
+                            <tr>
+                                <th scope="col" class="px-6 py-4 font-bold">Item ID</th>
+                                <th scope="col" class="px-6 py-4 font-bold">Consumable Name</th>
+                                <th scope="col" class="px-6 py-4 font-bold">Unit Type</th>
+                                <th scope="col" class="px-6 py-4 font-bold text-center">Qty Available</th>
+                                <th scope="col" class="px-6 py-4 font-bold">Last Updated</th>
+                                <th scope="col" class="px-6 py-4 font-bold text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stockTableBody" class="divide-y divide-gray-100">
+                            <!-- JS Rendered -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Modal for Manual Update -->
-    <div id="updateModal" class="fixed inset-0 bg-black bg-opacity-50 hidden place-items-center z-50">
-        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
-            <div class="flex justify-between items-center mb-4 border-b pb-2">
-                <h3 class="text-xl font-bold text-gray-800">Manual Stock Adjustment</h3>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600"><i
-                        class="bi bi-x-lg"></i></button>
+    <div id="updateModal"
+        class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex justify-center items-center backdrop-blur-sm">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all scale-100">
+            <div class="bg-basic px-6 py-4 flex justify-between items-center">
+                <h3 class="text-white font-bold text-lg">Manual Stock Adjustment</h3>
+                <button onclick="closeModal()"
+                    class="text-white hover:bg-white/20 rounded-full p-1 w-8 h-8 flex items-center justify-center transition-colors">
+                    <i class="bi bi-x-lg"></i>
+                </button>
             </div>
 
-            <form id="stockForm" onsubmit="saveStockUpdate(event)">
+            <form id="stockForm" onsubmit="saveStockUpdate(event)" class="p-6">
                 <input type="hidden" id="itemId">
 
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Select Item</label>
-                    <select id="itemSelect" onchange="loadItemDetails()"
-                        class="w-full border rounded p-2 text-gray-700">
-                        <!-- Populated via JS -->
-                    </select>
+                <div class="mb-5">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Select Item</label>
+                    <div class="relative">
+                        <select id="itemSelect" onchange="loadItemDetails()"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none appearance-none transition-all">
+                            <!-- Populated via JS -->
+                        </select>
+                        <i
+                            class="bi bi-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                    </div>
                 </div>
 
-                <div class="mb-4 bg-gray-50 p-3 rounded text-sm text-gray-600">
-                    <p>Current Stock: <span id="currentStockDisplay" class="font-bold text-gray-800">0</span> <span
-                            id="unitDisplay"></span></p>
+                <div
+                    class="mb-5 bg-blue-50 border border-blue-100 p-4 rounded-lg flex justify-between items-center text-sm">
+                    <span class="text-blue-800 font-medium">Current Stock</span>
+                    <span class="font-bold text-blue-900 text-lg"><span id="currentStockDisplay">0</span> <span
+                            id="unitDisplay" class="text-xs font-normal opacity-70"></span></span>
                 </div>
 
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Action</label>
-                    <div class="flex gap-4">
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="radio" name="actionType" value="add" checked>
-                            <span class="text-green-600 font-medium">Add (+)</span>
+                <div class="mb-5">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Action Type</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="actionType" value="add" checked class="peer sr-only">
+                            <div
+                                class="text-center py-2.5 rounded-lg border border-gray-200 peer-checked:bg-green-50 peer-checked:border-green-200 peer-checked:text-green-700 font-bold transition-all hover:bg-gray-50">
+                                <i class="bi bi-plus-lg mr-1"></i> Add Stock
+                            </div>
                         </label>
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="radio" name="actionType" value="remove">
-                            <span class="text-red-600 font-medium">Remove / Use (-)</span>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="actionType" value="remove" class="peer sr-only">
+                            <div
+                                class="text-center py-2.5 rounded-lg border border-gray-200 peer-checked:bg-red-50 peer-checked:border-red-200 peer-checked:text-red-700 font-bold transition-all hover:bg-gray-50">
+                                <i class="bi bi-dash-lg mr-1"></i> Use / Remove
+                            </div>
                         </label>
                     </div>
                 </div>
 
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
-                    <input type="number" id="updateQty" min="1" required class="w-full border rounded p-2"
-                        placeholder="Enter amount">
+                <div class="mb-5">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Quantity</label>
+                    <input type="number" id="updateQty" min="1" required
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none font-mono font-bold text-lg"
+                        placeholder="Amount">
                 </div>
 
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Reason (Optional)</label>
-                    <input type="text" id="updateReason" class="w-full border rounded p-2"
-                        placeholder="e.g. Daily usage">
+                <div class="mb-6">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Reason <span
+                            class="text-gray-400 font-normal">(Optional)</span></label>
+                    <input type="text" id="updateReason"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition-all"
+                        placeholder="e.g. Daily Ward Usage">
                 </div>
 
-                <div class="flex justify-end gap-2 mt-6">
+                <div class="flex justify-end gap-3 mt-4">
                     <button type="button" onclick="closeModal()"
-                        class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Save
-                        Update</button>
+                        class="px-5 py-2.5 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition-colors">Cancel</button>
+                    <button type="submit"
+                        class="px-5 py-2.5 bg-basic text-white rounded-lg font-bold shadow-lg hover:bg-opacity-90 transition-all flex items-center gap-2">
+                        <i class="bi bi-check2-circle"></i> Save Update
+                    </button>
                 </div>
             </form>
         </div>
@@ -141,19 +207,36 @@
             const tbody = document.getElementById('stockTableBody');
             tbody.innerHTML = '';
 
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-gray-400">No consumables found matching your search.</td></tr>';
+                return;
+            }
+
             data.forEach(item => {
                 const dateStr = new Date(item.lastUpdate).toLocaleString();
 
                 const row = document.createElement('tr');
-                row.className = 'bg-white border-b hover:bg-gray-50';
+                row.className = 'bg-white border-b border-gray-100 hover:bg-gray-50 transition-colors last:border-0';
+
+                // Alert if low stock (mock logic)
+                const isLow = item.stock < 10;
+                const stockClass = isLow ? 'text-red-600' : 'text-gray-800';
+
                 row.innerHTML = `
-                    <td class="px-6 py-4 font-medium text-gray-900">${item.id}</td>
-                    <td class="px-6 py-4">${item.name}</td>
-                    <td class="px-6 py-4">${item.unit}</td>
-                    <td class="px-6 py-4 text-center font-bold text-gray-800 text-lg">${item.stock}</td>
+                    <td class="px-6 py-4 font-mono text-sm text-gray-500">${item.id}</td>
+                    <td class="px-6 py-4 font-bold text-gray-800">${item.name}</td>
+                    <td class="px-6 py-4 text-gray-600 text-sm">${item.unit}</td>
+                    <td class="px-6 py-4 text-center">
+                        <span class="inline-block px-3 py-1 rounded-lg ${stockClass} bg-gray-50 border border-gray-100 font-bold text-lg">
+                            ${item.stock} ${isLow ? '<i class="bi bi-exclamation-circle-fill text-xs ml-1 text-red-500" title="Low Stock"></i>' : ''}
+                        </span>
+                    </td>
                     <td class="px-6 py-4 text-xs text-gray-500">${dateStr}</td>
                     <td class="px-6 py-4 text-center">
-                        <button onclick="openModal('${item.id}')" class="text-blue-600 hover:text-blue-800 font-medium text-sm">Adjust</button>
+                        <button onclick="openModal('${item.id}')" 
+                            class="text-basic hover:text-white hover:bg-basic border border-basic/30 px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm">
+                            <i class="bi bi-pencil-square mr-1"></i> Adjust
+                        </button>
                     </td>
                 `;
                 tbody.appendChild(row);
@@ -191,12 +274,10 @@
             document.getElementById('updateReason').value = '';
 
             modal.classList.remove('hidden');
-            modal.classList.add('grid');
         }
 
         function closeModal() {
             modal.classList.add('hidden');
-            modal.classList.remove('grid');
         }
 
         function loadItemDetails() {
@@ -234,20 +315,14 @@
                 opdStock[index].lastUpdate = new Date().toISOString();
                 localStorage.setItem('opd_stock', JSON.stringify(opdStock));
 
-                alert('Stock Updated Successfully!');
+                alert('OPD Stock Updated Successfully!');
                 closeModal();
                 renderStock(opdStock);
             }
         }
 
-        function updateDateTime() {
-            const now = new Date();
-            document.getElementById('datetime').textContent = now.toLocaleString();
-        }
-
         // Init
         renderStock(opdStock);
-        updateDateTime();
     </script>
 </body>
 
