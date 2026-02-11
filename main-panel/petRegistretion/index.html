@@ -70,8 +70,7 @@
     <!--Button container-->
     <div class="w-fit h-full">
       <!--buttons-->
-      <div
-        class="grid grid-cols-2 max-[375px]:grid-cols-1 place-content-center [375px]:justify-items-center h-full gap-6 text-white 2xl:scale-[110%] ">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 place-content-center h-full text-white">
         <div onclick="locatePanelItem('register.html');"
           class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
           <div class="card">
@@ -86,6 +85,15 @@
             <img src="../../images/main-panel/btn-icons/view-item.svg"
               class="w-[60px] h-[60px] max-xl:w-[50px] max-xl:h-[50px]" alt="">
             <p class="text-center mt-2">Pet List</p>
+          </div>
+        </div>
+        <div onclick="locatePanelItem('categories.html');"
+          class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
+          <div class="card">
+            <img src="../../images/main-panel/btn-icons/items.svg"
+              onerror="this.src='../../images/main-panel/btn-icons/view-item.svg'"
+              class="w-[60px] h-[60px] max-xl:w-[50px] max-xl:h-[50px]" alt="">
+            <p class="text-center mt-2">Manage Categories</p>
           </div>
         </div>
       </div>

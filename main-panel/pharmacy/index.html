@@ -61,14 +61,18 @@
         <!--Main Panel-->
         <div class="grid place-items-center h-5/6 w-full">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-fit gap-6 h-fit py-6 text-white px-12">
-                <div onclick="locatePanelItem('billing/index.html');"
+                <!-- POS Button -->
+                <div onclick="locatePanelItem('pos');"
                     class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
                     <div class="card">
-                        <img src="../../images/main-panel/btn-icons/add-item.svg"
+                        <img src="../../images/main-panel/btn-icons/pos.svg"
+                            onerror="this.src='../../images/main-panel/btn-icons/view-item.svg'"
                             class="w-[60px] h-[60px] max-xl:w-[50px] max-xl:h-[50px]" alt="">
-                        <p class="text-center mt-2">Issue Medicine / Bill</p>
+                        <p class="text-center mt-2">Issue Items (POS)</p>
                     </div>
                 </div>
+
+                <!-- History Button -->
                 <div onclick="locatePanelItem('#');"
                     class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
                     <div class="card">
