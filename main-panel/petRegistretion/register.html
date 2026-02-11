@@ -11,26 +11,27 @@
     <link rel="stylesheet" href="../../styles/common.css">
 </head>
 
-<body class="h-dvh flex flex-col">
+<body class="h-dvh flex flex-col bg-gray-50">
     <!--Nav-->
-    <div class="nav bg-basic w-full py-6 flex justify-between items-center max-lg:justify-center max-lg:flex-col">
-        <span class="flex items-center gap-3 ml-20 max-lg:ml-0 max-sm:scale-75">
-            <button onclick="history.go ( -1);"
-                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all">
+    <!--Nav-->
+    <div
+        class="nav bg-basic w-full py-6 flex justify-between items-center px-8 max-lg:justify-center max-lg:flex-col shrink-0 z-20">
+        <span class="flex items-center gap-3 max-lg:ml-0 max-sm:scale-75">
+            <button onclick="window.location.href = 'index.html';"
+                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all shadow-md">
                 <i class="bi bi-chevron-left scale-[1.5]"></i>
             </button>
-            <button onclick="window.location.href = '../../../main-panel/';"
-                class="p-2 text-basic rounded-lg bg-white flex gap-3 justify-center items-center hover:scale-90 transition-all">
+            <button onclick="window.location.href = '../../';"
+                class="p-2 text-basic rounded-lg bg-white flex gap-3 justify-center items-center hover:scale-90 transition-all shadow-md font-bold text-sm sm:text-base">
                 <i class="bi bi-house scale-[1.2]"></i>
-                Go to Main Panel
+                <span class="hidden sm:inline">Main Panel</span>
             </button>
         </span>
-        <span class="flex items-center gap-3 mr-20 max-lg:mr-0 max-sm:scale-75">
-            <!--Logged User-->
-            <h3 class="text-2xl max-md:text-sm text-white">Register Pet</h3>
-            <!--log out btn-->
+        <span class="flex items-center gap-3 max-lg:mr-0 max-sm:scale-75 mt-4 lg:mt-0">
+            <h3 class="text-xl sm:text-2xl font-bold text-white uppercase tracking-wider text-center">Register New Pet
+            </h3>
             <button onclick="window.location.href = '../../../';"
-                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all">
+                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all shadow-md">
                 <i class="bi bi-box-arrow-left scale-[1.5]"></i>
             </button>
         </span>
@@ -120,7 +121,8 @@
                         <button type="button" onclick="openBreedModal()"
                             class="px-4 py-2.5 bg-[#0b2b64] text-white rounded-lg hover:bg-[#65adff] transition-all flex items-center justify-center">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4v16m8-8H4" />
                             </svg>
                         </button>
                     </div>
@@ -148,14 +150,17 @@
                     </label>
                 </div>
                 <div class="flex justify-center items-center w-full gap-4 p-4">
-                    <button type="button" onclick="savePet()" class="py-3 px-6 bg-basic text-white rounded-lg hover:scale-95 transition-all">Save</button>
-                    <button type="button" onclick="resetForm()" class="py-3 px-6 bg-black text-white rounded-lg hover:scale-95 transition-all">Reset</button>
+                    <button type="button" onclick="savePet()"
+                        class="py-3 px-6 bg-basic text-white rounded-lg hover:scale-95 transition-all">Save</button>
+                    <button type="button" onclick="resetForm()"
+                        class="py-3 px-6 bg-black text-white rounded-lg hover:scale-95 transition-all">Reset</button>
                 </div>
             </div>
         </div>
 
         <!-- Add Breed Modal -->
-        <div id="breedModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-500 bg-opacity-50">
+        <div id="breedModal"
+            class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-500 bg-opacity-50">
             <div class="bg-white rounded-lg p-6 w-full max-w-md">
                 <h2 class="text-xl font-semibold mb-4">Add New Breed</h2>
                 <div class="mb-4">
@@ -165,14 +170,15 @@
                         placeholder="Enter breed name" />
                 </div>
                 <div class="flex justify-end gap-3">
-                    <button type="button" onclick="closeBreedModal()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">Cancel</button>
-                    <button type="button" onclick="addBreed()" class="px-4 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#65adff]">Add Breed</button>
+                    <button type="button" onclick="closeBreedModal()"
+                        class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">Cancel</button>
+                    <button type="button" onclick="addBreed()"
+                        class="px-4 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#65adff]">Add Breed</button>
                 </div>
             </div>
         </div>
         <div class="flex-grow"></div>
-        <footer
-            class="h-[80px] bg-basic max-md:text-sm max-sm:text-xs max-md:flex-col text-center w-full flex items-center text-white justify-center gap-3">
+        <footer class="bg-basic py-4 text-center text-white text-xs z-20 shrink-0">
             <p>2025 © All Rights Reserved | Application | Powered by Silicon Radon Networks (Pvt) Ltd</p>
         </footer>
     </div>
@@ -222,7 +228,7 @@
         }
 
         const petCode = 'RP' + String(pets.length + 1).padStart(5, '0');
-        
+
         const pet = {
             code: petCode,
             name: petName,

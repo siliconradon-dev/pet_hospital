@@ -4,53 +4,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Application | Expenses</title>
-  <link rel="icon" href="./images/favicon.png" />
+  <title>Application | Pet Management</title>
+  <link rel="icon" href="../../images/favicon.png" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <link rel="stylesheet" href="../../styles/common.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 
-<body class="h-dvh">
+<body class="h-dvh flex flex-col bg-gray-50">
   <!--Nav-->
-  <div class="nav bg-basic w-full py-6 flex justify-between items-center max-lg:justify-center max-lg:flex-col">
-    <span class="flex items-center gap-3 ml-20 max-lg:ml-0 max-sm:scale-75">
-      <button onclick="history.go ( -1);"
-        class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all">
+  <div
+    class="nav bg-basic w-full py-6 flex justify-between items-center px-8 max-lg:justify-center max-lg:flex-col shrink-0 z-20">
+    <span class="flex items-center gap-3 max-lg:ml-0 max-sm:scale-75">
+      <button onclick="window.location.href = '../';"
+        class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all shadow-md">
         <i class="bi bi-chevron-left scale-[1.5]"></i>
       </button>
-      <!--
-      <button onclick="window.location.href = '../../../main-panel/';"
-          class="p-2 text-basic rounded-lg bg-white flex gap-3 justify-center items-center hover:scale-90 transition-all">
-          <i class="bi bi-house scale-[1.2]"></i>
-          Go to Main Panel
-      </button>
-      -->
-    </span>
-    <span class="flex items-center gap-3 mr-20 max-lg:mr-0 max-sm:scale-75">
-      <!--Logged User-->
-      <h3 class="text-2xl max-md:text-sm text-white">Welcome User</h3>
-      <!--log out btn-->
       <button onclick="window.location.href = '../../';"
-        class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all">
+        class="p-2 text-basic rounded-lg bg-white flex gap-3 justify-center items-center hover:scale-90 transition-all shadow-md font-bold text-sm sm:text-base">
+        <i class="bi bi-house scale-[1.2]"></i>
+        <span class="hidden sm:inline">Main Panel</span>
+      </button>
+    </span>
+    <span class="flex items-center gap-3 max-lg:mr-0 max-sm:scale-75 mt-4 lg:mt-0">
+      <h3 class="text-xl sm:text-2xl font-bold text-white uppercase tracking-wider text-center">Pet Management</h3>
+      <button onclick="window.location.href = '../../';"
+        class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all shadow-md">
         <i class="bi bi-box-arrow-left scale-[1.5]"></i>
       </button>
     </span>
   </div>
-  <div class="h-5/6 max-lg:h-[83vh] flex flex-col items-center">
-    <!--breadcrumbs-->
-    <div class="px-12 max-sm:px-6 py-5 w-full">
+
+  <!-- Content -->
+  <div class="flex-grow flex flex-col items-center w-full overflow-hidden">
+
+    <!-- Breadcrumbs -->
+    <div class="px-12 max-sm:px-6 py-6 w-full">
       <nav class="flex" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
           <li class="inline-flex items-center">
-            <p class="inline-flex items-center text-sm font-medium text-gray-700">
+            <a href="../index.html"
+              class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
               <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                 viewBox="0 0 20 20">
                 <path
                   d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
               </svg>
               Main Panel
-            </p>
+            </a>
           </li>
           <li aria-current="page">
             <div class="flex items-center">
@@ -59,51 +60,55 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="m1 9 4-4-4-4" />
               </svg>
-              <p class="ms-1 text-sm font-medium text-gray-700 md:ms-2">
-                Pet Management
-              </p>
+              <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2">Pet Management</span>
             </div>
           </li>
         </ol>
       </nav>
     </div>
-    <!--Button container-->
-    <div class="w-fit h-full">
-      <!--buttons-->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 place-content-center h-full text-white">
+
+    <!-- Dashboard Grid -->
+    <div class="flex-grow w-full flex justify-center overflow-y-auto pb-20">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-fit text-white px-12 py-6">
+        <!-- Register Pet -->
         <div onclick="locatePanelItem('register.html');"
-          class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
-          <div class="card">
+          class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox cursor-pointer">
+          <div class="card flex flex-col items-center justify-center p-4">
             <img src="../../images/main-panel/btn-icons/add-item.svg"
-              class="w-[60px] h-[60px] max-xl:w-[50px] max-xl:h-[50px]" alt="">
+              class="w-[60px] h-[60px] max-xl:w-[50px] max-xl:h-[50px] mb-2" alt="">
             <p class="text-center mt-2">Register Pet</p>
           </div>
         </div>
+
+        <!-- Pet List -->
         <div onclick="locatePanelItem('list.html');"
-          class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
-          <div class="card">
+          class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox cursor-pointer">
+          <div class="card flex flex-col items-center justify-center p-4">
             <img src="../../images/main-panel/btn-icons/view-item.svg"
-              class="w-[60px] h-[60px] max-xl:w-[50px] max-xl:h-[50px]" alt="">
+              class="w-[60px] h-[60px] max-xl:w-[50px] max-xl:h-[50px] mb-2" alt="">
             <p class="text-center mt-2">Pet List</p>
           </div>
         </div>
+
+        <!-- Manage Categories -->
         <div onclick="locatePanelItem('categories.html');"
-          class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox">
-          <div class="card">
+          class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox cursor-pointer">
+          <div class="card flex flex-col items-center justify-center p-4">
             <img src="../../images/main-panel/btn-icons/items.svg"
               onerror="this.src='../../images/main-panel/btn-icons/view-item.svg'"
-              class="w-[60px] h-[60px] max-xl:w-[50px] max-xl:h-[50px]" alt="">
+              class="w-[60px] h-[60px] max-xl:w-[50px] max-xl:h-[50px] mb-2" alt="">
             <p class="text-center mt-2">Manage Categories</p>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <script>
+    function locatePanelItem(panelItem) {
+      window.location.href = "../../main-panel/petRegistretion/" + panelItem;
+    }
+  </script>
 </body>
-<script>
-  function locatePanelItem(panelItem) {
-    window.location.href = "../../main-panel/petRegistretion/" + panelItem;
-  }
-</script>
 
 </html>

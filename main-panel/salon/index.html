@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Application | Pharmacy Dashboard</title>
+    <title>Application | Pet Salon Management</title>
     <link rel="icon" href="../../images/favicon.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../../styles/common.css" />
@@ -20,15 +20,16 @@
                 class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all shadow-md">
                 <i class="bi bi-chevron-left scale-[1.5]"></i>
             </button>
-            <button onclick="window.location.href = '../../../';"
+            <button onclick="window.location.href = '../../';"
                 class="p-2 text-basic rounded-lg bg-white flex gap-3 justify-center items-center hover:scale-90 transition-all shadow-md font-bold text-sm sm:text-base">
                 <i class="bi bi-house scale-[1.2]"></i>
                 <span class="hidden sm:inline">Main Panel</span>
             </button>
         </span>
         <span class="flex items-center gap-3 max-lg:mr-0 max-sm:scale-75 mt-4 lg:mt-0">
-            <h3 class="text-xl sm:text-2xl font-bold text-white uppercase tracking-wider text-center">Pharmacy</h3>
-            <button onclick="window.location.href = '../../../';"
+            <h3 class="text-xl sm:text-2xl font-bold text-white uppercase tracking-wider text-center">Salon Management
+            </h3>
+            <button onclick="window.location.href = '../../';"
                 class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all shadow-md">
                 <i class="bi bi-box-arrow-left scale-[1.5]"></i>
             </button>
@@ -39,7 +40,7 @@
     <div class="flex-grow flex flex-col items-center w-full overflow-hidden">
 
         <!-- Breadcrumbs -->
-        <div class="px-12 max-sm:px-6 py-8 w-full">
+        <div class="px-12 max-sm:px-6 py-6 w-full">
             <nav class="flex" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                     <li class="inline-flex items-center">
@@ -60,40 +61,34 @@
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m1 9 4-4-4-4" />
                             </svg>
-                            <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2">Pharmacy</span>
+                            <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2">Salon</span>
                         </div>
                     </li>
                 </ol>
             </nav>
         </div>
 
-        <!-- Dashboard Grid -->
-        <div class="grid place-items-center flex-grow w-full pb-20">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-fit px-12">
+        <!-- Dashboard Grid (Same Structure as Main Panel) -->
+        <div class="grid place-items-center flex-grow w-full pb-20 overflow-y-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-fit h-fit py-6 px-12 text-white">
 
-                <!-- POS Button -->
-                <div onclick="locatePanelItem('pos');"
-                    class="w-[300px] h-[220px] max-lg:w-[240px] max-lg:h-[180px] text-white uppercase transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox cursor-pointer group">
-                    <div class="card flex flex-col items-center justify-center gap-4 relative overflow-hidden">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-20 transition-opacity">
-                        </div>
-                        <i class="bi bi-cart-plus text-6xl mb-2"></i>
-                        <h3 class="text-xl font-bold tracking-wider">POS Terminal</h3>
-                        <p class="text-xs font-normal opacity-70 normal-case">Issue Medicine & Create Bills</p>
+                <!-- New Job -->
+                <div onclick="locatePanelItem('create/index.html');"
+                    class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox cursor-pointer">
+                    <div class="card flex flex-col items-center justify-center h-full">
+                        <img src="../../images/main-panel/btn-icons/add-item.svg"
+                            class="w-[60px] h-[60px] max-xl:w-[50px] max-xl:h-[50px]" alt="">
+                        <p class="text-center mt-2">New Grooming Job</p>
                     </div>
                 </div>
 
-                <!-- Stock Button (Placeholder) -->
-                <div onclick="locatePanelItem('#');"
-                    class="w-[300px] h-[220px] max-lg:w-[240px] max-lg:h-[180px] text-white uppercase transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox cursor-pointer group">
-                    <div class="card flex flex-col items-center justify-center gap-4 relative overflow-hidden">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-20 transition-opacity">
-                        </div>
-                        <i class="bi bi-boxes text-6xl mb-2"></i>
-                        <h3 class="text-xl font-bold tracking-wider">Inventory</h3>
-                        <p class="text-xs font-normal opacity-70 normal-case">Manage Stock & Suppliers</p>
+                <!-- Job List -->
+                <div onclick="locatePanelItem('list/index.html');"
+                    class="w-[250px] max-lg:w-[200px] h-[200px] max-lg:h-[150px] text-white uppercase lg:text-xl transform transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:scale-[1.02] hover:rotate-[1deg] cardBox cursor-pointer">
+                    <div class="card flex flex-col items-center justify-center h-full">
+                        <img src="../../images/main-panel/btn-icons/view-item.svg"
+                            class="w-[60px] h-[60px] max-xl:w-[50px] max-xl:h-[50px]" alt="">
+                        <p class="text-center mt-2">Job List</p>
                     </div>
                 </div>
 
@@ -103,11 +98,7 @@
 
     <script>
         function locatePanelItem(panelItem) {
-            if (panelItem === '#') {
-                alert('Module coming soon!');
-                return;
-            }
-            window.location.href = "./" + panelItem + "/index.html";
+            window.location.href = "../salon/" + panelItem;
         }
     </script>
 </body>
