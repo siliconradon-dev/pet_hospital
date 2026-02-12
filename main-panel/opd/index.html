@@ -12,7 +12,7 @@
 </head>
 
 <body class="min-h-screen flex flex-col bg-gray-50">
-        <!--Nav-->
+    <!--Nav-->
     <div class="nav bg-basic w-full py-4 flex justify-between items-center px-8 shadow-md">
         <!-- Left: Navigation -->
         <div class="flex items-center gap-4">
@@ -29,7 +29,7 @@
 
         <!-- Center: Logo -->
         <div class="flex-1 flex justify-center">
-             <img src="../../images/logo.png" alt="Logo" class="h-12 w-auto drop-shadow-md">
+            <img src="../../images/logo.png" alt="Logo" class="h-12 w-auto drop-shadow-md">
         </div>
 
         <!-- Right: User Info -->
@@ -80,7 +80,7 @@
 
         <!--Main Panel-->
         <div class="grid place-items-center flex-grow w-full">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-fit h-fit py-6 text-white px-12">
+            <div class="flex flex-wrap justify-center gap-6 w-full max-w-7xl h-fit py-6 text-white px-4">
 
                 <!-- New OPD Entry -->
                 <div onclick="locatePanelItem('create/index.html');"
@@ -104,10 +104,11 @@
             </div>
         </div>
     </div>
-        
-        <footer class="mt-auto bg-basic py-4 text-center text-white text-xs w-full">
-            <p>2026 © All Rights Reserved | Royal Pets Animal Hospital | Designed and Developed by Silicon Radon Networks (Pvt) Ltd</p>
-        </footer>
+
+    <footer class="mt-auto bg-basic py-4 text-center text-white text-xs w-full">
+        <p>2026 © All Rights Reserved | Royal Pets Animal Hospital | Designed and Developed by Silicon Radon Networks
+            (Pvt) Ltd</p>
+    </footer>
 </body>
 <script>
     function locatePanelItem(panelItem) {
