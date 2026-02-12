@@ -12,31 +12,40 @@
     <link rel="stylesheet" href="../../../styles/common.css">
 </head>
 
-<body class="h-dvh flex flex-col">
-    <!--Nav-->
-    <div
-        class="nav bg-basic w-full py-6 flex justify-between items-center max-lg:justify-center max-lg:flex-col">
-        <span class="flex items-center gap-3 ml-20 max-lg:ml-0 max-sm:scale-75">
-            <button onclick="history.go ( -1);"
-                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all">
-                <i class="bi bi-chevron-left scale-[1.5]"></i>
+<body class="min-h-screen flex flex-col">
+        <!--Nav-->
+    <div class="nav bg-basic w-full py-4 flex justify-between items-center px-8 shadow-md">
+        <!-- Left: Navigation -->
+        <div class="flex items-center gap-4">
+            <button onclick="history.back()"
+                class="w-10 h-10 bg-white text-basic rounded-full flex items-center justify-center hover:scale-95 transition-transform shadow-sm">
+                <i class="bi bi-chevron-left text-lg"></i>
             </button>
-            <button onclick="window.location.href = '../../../main-panel/';"
-                class="p-2 text-basic rounded-lg bg-white flex gap-3 justify-center items-center hover:scale-90 transition-all">
-                <i class="bi bi-house scale-[1.2]"></i>
-                Go to Main Panel
+            <button onclick="window.location.href = '../../';"
+                class="px-4 py-2 bg-white text-basic rounded-lg flex items-center gap-2 hover:scale-95 transition-transform shadow-sm font-semibold text-sm">
+                <i class="bi bi-building"></i>
+                <span class="hidden sm:inline">Go to Main Panel</span>
             </button>
-        </span>
-        <span class="flex items-center gap-3 mr-20 max-lg:mr-0 max-sm:scale-75">
-            <!--Logged User-->
-            <h3 class="text-2xl max-md:text-sm text-white">Welcome User</h3>
-            <!--log out btn-->
+        </div>
+
+        <!-- Center: Logo -->
+        <div class="flex-1 flex justify-center">
+             <img src="../../../images/logo.png" alt="Logo" class="h-12 w-auto drop-shadow-md">
+        </div>
+
+        <!-- Right: User Info -->
+        <div class="flex items-center gap-4">
+            <div class="text-right text-white hidden sm:block">
+                <h2 class="text-lg font-bold leading-tight">Good Evening!</h2>
+                <p class="text-xs text-blue-200">Welcome Admin</p>
+            </div>
             <button onclick="window.location.href = '../../../';"
-                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all">
-                <i class="bi bi-box-arrow-left scale-[1.5]"></i>
+                class="w-10 h-10 bg-white text-basic rounded-full flex items-center justify-center hover:scale-95 transition-transform shadow-sm">
+                <i class="bi bi-box-arrow-right text-lg"></i>
             </button>
-        </span>
+        </div>
     </div>
+    <!-- Spacer -->
     <div class="flex-grow flex flex-col">
         <!--breadcrumbs-->
         <div class="px-12 max-sm:px-6 pt-5">
@@ -305,12 +314,13 @@
             </div>
         </div>
         <div class="flex-grow"></div>
-        <footer
-            class="h-[80px] bg-basic max-md:text-sm max-sm:text-xs max-md:flex-col text-center w-full flex items-center text-white justify-center gap-3">
-            <p>2025 © All Rights Reserved | Application | Powered by Silicon Radon Networks (Pvt) Ltd</p>
-        </footer>
+        
     </div>
 
+        
+        <footer class="mt-auto bg-basic py-4 text-center text-white text-xs w-full">
+            <p>2025 © All Rights Reserved | Application | Powered by Silicon Radon Networks (Pvt) Ltd</p>
+        </footer>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 <script src="../../../scripts/common.js"></script>
