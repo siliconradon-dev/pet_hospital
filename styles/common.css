@@ -220,3 +220,18 @@
     transform: rotate(360deg);
   }
 }
+
+/* Standardized page content padding - matches nav bar px-8 */
+.page-padding {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+@media (max-width: 639px) {
+  .page-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

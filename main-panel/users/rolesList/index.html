@@ -13,7 +13,7 @@
 </head>
 
 <body class="flex flex-col min-h-screen">
-        <!--Nav-->
+    <!--Nav-->
     <div class="nav bg-basic w-full py-4 flex justify-between items-center px-8 shadow-md">
         <!-- Left: Navigation -->
         <div class="flex items-center gap-4">
@@ -30,7 +30,7 @@
 
         <!-- Center: Logo -->
         <div class="flex-1 flex justify-center">
-             <img src="../../../images/logo.png" alt="Logo" class="h-12 w-auto drop-shadow-md">
+            <img src="../../../images/logo.png" alt="Logo" class="h-12 w-auto drop-shadow-md">
         </div>
 
         <!-- Right: User Info -->
@@ -48,7 +48,7 @@
     <!-- Spacer -->
     <div class="flex flex-col flex-grow">
         <!--breadcrumbs-->
-        <div class="px-12 max-sm:px-6 pt-5">
+        <div class="page-padding">
             <nav class="flex" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                     <li class="inline-flex items-center">
@@ -85,15 +85,16 @@
             </nav>
         </div>
         <!--search-->
-        <div class="px-12 max-sm:px-6 pt-5 flex w-1/2 max-md:w-full items-center gap-3">
+        <div class="page-padding pt-5 flex w-1/2 max-md:w-full items-center gap-3">
             <label for="search_item">Search</label>
             <input type="text" id="search_item"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 placeholder="Enter role name" required />
-            <button onclick="searchItems('search_item', 'itemsTable', 1);" class="py-3 px-6 bg-basic text-white rounded-lg">Search</button>
+            <button onclick="searchItems('search_item', 'itemsTable', 1);"
+                class="py-3 px-6 bg-basic text-white rounded-lg">Search</button>
         </div>
         <!--btn controls-->
-        <div class="px-12 max-sm:px-6 pt-5 flex w-full items-center max-md:flex-col justify-between gap-3">
+        <div class="page-padding pt-5 flex w-full items-center max-md:flex-col justify-between gap-3">
             <span class="w-fit max-md:w-full max-md:justify-center flex gap-3 max-sm:gap-1 max-[350px]:scale-75">
                 <button class="py-3 px-6 max-sm:px-3 max-sm:py-1 bg-black text-white rounded-lg">Copy</button>
                 <button class="py-3 px-6 max-sm:px-3 max-sm:py-1 bg-black text-white rounded-lg">CSV</button>
@@ -156,7 +157,7 @@
             </span>
         </div>
         <!--table-->
-        <div class="px-12 max-sm:px-6 max-lg:min-h-full py-5 bg-white flex flex-col flex-grow">
+        <div class="page-padding max-lg:min-h-full py-5 bg-white flex flex-col flex-grow">
             <span></span>
             <!--table from flowbite-->
             <div class="relative overflow-x-auto">
@@ -332,12 +333,13 @@
                 </table>
             </div>
         </div>
-        
+
     </div>
-        
-        <footer class="mt-auto bg-basic py-4 text-center text-white text-xs w-full">
-            <p>2026 © All Rights Reserved | Royal Pets Animal Hospital | Designed and Developed by Silicon Radon Networks (Pvt) Ltd</p>
-        </footer>
+
+    <footer class="mt-auto bg-basic py-4 text-center text-white text-xs w-full">
+        <p>2026 © All Rights Reserved | Royal Pets Animal Hospital | Designed and Developed by Silicon Radon Networks
+            (Pvt) Ltd</p>
+    </footer>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 <script src="../../../scripts/common.js"></script>

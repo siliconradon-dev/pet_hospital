@@ -37,7 +37,7 @@
     </div>
     <div class="flex-grow flex flex-col">
         <!--breadcrumbs-->
-        <div class="px-12 max-sm:px-6 pt-5">
+        <div class="page-padding">
             <nav class="flex" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                     <li class="inline-flex items-center">
@@ -74,7 +74,7 @@
             </nav>
         </div>
         <!--main panel-->
-        <div class="p-6">
+        <div class="page-padding">
             <div class="flex flex-col border-2 h-full rounded-lg p-6">
                 <!-- Pet Code Display -->
                 <div class="mb-6 p-4 bg-blue-50 rounded-lg border-2 border-blue-200">
@@ -126,7 +126,8 @@
                         <button type="button" onclick="openBreedModal()"
                             class="px-4 py-2.5 bg-[#0b2b64] text-white rounded-lg hover:bg-[#65adff] transition-all flex items-center justify-center">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4v16m8-8H4" />
                             </svg>
                         </button>
                     </div>
@@ -137,11 +138,12 @@
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="Description" rows="3"></textarea>
                 </div>
-                
+
                 <!-- Current Image Display -->
                 <div class="mb-4">
                     <label class="block mb-2 text-sm font-medium text-black">Current Image</label>
-                    <img id="current_image" src="" alt="Current Pet" class="w-32 h-32 rounded-lg object-cover border-2 border-gray-300">
+                    <img id="current_image" src="" alt="Current Pet"
+                        class="w-32 h-32 rounded-lg object-cover border-2 border-gray-300">
                 </div>
 
                 <div class="flex items-center justify-center w-full mb-6">
@@ -154,21 +156,26 @@
                                     stroke-width="2"
                                     d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                             </svg>
-                            <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Change image </span>(optional)</p>
+                            <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Change image
+                                </span>(optional)</p>
                             <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                         </div>
                         <input id="dropzone-file" type="file" class="hidden" />
                     </label>
                 </div>
                 <div class="flex justify-center items-center w-full gap-4 p-4">
-                    <button type="button" onclick="updatePet()" class="py-3 px-6 bg-green-600 text-white rounded-lg hover:scale-95 transition-all">Update Pet</button>
-                    <button type="button" onclick="window.location.href='list.html'" class="py-3 px-6 bg-gray-600 text-white rounded-lg hover:scale-95 transition-all">Cancel</button>
+                    <button type="button" onclick="updatePet()"
+                        class="py-3 px-6 bg-green-600 text-white rounded-lg hover:scale-95 transition-all">Update
+                        Pet</button>
+                    <button type="button" onclick="window.location.href='list.html'"
+                        class="py-3 px-6 bg-gray-600 text-white rounded-lg hover:scale-95 transition-all">Cancel</button>
                 </div>
             </div>
         </div>
 
         <!-- Add Breed Modal -->
-        <div id="breedModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-500 bg-opacity-50">
+        <div id="breedModal"
+            class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-500 bg-opacity-50">
             <div class="bg-white rounded-lg p-6 w-full max-w-md">
                 <h2 class="text-xl font-semibold mb-4">Add New Breed</h2>
                 <div class="mb-4">
@@ -178,14 +185,18 @@
                         placeholder="Enter breed name" />
                 </div>
                 <div class="flex justify-end gap-3">
-                    <button type="button" onclick="closeBreedModal()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">Cancel</button>
-                    <button type="button" onclick="addBreed()" class="px-4 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#65adff]">Add Breed</button>
+                    <button type="button" onclick="closeBreedModal()"
+                        class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">Cancel</button>
+                    <button type="button" onclick="addBreed()"
+                        class="px-4 py-2 bg-[#0b2b64] text-white rounded-lg hover:bg-[#65adff]">Add Breed</button>
                 </div>
             </div>
         </div>
         <div class="flex-grow"></div>
-        <footer class="mt-auto h-[80px] bg-basic max-md:text-sm max-sm:text-xs max-md:flex-col text-center w-full flex items-center text-white justify-center gap-3">
-            <p>2026 © All Rights Reserved | Royal Pets Animal Hospital | Designed and Developed by Silicon Radon Networks (Pvt) Ltd</p>
+        <footer
+            class="mt-auto h-[80px] bg-basic max-md:text-sm max-sm:text-xs max-md:flex-col text-center w-full flex items-center text-white justify-center gap-3">
+            <p>2026 © All Rights Reserved | Royal Pets Animal Hospital | Designed and Developed by Silicon Radon
+                Networks (Pvt) Ltd</p>
         </footer>
     </div>
 
@@ -198,7 +209,7 @@
     let petCode = '';
 
     // Load pet data on page load
-    window.onload = function() {
+    window.onload = function () {
         // Get pet code from URL
         const urlParams = new URLSearchParams(window.location.search);
         petCode = urlParams.get('code');
@@ -276,7 +287,7 @@
         currentPet.species = petSpecies;
         currentPet.breed = petBreed;
         currentPet.description = petDescription;
-        
+
         // Update image only if new one is selected
         if (petImage) {
             currentPet.image = URL.createObjectURL(petImage);
@@ -289,7 +300,7 @@
         if (petIndex !== -1) {
             pets[petIndex] = currentPet;
             localStorage.setItem('pets', JSON.stringify(pets));
-            
+
             alert('Pet updated successfully!');
             window.location.href = 'list.html';
         } else {
