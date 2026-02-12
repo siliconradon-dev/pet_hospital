@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Application | Employee & User Management</title>
-    <link rel="icon" href="../../images/favicon.png" />        
+    <link rel="icon" href="../../images/favicon.png" />
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../../styles/common.css" />
@@ -13,7 +13,7 @@
 </head>
 
 <body class="min-h-screen flex flex-col bg-gray-50">
-        <!--Nav-->
+    <!--Nav-->
     <div class="nav bg-basic w-full py-4 flex justify-between items-center px-8 shadow-md">
         <!-- Left: Navigation -->
         <div class="flex items-center gap-4">
@@ -30,7 +30,7 @@
 
         <!-- Center: Logo -->
         <div class="flex-1 flex justify-center">
-             <img src="../../images/logo.png" alt="Logo" class="h-12 w-auto drop-shadow-md">
+            <img src="../../images/logo.png" alt="Logo" class="h-12 w-auto drop-shadow-md">
         </div>
 
         <!-- Right: User Info -->
@@ -80,10 +80,8 @@
         </div>
 
         <!-- Dashboard Grid (Same Structure as Main Panel) -->
-        <div
-            class="w-full max-w-7xl px-12 max-sm:px-6 flex justify-center items-center">
-            <div
-                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-fit h-fit py-6 px-12 text-white">
+        <div class="w-full max-w-7xl px-12 max-sm:px-6 flex justify-center items-center">
+            <div class="flex flex-wrap justify-center gap-6 w-full h-fit py-6 text-white">
 
                 <!-- Attendance -->
                 <div onclick="locatePanelItem('attendance');"
@@ -149,7 +147,7 @@
         </div>
 
         <!-- Footer -->
-        
+
     </div>
 
     <script>
@@ -161,9 +159,10 @@
             window.location.href = "../../main-panel/users/" + panelItem;
         }
     </script>
-        <footer class="mt-auto bg-basic py-4 text-center text-white text-xs w-full">
-            <p>2026 © All Rights Reserved | Royal Pets Animal Hospital | Designed and Developed by Silicon Radon Networks (Pvt) Ltd</p>
-        </footer>
+    <footer class="mt-auto bg-basic py-4 text-center text-white text-xs w-full">
+        <p>2026 © All Rights Reserved | Royal Pets Animal Hospital | Designed and Developed by Silicon Radon Networks
+            (Pvt) Ltd</p>
+    </footer>
 </body>
 
 </html>
