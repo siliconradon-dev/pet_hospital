@@ -12,9 +12,9 @@
 
 <body class="min-h-screen max-md:h-fit flex flex-col">
     <!--Nav-->
-    <div class="nav bg-basic w-full py-4 flex justify-between items-center px-8 shadow-md relative">
+    <div class="nav bg-basic w-full py-4 grid grid-cols-3 items-center px-8 shadow-md relative">
         <!-- Left: Navigation -->
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-4 justify-self-start">
             <button onclick="history.back()"
                 class="w-10 h-10 bg-white text-basic rounded-full flex items-center justify-center hover:scale-95 transition-transform shadow-sm">
                 <i class="bi bi-chevron-left text-lg"></i>
@@ -23,12 +23,12 @@
         </div>
 
         <!-- Center: Logo -->
-        <div class="absolute left-1/2 transform -translate-x-1/2">
+        <div class="flex justify-center justify-self-center">
             <img src="../images/logo.png" alt="Logo" class="h-12 w-auto drop-shadow-md">
         </div>
 
         <!-- Right: User Info -->
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-4 justify-self-end">
             <div class="text-right text-white hidden sm:block">
                 <h2 class="text-lg font-bold leading-tight">Good Evening!</h2>
                 <p class="text-xs text-blue-200">Welcome Admin</p>
@@ -178,7 +178,8 @@
     </div>
 
     <footer class="mt-auto bg-basic py-4 text-center text-white text-xs w-full">
-        <p>2026 © All Rights Reserved | Royal Pets Animal Hospital | Designed and Developed by Silicon Radon Networks (Pvt) Ltd</p>
+        <p>2026 © All Rights Reserved | Royal Pets Animal Hospital | Designed and Developed by Silicon Radon Networks
+            (Pvt) Ltd</p>
     </footer>
 </body>
 <script src="../scripts/common.js"></script>

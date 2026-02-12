@@ -1,10 +1,10 @@
-const appName = "Pet Hospital";
+const appName = " Royal Pets Animal Hospital";
 
 document.title = `${appName}`;
 
 document.querySelector(
   "footer p"
-).textContent = `2025 © All Rights Reserved | ${appName} | Powered by Silicon Radon Networks (Pvt) Ltd`;
+).textContent = `2026 © All Rights Reserved | ${appName} | Designed and Developed by Silicon Radon Networks (Pvt) Ltd`;
 
 class CustomSelect {
   constructor(selectElement) {
