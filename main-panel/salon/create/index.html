@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Application | New Grooming Job</title>
     <link rel="icon" href="../../../images/favicon.png" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../../../styles/common.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -42,34 +43,44 @@
     </style>
 </head>
 
-<body class="h-dvh flex flex-col bg-gray-50">
+<body class="min-h-screen flex flex-col bg-gray-50">
 
     <!--Nav-->
-    <div
-        class="nav bg-basic w-full py-6 flex justify-between items-center px-8 max-lg:justify-center max-lg:flex-col shrink-0 z-20">
-        <span class="flex items-center gap-3 max-lg:ml-0 max-sm:scale-75">
-            <button onclick="history.back();"
-                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all shadow-md">
-                <i class="bi bi-chevron-left scale-[1.5]"></i>
+    <div class="nav bg-basic w-full py-4 flex justify-between items-center px-8 shadow-md">
+        <!-- Left: Navigation -->
+        <div class="flex items-center gap-4">
+            <button onclick="history.back()"
+                class="w-10 h-10 bg-white text-basic rounded-full flex items-center justify-center hover:scale-95 transition-transform shadow-sm">
+                <i class="bi bi-chevron-left text-lg"></i>
             </button>
+            <button onclick="window.location.href = '../../';"
+                class="px-4 py-2 bg-white text-basic rounded-lg flex items-center gap-2 hover:scale-95 transition-transform shadow-sm font-semibold text-sm">
+                <i class="bi bi-building"></i>
+                <span class="hidden sm:inline">Go to Main Panel</span>
+            </button>
+        </div>
+
+        <!-- Center: Logo -->
+        <div class="flex-1 flex justify-center">
+            <img src="../../../images/logo.png" alt="Logo" class="h-12 w-auto drop-shadow-md">
+        </div>
+
+        <!-- Right: User Info -->
+        <div class="flex items-center gap-4">
+            <div class="text-right text-white hidden sm:block">
+                <h2 class="text-lg font-bold leading-tight">Good Evening!</h2>
+                <p class="text-xs text-blue-200">Welcome Admin</p>
+            </div>
             <button onclick="window.location.href = '../../../';"
-                class="p-2 text-basic rounded-lg bg-white flex gap-3 justify-center items-center hover:scale-90 transition-all shadow-md font-bold text-sm sm:text-base">
-                <i class="bi bi-house scale-[1.2]"></i>
-                <span class="hidden sm:inline">Main Panel</span>
+                class="w-10 h-10 bg-white text-basic rounded-full flex items-center justify-center hover:scale-95 transition-transform shadow-sm">
+                <i class="bi bi-box-arrow-right text-lg"></i>
             </button>
-        </span>
-        <span class="flex items-center gap-3 max-lg:mr-0 max-sm:scale-75 mt-4 lg:mt-0">
-            <h3 class="text-xl sm:text-2xl font-bold text-white uppercase tracking-wider text-center">New Grooming Job
-            </h3>
-            <button onclick="window.location.href = '../../../';"
-                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all shadow-md">
-                <i class="bi bi-box-arrow-left scale-[1.5]"></i>
-            </button>
-        </span>
+        </div>
+    </div>
     </div>
 
     <!-- Content -->
-    <div class="flex-grow flex flex-col items-center w-full overflow-hidden">
+    <div class="flex-grow flex flex-col items-center w-full relative">
 
         <!-- Breadcrumbs -->
         <div class="px-12 max-sm:px-6 py-6 w-full max-w-7xl">
@@ -101,9 +112,11 @@
         </div>
 
         <!-- Create Job Form -->
-        <div class="w-full max-w-7xl px-12 max-sm:px-6 pb-24 overflow-y-auto custom-scrollbar">
-            <!-- Added pb-24 for fixed footer clearance -->
-            <div class="space-y-8">
+        <!-- Create Job Form -->
+        <!-- Create Job Form -->
+        <div class="w-full flex-grow flex flex-col">
+            <!-- Added pb-32 for fixed footer clearance -->
+            <div class="space-y-8 w-full max-w-7xl px-12 max-sm:px-6 mx-auto">
 
                 <!-- 1. Pet Details Section -->
                 <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
@@ -164,10 +177,14 @@
 
             </div>
         </div>
+    </div>
 
-        <!-- Fixed Footer for Summary & Action -->
-        <div
-            class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 shadow-[0_-5px_15px_rgba(0,0,0,0.05)] z-50">
+    <!-- Fixed Footer for Summary & Action -->
+    <!-- Fixed Footer for Summary & Action -->
+    <!-- Fixed Footer for Summary & Action -->
+    <div class="w-full z-50 flex flex-col mt-auto">
+        <!-- Action Bar -->
+        <div class="bg-white border-t border-gray-200 p-4 shadow-[0_-5px_15px_rgba(0,0,0,0.05)] w-full">
             <div class="max-w-6xl mx-auto flex justify-between items-center px-8 max-sm:px-0">
                 <div class="flex flex-col">
                     <p class="text-xs text-gray-500 font-bold uppercase tracking-wider">Total Estimate</p>
@@ -183,22 +200,49 @@
                 </div>
             </div>
         </div>
+
+        <!-- Footer -->
+        <footer class="bg-basic py-4 text-center text-white text-xs w-full">
+            <p>2025 © All Rights Reserved | Application | Powered by Silicon Radon Networks (Pvt) Ltd</p>
+        </footer>
+    </div>
+    <!-- Custom Service Modal -->
+    <div id="customServiceModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-[60]">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md p-6 transform transition-all scale-100">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Add Custom Service</h3>
+
+            <div class="mb-4">
+                <label class="block text-sm font-bold text-gray-700 mb-2">Service Name</label>
+                <input type="text" id="customServiceNameInput"
+                    class="w-full border border-gray-300 rounded-lg p-3 bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
+                    placeholder="E.g., Special Trim">
+            </div>
+
+            <div class="flex justify-end gap-3 mt-6">
+                <button onclick="closeCustomServiceModal()"
+                    class="px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-100 font-bold transition-colors">Cancel</button>
+                <button onclick="saveCustomService()"
+                    class="px-6 py-2 rounded-lg bg-blue-600 text-white font-bold hover:bg-blue-700 shadow-md transition-all">Add
+                    Service</button>
+            </div>
+        </div>
     </div>
 
     <script>
         // --- Data ---
         const services = [
-            { id: 'wash', title: 'Premium Wash', price: 2500, icon: 'bi-droplet-fill', color: 'text-blue-500', desc: 'Shampoo, Conditioning & Blow Dry' },
-            { id: 'haircut', title: 'Full Haircut', price: 3500, icon: 'bi-scissors', color: 'text-pink-500', desc: 'Styling & Trimming' },
-            { id: 'nails', title: 'Nail & Paw Care', price: 1500, icon: 'bi-flower1', color: 'text-purple-500', desc: 'Nail Clipping & Paw Padding' },
-            { id: 'ears', title: 'Ear Cleaning', price: 1200, icon: 'bi-ear', color: 'text-orange-500', desc: 'Deep Cleaning & Plucking' },
-            { id: 'spa', title: 'Full Spa Day', price: 7500, icon: 'bi-stars', color: 'text-yellow-500', desc: 'All Services + Massage & Treat' },
-            { id: 'dental', title: 'Dental Hygiene', price: 2000, icon: 'bi-emoji-smile', color: 'text-teal-500', desc: 'Brushing & Breath Spray' },
-            { id: 'tick', title: 'Tick Treatment', price: 3000, icon: 'bi-bug', color: 'text-red-500', desc: 'Medicated Bath & Removal' },
-            { id: 'massage', title: 'Relaxing Massage', price: 2000, icon: 'bi-heart-pulse', color: 'text-rose-500', desc: '15 min Calming Massage' }
+            { id: 'wash', title: 'Premium Wash', icon: 'bi-droplet-fill', color: 'text-blue-500', desc: 'Shampoo, Conditioning & Blow Dry' },
+            { id: 'haircut', title: 'Full Haircut', icon: 'bi-scissors', color: 'text-pink-500', desc: 'Styling & Trimming' },
+            { id: 'nails', title: 'Nail & Paw Care', icon: 'bi-flower1', color: 'text-purple-500', desc: 'Nail Clipping & Paw Padding' },
+            { id: 'ears', title: 'Ear Cleaning', icon: 'bi-ear', color: 'text-orange-500', desc: 'Deep Cleaning & Plucking' },
+            { id: 'spa', title: 'Full Spa Day', icon: 'bi-stars', color: 'text-yellow-500', desc: 'All Services + Massage & Treat' },
+            { id: 'dental', title: 'Dental Hygiene', icon: 'bi-emoji-smile', color: 'text-teal-500', desc: 'Brushing & Breath Spray' },
+            { id: 'tick', title: 'Tick Treatment', icon: 'bi-bug', color: 'text-red-500', desc: 'Medicated Bath & Removal' },
+            { id: 'massage', title: 'Relaxing Massage', icon: 'bi-heart-pulse', color: 'text-rose-500', desc: '15 min Calming Massage' },
+            { id: 'custom', title: 'Other Service', icon: 'bi-plus-circle', color: 'text-gray-500', desc: 'Custom service request' }
         ];
 
-        let selectedServices = new Set();
+        let selectedServices = new Map(); // Store id -> price
 
         // --- Init ---
         function renderServices() {
@@ -206,51 +250,143 @@
             grid.innerHTML = '';
 
             services.forEach(s => {
+                const isSelected = selectedServices.has(s.id);
+                const currentPrice = selectedServices.get(s.id);
+
                 const card = document.createElement('div');
-                card.className = `service-card bg-white border border-gray-200 rounded-xl p-5 relative group flex flex-col justify-between h-full`;
+                card.className = `service-card bg-white border border-gray-200 rounded-xl p-5 relative group flex flex-col
+        justify-between h-full ${isSelected ? 'selected' : ''}`;
                 card.onclick = () => toggleService(s.id, card);
                 card.id = `card-${s.id}`;
 
+                const inputVal = isSelected && currentPrice !== undefined ? currentPrice : '';
+                const inputDisabled = !isSelected;
+
                 card.innerHTML = `
-                    <div class="absolute top-3 right-3 check-icon text-white bg-blue-500 rounded-full w-6 h-6 flex items-center justify-center shadow-sm">
-                        <i class="bi bi-check-lg text-sm font-bold"></i>
-                    </div>
-                    
-                    <div>
-                        <div class="w-12 h-12 rounded-lg bg-gray-50 flex items-center justify-center mb-3 group-hover:bg-blue-50 transition-colors">
-                            <i class="bi ${s.icon} text-2xl ${s.color}"></i>
-                        </div>
-                        <h3 class="font-bold text-gray-800 text-lg leading-tight mb-1">${s.title}</h3>
-                        <p class="text-xs text-gray-500 mb-3 line-clamp-2">${s.desc}</p>
-                    </div>
-                    
-                    <div class="mt-auto pt-3 border-t border-gray-100 flex justify-between items-center">
-                        <span class="font-mono font-bold text-gray-700">LKR ${s.price.toLocaleString()}</span>
-                        <span class="text-xs text-blue-600 font-bold uppercase opacity-0 group-hover:opacity-100 transition-opacity">Select</span>
-                    </div>
-                `;
+        <div
+            class="absolute top-3 right-3 check-icon text-white bg-blue-500 rounded-full w-6 h-6 flex items-center justify-center shadow-sm">
+            <i class="bi bi-check-lg text-sm font-bold"></i>
+        </div>
+
+        <div>
+            <div
+                class="w-12 h-12 rounded-lg bg-gray-50 flex items-center justify-center mb-3 group-hover:bg-blue-50 transition-colors">
+                <i class="bi ${s.icon} text-2xl ${s.color}"></i>
+            </div>
+            <h3 class="font-bold text-gray-800 text-lg leading-tight mb-1">${s.title}</h3>
+            <p class="text-xs text-gray-500 mb-3 line-clamp-2">${s.desc}</p>
+        </div>
+
+        <div class="mt-auto pt-3 border-t border-gray-100 flex flex-col gap-2">
+            <div class="flex items-center gap-2" onclick="event.stopPropagation()">
+                <span class="text-xs font-bold text-gray-500">LKR</span>
+                <input type="number" id="price-${s.id}" placeholder="0.00" value="${inputVal}"
+                    class="w-full border border-gray-200 rounded px-2 py-1 text-sm font-mono focus:ring-1 focus:ring-blue-500 outline-none"
+                    onchange="updateServicePrice('${s.id}', this.value)" ${inputDisabled ? 'disabled' : ''}>
+            </div>
+            <span
+                class="text-xs text-blue-600 font-bold uppercase opacity-0 group-hover:opacity-100 transition-opacity text-center">Click
+                to Select</span>
+        </div>
+        `;
                 grid.appendChild(card);
             });
         }
 
+        // Helper to manage custom service names: id -> customName
+        let customServiceNames = new Map();
+
         function toggleService(id, cardElement) {
+            // If custom button clicked, open modal
+            if (id === 'custom') {
+                openCustomServiceModal();
+                return;
+            }
+
+            const input = document.getElementById(`price-${id}`);
+
             if (selectedServices.has(id)) {
+                // Deselect
                 selectedServices.delete(id);
                 cardElement.classList.remove('selected');
+                input.disabled = true;
+                input.value = '';
             } else {
-                selectedServices.add(id);
+                // Select
+                const defaultPrice = 0;
+                selectedServices.set(id, defaultPrice);
                 cardElement.classList.add('selected');
+                input.disabled = false;
+                input.focus();
             }
             updateTotal();
         }
 
+        // Modal Logic
+        let pendingCustomCard = null;
+        let pendingCustomInput = null;
+
+        function openCustomServiceModal() {
+            document.getElementById('customServiceNameInput').value = '';
+            document.getElementById('customServiceModal').classList.remove('hidden');
+            document.getElementById('customServiceModal').classList.add('flex');
+            document.getElementById('customServiceNameInput').focus();
+        }
+
+        function closeCustomServiceModal() {
+            document.getElementById('customServiceModal').classList.add('hidden');
+            document.getElementById('customServiceModal').classList.remove('flex');
+        }
+
+        function saveCustomService() {
+            const name = document.getElementById('customServiceNameInput').value.trim();
+            if (!name) {
+                alert("Please enter a service name.");
+                return;
+            }
+
+            const newId = 'custom-' + Date.now();
+            const newService = {
+                id: newId,
+                title: name,
+                icon: 'bi-stars', // Generic icon
+                color: 'text-gray-600',
+                desc: 'Custom Service'
+            };
+
+            // Add to services array, before the 'custom' add button
+            services.splice(services.length - 1, 0, newService);
+
+            // Select it automatically
+            selectedServices.set(newId, 0);
+
+            // Re-render
+            renderServices();
+            updateTotal();
+            closeCustomServiceModal();
+
+            // Focus the new input
+            setTimeout(() => {
+                const newInput = document.getElementById(`price-${newId}`);
+                if (newInput) newInput.focus();
+            }, 100);
+        }
+
+        function updateServicePrice(id, value) {
+            if (selectedServices.has(id)) {
+                selectedServices.set(id, parseFloat(value) || 0);
+                updateTotal();
+            }
+        }
+
         function updateTotal() {
             let total = 0;
-            selectedServices.forEach(id => {
-                const s = services.find(x => x.id === id);
-                if (s) total += s.price;
+            selectedServices.forEach(price => {
+                total += price;
             });
-            document.getElementById('totalPrice').innerText = `LKR ${total.toLocaleString()}.00`;
+            document.getElementById('totalPrice').innerText = `LKR ${total.toLocaleString(undefined, {
+                minimumFractionDigits: 2, maximumFractionDigits: 2
+            })}`;
         }
 
         function createJob() {
@@ -268,8 +404,12 @@
             const jobData = {
                 id: 'JOB-' + Math.floor(Math.random() * 10000),
                 petId: petId,
-                services: Array.from(selectedServices),
-                total: parseFloat(document.getElementById('totalPrice').innerText.replace('LKR', '').replace(',', '')),
+                services: Array.from(selectedServices.keys()).map(id => ({
+                    id: id,
+                    name: services.find(s => s.id === id).title,
+                    price: selectedServices.get(id)
+                })),
+                total: parseFloat(document.getElementById('totalPrice').innerText.replace('LKR', '').replace(/,/g, '')),
                 date: new Date().toISOString(),
                 status: 'pending'
             };
@@ -299,6 +439,7 @@
         });
 
     </script>
+
 </body>
 
 </html>

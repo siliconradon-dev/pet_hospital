@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application | Final Billing POS</title>
     <link rel="icon" href="../../images/favicon.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../../styles/common.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -45,83 +46,93 @@
     </style>
 </head>
 
-<body class="h-screen w-screen overflow-hidden bg-gray-50 flex flex-col font-sans">
+<body class="min-h-screen flex flex-col bg-gray-50 font-sans">
 
-    <!-- Nav / Header -->
-    <div class="nav bg-basic w-full py-6 flex justify-between items-center px-8 shadow-md z-30 shrink-0">
-        <!-- Left: Navigation Buttons -->
-        <span class="flex items-center gap-3">
-            <button onclick="window.location.href = '../';"
-                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all shadow-md">
-                <i class="bi bi-chevron-left scale-[1.5]"></i>
+    <!--Nav-->
+    <div class="nav bg-basic w-full py-4 flex justify-between items-center px-8 shadow-md">
+        <!-- Left: Navigation -->
+        <div class="flex items-center gap-4">
+            <button onclick="history.back()"
+                class="w-10 h-10 bg-white text-basic rounded-full flex items-center justify-center hover:scale-95 transition-transform shadow-sm">
+                <i class="bi bi-chevron-left text-lg"></i>
             </button>
             <button onclick="window.location.href = '../';"
-                class="p-2 text-basic rounded-lg bg-white flex gap-3 justify-center items-center hover:scale-90 transition-all shadow-md font-bold text-sm sm:text-base">
-                <i class="bi bi-house scale-[1.2]"></i>
-                <span class="hidden sm:inline">Main Panel</span>
+                class="px-4 py-2 bg-white text-basic rounded-lg flex items-center gap-2 hover:scale-95 transition-transform shadow-sm font-semibold text-sm">
+                <i class="bi bi-building"></i>
+                <span class="hidden sm:inline">Go to Main Panel</span>
             </button>
-        </span>
-
-        <!-- Center: Title & Search -->
-        <div class="flex items-center gap-6">
-            <h1 class="text-xl sm:text-2xl font-bold text-white uppercase tracking-wider hidden lg:block">Final Billing
-                <span class="opacity-70 text-sm">POS</span>
-            </h1>
-
-            <!-- Search -->
-            <div class="relative w-64 xl:w-96">
-                <i class="bi bi-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                <input type="text" id="searchInput" onkeyup="handleSearch()" placeholder="Search Bills..."
-                    class="w-full pl-12 pr-4 py-2.5 rounded-full border-none focus:ring-2 focus:ring-blue-300 bg-white/10 text-white placeholder-gray-300 backdrop-blur-sm shadow-inner transition-all focus:bg-white focus:text-gray-800 focus:placeholder-gray-500">
-            </div>
         </div>
 
-        <!-- Right: Held Bills & Home -->
+        <!-- Center: Logo -->
+        <div class="flex-1 flex justify-center">
+            <img src="../../images/logo.png" alt="Logo" class="h-12 w-auto drop-shadow-md">
+        </div>
+
+        <!-- Right: User Info -->
         <div class="flex items-center gap-4">
-            <!-- Held Bills -->
+            <!-- Held Bills (Moved from old header) -->
             <button onclick="showHeldBills()"
-                class="relative p-2 text-white hover:text-blue-200 transition-colors tooltip flex items-center gap-2"
+                class="relative w-10 h-10 bg-white/10 rounded-full text-white hover:bg-white/20 transition-colors flex items-center justify-center"
                 title="Held Bills">
-                <i class="bi bi-pause-circle text-2xl"></i>
+                <i class="bi bi-pause-circle text-lg"></i>
                 <span id="heldCountBadge"
-                    class="hidden absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex justify-center items-center shadow-lg border border-white">0</span>
+                    class="hidden absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex justify-center items-center shadow-sm border border-white">0</span>
             </button>
 
+            <div class="text-right text-white hidden sm:block">
+                <h2 class="text-lg font-bold leading-tight">Good Evening!</h2>
+                <p class="text-xs text-blue-200">Welcome Admin</p>
+            </div>
             <button onclick="window.location.href = '../../';"
-                class="rounded-full w-[50px] text-basic aspect-square bg-white flex justify-center items-center hover:scale-90 transition-all shadow-md">
-                <i class="bi bi-box-arrow-left scale-[1.5]"></i>
+                class="w-10 h-10 bg-white text-basic rounded-full flex items-center justify-center hover:scale-95 transition-transform shadow-sm">
+                <i class="bi bi-box-arrow-right text-lg"></i>
             </button>
         </div>
     </div>
 
     <!-- Main Content Area -->
-    <div class="flex-grow flex overflow-hidden">
+    <div class="flex-grow flex flex-col md:flex-row">
 
-        <!-- LEFT PANEL: Pending Bills Grid (70%) -->
-        <div class="flex-grow flex flex-col h-full bg-gray-100/50">
+        <!-- LEFT PANEL: Pending Bills Grid -->
+        <div class="flex-grow flex flex-col bg-gray-100/50">
             <!-- Sub-header / Filters -->
-            <div class="bg-gray-100 border-b border-gray-200 px-6 py-3 flex items-center gap-4 text-sm text-gray-600">
-                <span class="font-bold uppercase tracking-wide text-xs">Queue:</span>
+            <div
+                class="bg-white border-b border-gray-200 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm">
+                <h1 class="text-xl font-bold text-gray-800 uppercase tracking-wider flex items-center gap-2">
+                    Final Billing <span
+                        class="text-sm bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-bold">POS</span>
+                </h1>
+
+                <div class="relative w-full sm:w-80">
+                    <i class="bi bi-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="searchInput" onkeyup="handleSearch()" placeholder="Search Bills..."
+                        class="w-full pl-12 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-gray-50 focus:bg-white transition-all">
+                </div>
+            </div>
+
+            <div
+                class="px-6 py-2 flex items-center gap-3 text-xs text-gray-500 bg-gray-50 border-b border-gray-200 overflow-x-auto">
+                <span class="font-bold uppercase tracking-wide">Queue:</span>
                 <span
-                    class="bg-white px-3 py-1 rounded-full text-xs font-semibold shadow-sm border border-gray-200 flex items-center gap-1">
+                    class="bg-white px-3 py-1 rounded-full font-semibold shadow-sm border border-gray-200 flex items-center gap-1 whitespace-nowrap">
                     <i class="bi bi-clock-history text-blue-600"></i> Pending Bills
                 </span>
                 <span
-                    class="bg-white px-3 py-1 rounded-full text-xs font-semibold shadow-sm border border-gray-200 opacity-50">
+                    class="bg-white px-3 py-1 rounded-full font-semibold shadow-sm border border-gray-200 opacity-50 whitespace-nowrap">
                     <i class="bi bi-check-circle"></i> Completed
                 </span>
             </div>
 
             <!-- Content -->
-            <div class="flex-grow overflow-y-auto p-6 custom-scrollbar" id="mainContent">
+            <div class="flex-grow p-6" id="mainContent">
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5" id="gridContainer">
                     <!-- Grid Items -->
                 </div>
             </div>
         </div>
 
-        <!-- RIGHT PANEL: Cart / Transaction (30%) -->
-        <div class="w-[420px] bg-white flex flex-col h-full shadow-2xl z-20 shrink-0 border-l border-gray-200">
+        <!-- RIGHT PANEL: Cart / Transaction -->
+        <div class="w-full md:w-[420px] bg-white flex flex-col shadow-2xl z-20 shrink-0 border-l border-gray-200">
             <!-- Customer Info -->
             <div
                 class="h-20 bg-gradient-to-br from-gray-50 to-white border-b border-gray-200 flex items-center px-6 justify-between relative group">
@@ -143,8 +154,7 @@
             </div>
 
             <!-- Cart Items -->
-            <div class="flex-grow overflow-y-auto p-6 content-start custom-scrollbar bg-slate-50 space-y-3"
-                id="cartItemsContainer">
+            <div class="flex-grow p-6 content-start bg-slate-50 space-y-3" id="cartItemsContainer">
                 <!-- Empty State -->
                 <div id="cartEmptyState"
                     class="h-full flex flex-col justify-center items-center text-gray-400 opacity-60">
@@ -208,7 +218,7 @@
                         class="bi bi-x-lg"></i></button>
             </div>
 
-            <div id="heldBillsList" class="flex flex-col gap-2 max-h-[60vh] overflow-y-auto p-6 custom-scrollbar">
+            <div id="heldBillsList" class="flex flex-col gap-2 max-h-[60vh] p-6">
                 <!-- Items injected here -->
                 <p class="text-center text-gray-500 py-4">No held bills found.</p>
             </div>
@@ -274,6 +284,7 @@
                         typeLabel: typeLabel,
                         typeClass: typeClass,
                         price: floatTotal,
+                        advance: parseFloat(entry.advanceAmount || 0),
                         originalData: entry
                     });
                 }
@@ -304,7 +315,7 @@
 
             filtered.forEach(pb => {
                 const card = document.createElement('div');
-                card.className = "bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-200 cursor-pointer pos-grid-item flex flex-col justify-between h-[200px] relative group overflow-hidden transition-all";
+                card.className = "bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-200 cursor-pointer pos-grid-item flex flex-col justify-between min-h-[200px] h-auto relative group transition-all";
                 card.onclick = () => addToCartAsCustomer(pb);
 
                 card.innerHTML = `
@@ -325,7 +336,14 @@
 
                     <div class="relative z-10 mt-4 pt-4 border-t border-gray-50 flex justify-between items-end">
                         <span class="text-xs text-gray-400 font-medium">Total Due</span>
-                        <span class="text-xl font-bold text-gray-800 group-hover:text-basic transition-colors">${pb.totalAcc.toFixed(2)}</span>
+                        <div class="text-right">
+                             ${pb.bills.reduce((acc, b) => acc + (b.price - (b.advance || 0)), 0).toFixed(2) !== pb.totalAcc.toFixed(2)
+                        ? `<span class="block text-[10px] text-gray-400 line-through decoration-red-300">${pb.totalAcc.toFixed(2)}</span>`
+                        : ''}
+                             <span class="text-xl font-bold text-gray-800 group-hover:text-basic transition-colors">
+                                ${pb.bills.reduce((acc, b) => acc + (b.price - (b.advance || 0)), 0).toFixed(2)}
+                             </span>
+                        </div>
                     </div>
                 `;
                 grid.appendChild(card);
@@ -371,7 +389,10 @@
                         </div>
                     </div>
                     <div class="text-right flex flex-col items-end justify-between self-stretch">
-                        <span class="font-bold text-gray-900 font-mono">${item.price.toFixed(2)}</span>
+                        <div>
+                            <span class="font-bold text-gray-900 font-mono block">${(item.price - (item.advance || 0)).toFixed(2)}</span>
+                            ${item.advance > 0 ? `<span class="text-[10px] text-green-600 bg-green-50 px-1 rounded block mt-0.5">Paid: ${item.advance.toFixed(2)}</span>` : ''}
+                        </div>
                         <button onclick="removeFromCart(${index})" class="text-xs text-red-400 opacity-0 group-hover:opacity-100 hover:text-red-600 font-medium transition-opacity flex items-center gap-1 mt-auto">
                             <i class="bi bi-x-circle"></i> Remove
                         </button>
@@ -416,6 +437,7 @@
                         typeLabel: bill.typeLabel,
                         typeClass: bill.typeClass,
                         price: bill.price,
+                        advance: bill.advance,
                         type: 'bill', // distinction
                         originalData: bill.originalData
                     });
@@ -444,7 +466,7 @@
 
         function updateTotals() {
             let sub = 0;
-            cart.items.forEach(i => sub += i.price);
+            cart.items.forEach(i => sub += (i.price - (i.advance || 0)));
             cart.total = sub;
 
             document.getElementById('txtSubtotal').innerText = sub.toFixed(2);
@@ -601,6 +623,9 @@
         renderGrid();
         updateHeldBadge();
     </script>
+    <footer class="mt-auto bg-basic py-4 text-center text-white text-xs w-full">
+        <p>2025 © All Rights Reserved | Application | Powered by Silicon Radon Networks (Pvt) Ltd</p>
+    </footer>
 </body>
 
 </html>
