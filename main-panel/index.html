@@ -11,24 +11,20 @@
 </head>
 
 <body class="min-h-screen max-md:h-fit flex flex-col">
-        <!--Nav-->
-    <div class="nav bg-basic w-full py-4 flex justify-between items-center px-8 shadow-md">
+    <!--Nav-->
+    <div class="nav bg-basic w-full py-4 flex justify-between items-center px-8 shadow-md relative">
         <!-- Left: Navigation -->
         <div class="flex items-center gap-4">
             <button onclick="history.back()"
                 class="w-10 h-10 bg-white text-basic rounded-full flex items-center justify-center hover:scale-95 transition-transform shadow-sm">
                 <i class="bi bi-chevron-left text-lg"></i>
             </button>
-            <button onclick="window.location.href = './';"
-                class="px-4 py-2 bg-white text-basic rounded-lg flex items-center gap-2 hover:scale-95 transition-transform shadow-sm font-semibold text-sm">
-                <i class="bi bi-building"></i>
-                <span class="hidden sm:inline">Go to Main Panel</span>
-            </button>
+
         </div>
 
         <!-- Center: Logo -->
-        <div class="flex-1 flex justify-center">
-             <img src="../images/logo.png" alt="Logo" class="h-12 w-auto drop-shadow-md">
+        <div class="absolute left-1/2 transform -translate-x-1/2">
+            <img src="../images/logo.png" alt="Logo" class="h-12 w-auto drop-shadow-md">
         </div>
 
         <!-- Right: User Info -->
@@ -180,10 +176,10 @@
             </div>
         </div>
     </div>
-        
-        <footer class="mt-auto bg-basic py-4 text-center text-white text-xs w-full">
-            <p>2025 © All Rights Reserved | Application | Powered by Silicon Radon Networks (Pvt) Ltd</p>
-        </footer>
+
+    <footer class="mt-auto bg-basic py-4 text-center text-white text-xs w-full">
+        <p>2026 © All Rights Reserved | Royal Pets Animal Hospital | Designed and Developed by Silicon Radon Networks (Pvt) Ltd</p>
+    </footer>
 </body>
 <script src="../scripts/common.js"></script>
 <script>
