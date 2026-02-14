@@ -134,33 +134,60 @@
         <!-- RIGHT PANEL: Cart / Transaction -->
         <div class="w-full md:w-[420px] bg-white flex flex-col shadow-2xl z-20 shrink-0 border-l border-gray-200">
             <!-- Customer Info -->
+            <!-- Customer Search / Info Header -->
             <div
-                class="h-20 bg-gradient-to-br from-gray-50 to-white border-b border-gray-200 flex items-center px-6 justify-between relative group">
-                <div class="flex items-center gap-4">
-                    <div
-                        class="w-12 h-12 rounded-xl bg-blue-50 flex justify-center items-center text-basic text-xl font-bold shadow-sm">
-                        <i class="bi bi-person-fill"></i>
+                class="h-20 bg-gradient-to-br from-gray-50 to-white border-b border-gray-200 flex items-center px-6 justify-between relative z-40">
+
+                <!-- Search Mode (Default) -->
+                <div id="customerSearchContainer" class="w-full mr-4 relative">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="bi bi-search text-gray-400"></i>
+                        </div>
+                        <input type="text" id="customerSearchInput"
+                            class="block w-full pl-10 pr-10 py-2.5 border border-gray-200 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 sm:text-sm transition-all shadow-sm"
+                            placeholder="Search Customer (Name / Phone)..." onkeyup="searchCustomer(this.value)"
+                            onfocus="searchCustomer(this.value)" autocomplete="off">
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-400 hover:text-gray-600"
+                            onclick="clearCustomerSearch()">
+                            <i class="bi bi-x-circle-fill" id="searchClearIcon" style="display: none;"></i>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="font-bold text-gray-800 text-base" id="cartCustomerName">No Customer Selected</h3>
-                        <p class="text-xs text-gray-500 font-mono mt-0.5" id="cartCustomerId">ID: --</p>
+
+                    <!-- Dropdown Results -->
+                    <div id="customerSearchResults"
+                        class="hidden absolute mt-2 w-full bg-white shadow-xl rounded-xl py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto max-h-80 focus:outline-none sm:text-sm z-50">
+                        <!-- Results injected here -->
                     </div>
                 </div>
+
+                <!-- Selected Customer Display (Hidden by default) -->
+                <div id="selectedCustomerDisplay" class="hidden flex-grow items-center gap-3">
+                    <div
+                        class="w-10 h-10 rounded-lg bg-blue-100 flex justify-center items-center text-blue-600 font-bold shadow-sm shrink-0">
+                        <i class="bi bi-person-fill text-lg"></i>
+                    </div>
+                    <div class="flex-grow min-w-0">
+                        <h3 class="font-bold text-gray-800 text-sm truncate" id="dispCustName">Customer Name</h3>
+                        <p class="text-xs text-gray-500 font-mono" id="dispCustPhone">077-1234567</p>
+                    </div>
+                </div>
+
                 <button onclick="clearCart()"
-                    class="text-gray-400 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-red-50"
+                    class="text-gray-400 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-red-50 shrink-0 ml-2"
                     title="Clear Transaction">
                     <i class="bi bi-trash3 text-lg"></i>
                 </button>
             </div>
 
             <!-- Cart Items -->
-            <div class="flex-grow p-6 content-start bg-slate-50 space-y-3" id="cartItemsContainer">
+            <div class="flex-grow p-6 content-start bg-slate-50 space-y-3 overflow-y-auto" id="cartItemsContainer">
                 <!-- Empty State -->
                 <div id="cartEmptyState"
                     class="h-full flex flex-col justify-center items-center text-gray-400 opacity-60">
                     <i class="bi bi-cart4 text-6xl mb-4 text-gray-300"></i>
                     <p class="font-medium">No active bill selected</p>
-                    <p class="text-xs mt-2">Select a pending bill from the left</p>
+                    <p class="text-xs mt-2">Search customer or select pending bill</p>
                 </div>
             </div>
 
@@ -264,11 +291,19 @@
                     }
 
                     if (!grouped[entry.petId]) {
-                        const pet = pets.find(p => p.code === entry.petId) || { name: entry.petId || 'Unknown', owner: 'Unknown' };
+                        // Attempt to find pet and mock phone if missing
+                        const pet = pets.find(p => p.code === entry.petId) || { name: entry.petId || 'Unknown', owner: 'Unknown', phone: '' };
+                        // Mock phone if missing for demo
+                        if (!pet.phone || pet.phone === '') {
+                            // Deterministic mock based on petId length or something, or just random
+                            pet.phone = '077-' + Math.floor(1000000 + Math.random() * 9000000);
+                        }
+
                         grouped[entry.petId] = {
                             petId: entry.petId,
                             petName: pet.name,
                             owner: pet.owner,
+                            phone: pet.phone,
                             totalAcc: 0,
                             count: 0,
                             bills: []
@@ -302,7 +337,9 @@
 
             const filtered = pendingBills.filter(pb =>
                 pb.petName.toLowerCase().includes(search) ||
-                pb.petId.toLowerCase().includes(search)
+                pb.petId.toLowerCase().includes(search) ||
+                (pb.phone && pb.phone.includes(search)) ||
+                (pb.owner && pb.owner.toLowerCase().includes(search))
             );
 
             if (filtered.length === 0) {
@@ -332,6 +369,7 @@
                         <h3 class="font-bold text-lg text-gray-800 truncate mb-0.5 group-hover:text-blue-600 transition-colors">${pb.petName}</h3>
                         <p class="text-xs text-gray-500 flex items-center gap-1"><i class="bi bi-person"></i> ${pb.owner}</p>
                         <p class="text-[10px] text-gray-400 font-mono mt-1">ID: ${pb.petId}</p>
+                        ${pb.phone ? `<p class="text-[10px] text-gray-400 font-mono"><i class="bi bi-telephone"></i> ${pb.phone}</p>` : ''}
                     </div>
 
                     <div class="relative z-10 mt-4 pt-4 border-t border-gray-50 flex justify-between items-end">
@@ -354,13 +392,23 @@
             const container = document.getElementById('cartItemsContainer');
             const empty = document.getElementById('cartEmptyState');
 
-            // Customer Header
+            // Toggle Display
+            const searchContainer = document.getElementById('customerSearchContainer');
+            const displayContainer = document.getElementById('selectedCustomerDisplay');
+            const searchInput = document.getElementById('customerSearchInput');
+
             if (cart.customer) {
-                document.getElementById('cartCustomerName').innerText = cart.customer.petName;
-                document.getElementById('cartCustomerId').innerText = "ID: " + cart.customer.petId;
+                searchContainer.classList.add('hidden');
+                displayContainer.classList.remove('hidden');
+                displayContainer.classList.add('flex');
+
+                document.getElementById('dispCustName').innerText = cart.customer.petName + " (" + cart.customer.owner + ")";
+                document.getElementById('dispCustPhone').innerText = cart.customer.phone || cart.customer.petId;
             } else {
-                document.getElementById('cartCustomerName').innerText = "Walk-in / No Selection";
-                document.getElementById('cartCustomerId').innerText = "";
+                searchContainer.classList.remove('hidden');
+                displayContainer.classList.add('hidden');
+                displayContainer.classList.remove('flex');
+                searchInput.value = ''; // Reset input on clear
             }
 
             // Items
@@ -376,7 +424,7 @@
             container.innerHTML = '';
             cart.items.forEach((item, index) => {
                 const row = document.createElement('div');
-                row.className = "flex justify-between items-start p-4 bg-white border border-gray-100 rounded-xl shadow-sm hover:border-gray-300 transition-all group";
+                row.className = "flex justify-between items-start p-4 bg-white border border-gray-100 rounded-xl shadow-sm hover:border-gray-300 transition-all group shrink-0";
 
                 row.innerHTML = `
                     <div class="flex-grow pr-4">
@@ -409,10 +457,79 @@
             renderGrid(document.getElementById('searchInput').value);
         }
 
+        function searchCustomer(query) {
+            const results = document.getElementById('customerSearchResults');
+            const clearIcon = document.getElementById('searchClearIcon');
+            const container = document.getElementById('customerSearchContainer');
+
+            if (!query) {
+                results.classList.add('hidden');
+                clearIcon.style.display = 'none';
+                return;
+            }
+
+            clearIcon.style.display = 'block';
+            results.classList.remove('hidden');
+
+            const lower = query.toLowerCase();
+            // Filter from pendingBills (as we only want people with bills)
+            const matches = pendingBills.filter(pb =>
+                pb.petName.toLowerCase().includes(lower) ||
+                (pb.owner && pb.owner.toLowerCase().includes(lower)) ||
+                (pb.phone && pb.phone.includes(lower)) ||
+                pb.petId.toLowerCase().includes(lower)
+            );
+
+            results.innerHTML = '';
+
+            if (matches.length === 0) {
+                results.innerHTML = `<div class="px-4 py-3 text-sm text-gray-500 text-center">No pending bills found for query.</div>`;
+            } else {
+                matches.forEach(m => {
+                    const div = document.createElement('div');
+                    div.className = "px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-50 last:border-0 flex justify-between items-center";
+                    div.onclick = () => {
+                        addToCartAsCustomer(m);
+                        clearCustomerSearch();
+                    };
+                    div.innerHTML = `
+                        <div>
+                            <p class="font-bold text-gray-800 text-sm">${m.petName} <span class="text-xs font-normal text-gray-500">(${m.owner})</span></p>
+                            <p class="text-xs text-gray-400 font-mono">${m.phone || 'No Phone'}</p>
+                        </div>
+                        <div class="text-right">
+                             <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">${m.count} Bills</span>
+                             <p class="text-xs font-bold text-gray-800 mt-1">${m.totalAcc.toFixed(2)}</p>
+                        </div>
+                    `;
+                    results.appendChild(div);
+                });
+            }
+        }
+
+        function clearCustomerSearch() {
+            document.getElementById('customerSearchInput').value = '';
+            document.getElementById('customerSearchResults').classList.add('hidden');
+            document.getElementById('searchClearIcon').style.display = 'none';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            const container = document.getElementById('customerSearchContainer');
+            if (container && !container.contains(e.target)) {
+                document.getElementById('customerSearchResults').classList.add('hidden');
+            }
+        });
+
         // --- Cart Logic ---
         function addToCartAsCustomer(pendingBillGroup) {
-            // If another customer selected, warn or switch?
-            if (cart.customer && cart.customer.petId !== pendingBillGroup.petId) {
+            // Check if same customer
+            if (cart.customer && cart.customer.petId === pendingBillGroup.petId) {
+                return; // Already selected
+            }
+
+            // If another customer selected, confirm
+            if (cart.customer) {
                 if (!confirm("Switching customer will clear the current cart. Continue?")) {
                     return;
                 }
@@ -422,7 +539,8 @@
             cart.customer = {
                 petId: pendingBillGroup.petId,
                 petName: pendingBillGroup.petName,
-                owner: pendingBillGroup.owner
+                owner: pendingBillGroup.owner,
+                phone: pendingBillGroup.phone
             };
 
             // Add all bills from this group
@@ -445,6 +563,7 @@
             });
 
             renderCart();
+            clearCustomerSearch();
         }
 
         function removeFromCart(index) {
@@ -461,6 +580,7 @@
                 items: [],
                 total: 0
             };
+            clearCustomerSearch();
             renderCart();
         }
 
@@ -624,7 +744,8 @@
         updateHeldBadge();
     </script>
     <footer class="mt-auto bg-basic py-4 text-center text-white text-xs w-full">
-        <p>2026 © All Rights Reserved | Royal Pets Animal Hospital | Designed and Developed by Silicon Radon Networks (Pvt) Ltd</p>
+        <p>2026 © All Rights Reserved | Royal Pets Animal Hospital | Designed and Developed by Silicon Radon Networks
+            (Pvt) Ltd</p>
     </footer>
 </body>
 
