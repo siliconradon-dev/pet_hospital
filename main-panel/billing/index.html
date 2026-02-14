@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application | Billings POS</title>
+    <link rel="icon" href="../../images/favicon.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../styles/common.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        .pos-grid-item {
+            transition: all 0.2s;
+        }
+
+        .pos-grid-item:active {
+            transform: scale(0.95);
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Custom Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col bg-gray-50 font-sans">
+
+    <!--Nav-->
+    <div class="nav bg-basic w-full py-4 flex justify-between items-center px-8 shadow-md">
+        <!-- Left: Navigation -->
+        <div class="flex items-center gap-4">
+            <button onclick="history.back()"
+                class="w-10 h-10 bg-white text-basic rounded-full flex items-center justify-center hover:scale-95 transition-transform shadow-sm">
+                <i class="bi bi-chevron-left text-lg"></i>
+            </button>
+            <button onclick="window.location.href = '../';"
+                class="px-4 py-2 bg-white text-basic rounded-lg flex items-center gap-2 hover:scale-95 transition-transform shadow-sm font-semibold text-sm">
+                <i class="bi bi-building"></i>
+                <span class="hidden sm:inline">Go to Main Panel</span>
+            </button>
+        </div>
+
+        <!-- Center: Logo -->
+        <div class="flex-1 flex justify-center">
+            <img src="../../images/logo.png" alt="Logo" class="h-12 w-auto drop-shadow-md">
+        </div>
+
+        <!-- Right: User Info -->
+        <div class="flex items-center gap-4">
+
+
+            <div class="text-right text-white hidden sm:block">
+                <h2 class="text-lg font-bold leading-tight">Good Evening!</h2>
+                <p class="text-xs text-blue-200">Welcome Admin</p>
+            </div>
+            <button onclick="window.location.href = '../../';"
+                class="w-10 h-10 bg-white text-basic rounded-full flex items-center justify-center hover:scale-95 transition-transform shadow-sm">
+                <i class="bi bi-box-arrow-right text-lg"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex-grow flex flex-col md:flex-row">
+
+        <!-- Main Content Area -->
+        <div class="flex-grow flex flex-col bg-gray-50">
+
+            <!-- Header / Filters -->
+            <div class="bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
+                    <h1 class="text-2xl font-bold text-gray-800 uppercase tracking-wider flex items-center gap-2">
+                        <i class="bi bi-receipt-cutoff text-basic"></i> Billings <span
+                            class="text-sm bg-gray-100 text-gray-500 px-2 py-0.5 rounded font-normal normal-case">History
+                            & Management</span>
+                    </h1>
+
+                    <!-- Search & Actions -->
+                    <div class="flex gap-2 w-full md:w-auto">
+                        <div class="relative flex-grow md:w-80">
+                            <i
+                                class="bi bi-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" id="searchInput" onkeyup="handleSearch()"
+                                placeholder="Search by Client, ID, Phone..."
+                                class="w-full pl-12 pr-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-gray-50 focus:bg-white transition-all shadow-sm">
+                        </div>
+                        <button onclick="toggleAdvanceSearch()"
+                            class="px-4 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-600 transition-colors shadow-sm flex items-center gap-2"
+                            title="Advanced Filters">
+                            <i class="bi bi-sliders"></i> <span class="hidden sm:inline">Filters</span>
+                        </button>
+                        <button onclick="loadData(); renderGrid();"
+                            class="px-4 py-2 bg-basic text-white rounded-lg hover:bg-opacity-90 transition-colors shadow-sm"
+                            title="Refresh Data">
+                            <i class="bi bi-arrow-clockwise"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Advance Search Panel -->
+                <div id="advanceSearchPanel"
+                    class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 p-4 bg-gray-50 rounded-xl border border-gray-200 mb-2 animate-fade-in-down">
+
+                    <div class="col-span-1 sm:col-span-2">
+                        <label class="block text-xs font-semibold text-gray-500 mb-1">Client Name / Phone</label>
+                        <input type="text" id="filterClientOrPhone" onkeyup="handleSearch()"
+                            placeholder="Search Name or Phone..."
+                            class="w-full p-2 rounded-lg border border-gray-200 text-sm focus:ring-2 focus:ring-blue-100 outline-none">
+                    </div>
+
+                    <div class="col-span-1">
+                        <label class="block text-xs font-semibold text-gray-500 mb-1">Status</label>
+                        <select id="filterStatus" onchange="handleSearch()"
+                            class="w-full p-2 rounded-lg border border-gray-200 text-sm focus:ring-2 focus:ring-blue-100 outline-none">
+                            <option value="all">All Statuses</option>
+                            <option value="pending">Pending Payment</option>
+                            <option value="paid">Completed / Paid</option>
+                        </select>
+                    </div>
+
+                    <div class="col-span-1">
+                        <label class="block text-xs font-semibold text-gray-500 mb-1">Bill Period (From)</label>
+                        <input type="date" id="filterDateFrom" onchange="handleSearch()"
+                            class="w-full p-2 rounded-lg border border-gray-200 text-sm focus:ring-2 focus:ring-blue-100 outline-none">
+                    </div>
+
+                    <div class="col-span-1">
+                        <label class="block text-xs font-semibold text-gray-500 mb-1">Bill Period (To)</label>
+                        <input type="date" id="filterDateTo" onchange="handleSearch()"
+                            class="w-full p-2 rounded-lg border border-gray-200 text-sm focus:ring-2 focus:ring-blue-100 outline-none">
+                    </div>
+                    <div class="flex items-end">
+                        <button onclick="clearFilters()"
+                            class="w-full py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors text-sm font-semibold">
+                            Clear Filters
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Bar -->
+                <div class="flex items-center gap-6 text-sm text-gray-500 pt-2 border-t border-gray-100 mt-2">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                        <span id="statPendingCount">0 Pending</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                        <span id="statPaidCount">0 Completed</span>
+                    </div>
+                    <div class="flex-grow text-right font-mono text-gray-400 text-xs" id="lastUpdatedTime">Updated: Just
+                        now</div>
+                </div>
+            </div>
+
+            <!-- Scrollable Content Grid -->
+            <div class="flex-grow p-6 overflow-y-auto custom-scrollbar" id="mainContent">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6"
+                    id="gridContainer">
+                    <!-- Grid Items Injected via JS -->
+                </div>
+
+                <!-- Empty State Placeholder -->
+                <div id="emptyState"
+                    class="hidden flex flex-col items-center justify-center h-64 text-gray-400 opacity-60">
+                    <i class="bi bi-search text-6xl mb-4 text-gray-300"></i>
+                    <p class="text-xl font-medium">No bills found matching filters</p>
+                    <p class="text-sm mt-2">Try adjusting your search criteria</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bill Details Modal -->
+        <div id="billDetailsModal"
+            class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex justify-center items-center backdrop-blur-sm p-4">
+            <div
+                class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden transform transition-all scale-100 flex flex-col max-h-[90vh]">
+                <!-- Modal Header -->
+                <div
+                    class="bg-gradient-to-r from-gray-50 to-white px-6 py-4 border-b flex justify-between items-center">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                            <i class="bi bi-receipt"></i> Bill Details
+                        </h3>
+                        <p class="text-xs text-gray-500 mt-0.5" id="modalBillId">#BILL-ID</p>
+                    </div>
+                    <button onclick="closeBillModal()"
+                        class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 flex items-center justify-center transition-colors">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="p-6 overflow-y-auto flex-grow custom-scrollbar space-y-6">
+                    <!-- Status Banner -->
+                    <div id="modalStatusBanner"
+                        class="p-4 rounded-xl flex justify-between items-center text-white shadow-sm">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-xl">
+                                <i id="modalStatusIcon" class="bi bi-check-lg"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-lg" id="modalStatusText">PAID</p>
+                                <p class="text-xs opacity-80" id="modalStatusDate">on 2024-01-01</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Client Info -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Pet Details</p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-white border flex items-center justify-center text-gray-500 font-bold"
+                                    id="modalPetAvatar">P</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800" id="modalPetName">Pet Name</h4>
+                                    <p class="text-xs text-gray-500" id="modalPetId">ID: 000</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Owner Details</p>
+                            <div>
+                                <h4 class="font-bold text-gray-800" id="modalOwnerName">Owner Name</h4>
+                                <p class="text-xs text-gray-500 font-mono flex items-center gap-1 mt-1">
+                                    <i class="bi bi-telephone"></i> <span id="modalOwnerPhone">077-0000000</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bill Items -->
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-3 ml-1">Bill Items</h4>
+                        <div class="border rounded-xl overflow-hidden">
+                            <table class="w-full text-sm text-left">
+                                <thead class="bg-gray-50 text-gray-500 font-medium">
+                                    <tr>
+                                        <th class="px-4 py-3">Description</th>
+                                        <th class="px-4 py-3 text-right">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100" id="modalItemsTable">
+                                    <!-- Items -->
+                                </tbody>
+                                <tfoot class="bg-gray-50 font-bold text-gray-800">
+                                    <tr>
+                                        <td class="px-4 py-3 text-right">Total Payable</td>
+                                        <td class="px-4 py-3 text-right text-lg" id="modalTotalAmount">0.00</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="p-4 border-t bg-gray-50 flex justify-end gap-3">
+                    <!-- Actions can be added here if needed, like Reprint -->
+                    <button onclick="printBillFromModal()"
+                        class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 font-medium shadow-sm flex items-center gap-2">
+                        <i class="bi bi-printer"></i> Print Receipt
+                    </button>
+                    <button onclick="closeBillModal()"
+                        class="px-6 py-2 bg-basic text-white rounded-lg hover:bg-opacity-90 font-medium shadow-sm">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../scripts/common.js"></script>
+    <script>
+        // --- State ---
+        let allBills = []; // Holds both pending and paid
+
+        // --- Init ---
+        function init() {
+            loadData();
+            renderGrid();
+        }
+
+        // --- Data Loading ---
+        function loadData() {
+            let pets = JSON.parse(localStorage.getItem('pets'));
+            let opdEntries = JSON.parse(localStorage.getItem('opd_entries'));
+
+            // --- DUMMY DATA INJECTION IF EMPTY (FOR DEMO) ---
+            if (!pets || !opdEntries || opdEntries.length === 0) {
+                pets = [
+                    { code: 'PET001', name: 'Max', owner: 'John Doe', phone: '077-1234567' },
+                    { code: 'PET002', name: 'Bella', owner: 'Jane Smith', phone: '071-9876543' },
+                    { code: 'PET003', name: 'Charlie', owner: 'Robert Brown', phone: '075-5551234' },
+                    { code: 'PET004', name: 'Luna', owner: 'Emily Davis', phone: '076-2223333' },
+                    { code: 'PET005', name: 'Rocky', owner: 'Michael Wilson', phone: '070-4445555' }
+                ];
+                opdEntries = [
+                    { code: 'OPD-1001', petId: 'PET001', status: 'Pending', totalAmount: '1500', type: 'OPD', visitDate: new Date().toISOString().split('T')[0] },
+                    { code: 'OPD-1002', petId: 'PET001', status: 'Pending', totalAmount: '2500', type: 'Pharmacy', visitDate: new Date().toISOString().split('T')[0] },
+                    { code: 'OPD-1003', petId: 'PET002', status: 'Pending', totalAmount: '5000', type: 'Salon', visitDate: new Date().toISOString().split('T')[0] },
+                    { code: 'OPD-1004', petId: 'PET003', status: 'Paid', totalAmount: '3000', type: 'OPD', visitDate: '2023-10-01', paidAt: '2023-10-01T10:00:00' },
+                    { code: 'OPD-1005', petId: 'PET004', status: 'Pending', totalAmount: '1200', type: 'OPD', visitDate: new Date().toISOString().split('T')[0] },
+                    { code: 'OPD-1006', petId: 'PET005', status: 'Paid', totalAmount: '4500', type: 'Surgery', visitDate: '2023-09-15', paidAt: '2023-09-15T14:30:00' }
+                ];
+                localStorage.setItem('pets', JSON.stringify(pets));
+                localStorage.setItem('opd_entries', JSON.stringify(opdEntries));
+            }
+
+            const groupedMap = new Map();
+
+            opdEntries.forEach(entry => {
+                let groupKey;
+                let isPaid = entry.status === 'Paid';
+
+                if (isPaid) {
+                    groupKey = `PAID_${entry.petId}_${entry.paidAt || entry.code}`;
+                } else {
+                    groupKey = `PENDING_${entry.petId}`;
+                }
+
+                if (!groupedMap.has(groupKey)) {
+                    // Find Pet Info
+                    const pet = pets.find(p => p.code === entry.petId) || { name: entry.petId || 'Unknown', owner: 'Unknown', phone: '' };
+                    if (!pet.phone || pet.phone === '') {
+                        pet.phone = '077-' + Math.floor(1000000 + Math.random() * 9000000);
+                    }
+
+                    groupedMap.set(groupKey, {
+                        groupKey: groupKey,
+                        status: isPaid ? 'Paid' : 'Pending',
+                        paidAt: entry.paidAt,
+                        petId: entry.petId,
+                        petName: pet.name,
+                        owner: pet.owner,
+                        phone: pet.phone,
+                        items: [],
+                        totalAmount: 0,
+                        itemCount: 0,
+                        lastDate: entry.visitDate || new Date().toISOString().split('T')[0]
+                    });
+                }
+
+                const group = groupedMap.get(groupKey);
+
+                // Determine Label
+                let typeLabel = 'OPD';
+                let typeClass = 'bg-blue-100 text-blue-700';
+                if (entry.type) {
+                    typeLabel = entry.type;
+                    if (typeLabel === 'Salon') typeClass = 'bg-purple-100 text-purple-700';
+                    if (typeLabel === 'Pharmacy') typeClass = 'bg-green-100 text-green-700';
+                } else if (entry.code && entry.code.startsWith('SAL')) {
+                    typeLabel = 'Salon'; typeClass = 'bg-purple-100 text-purple-700';
+                } else if (entry.code && entry.code.startsWith('PHARM')) {
+                    typeLabel = 'Pharmacy'; typeClass = 'bg-green-100 text-green-700';
+                }
+
+                let itemTotal = parseFloat(entry.totalAmount || 0);
+
+                group.items.push({
+                    code: entry.code,
+                    desc: `${typeLabel} - ${entry.code}`,
+                    amount: itemTotal,
+                    date: entry.visitDate,
+                    typeClass: typeClass,
+                    typeLabel: typeLabel
+                });
+
+                group.totalAmount += itemTotal;
+                group.itemCount++;
+
+                // Update last date if this item is newer
+                if (entry.visitDate > group.lastDate) group.lastDate = entry.visitDate;
+            });
+
+            allBills = Array.from(groupedMap.values());
+
+            // Sort by Date (Newest First)
+            allBills.sort((a, b) => {
+                const dateA = a.paidAt || a.lastDate;
+                const dateB = b.paidAt || b.lastDate;
+                return new Date(dateB) - new Date(dateA);
+            });
+
+            // Update Stats
+            const pendingParams = allBills.filter(b => b.status === 'Pending').length;
+            const paidParams = allBills.filter(b => b.status === 'Paid').length;
+            document.getElementById('statPendingCount').innerText = `${pendingParams} Pending`;
+            document.getElementById('statPaidCount').innerText = `${paidParams} Completed`;
+            document.getElementById('lastUpdatedTime').innerText = `Last Updated: ${new Date().toLocaleTimeString()}`;
+        }
+
+        // --- Render ---
+        function renderGrid() {
+            const grid = document.getElementById('gridContainer');
+            const empty = document.getElementById('emptyState');
+            grid.innerHTML = '';
+
+            // Get Filter Values
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const filterClientOrPhone = document.getElementById('filterClientOrPhone').value.toLowerCase();
+            const filterStatus = document.getElementById('filterStatus').value;
+            const filterDateFrom = document.getElementById('filterDateFrom').value;
+            const filterDateTo = document.getElementById('filterDateTo').value;
+
+            const filtered = allBills.filter(bill => {
+                // 1. Text Search (Global)
+                const textMatch =
+                    bill.petName.toLowerCase().includes(searchQuery) ||
+                    bill.owner.toLowerCase().includes(searchQuery) ||
+                    bill.phone.includes(searchQuery) ||
+                    bill.petId.toLowerCase().includes(searchQuery);
+                if (!textMatch) return false;
+
+                // 2. Client/Phone Filter
+                if (filterClientOrPhone) {
+                    const cpMatch =
+                        bill.owner.toLowerCase().includes(filterClientOrPhone) ||
+                        bill.phone.toLowerCase().includes(filterClientOrPhone);
+                    if (!cpMatch) return false;
+                }
+
+                // 3. Status Filter
+                if (filterStatus !== 'all' && bill.status.toLowerCase() !== filterStatus) return false;
+
+                // 4. Date Filter
+                // Use paidAt for paid bills, lastDate for pending
+                const billDate = (bill.paidAt || bill.lastDate).split('T')[0];
+                if (filterDateFrom && billDate < filterDateFrom) return false;
+                if (filterDateTo && billDate > filterDateTo) return false;
+
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                empty.classList.remove('hidden');
+                return;
+            } else {
+                empty.classList.add('hidden');
+            }
+
+            filtered.forEach(bill => {
+                const isPaid = bill.status === 'Paid';
+
+                // Card Styling based on status
+                const statusColor = isPaid ? 'green' : 'orange';
+                const statusIcon = isPaid ? 'bi-check-circle-fill' : 'bi-clock-history';
+                const statusBg = isPaid ? 'bg-green-50 hover:border-green-300' : 'bg-white hover:border-orange-300';
+                const accentGradient = isPaid ? 'from-green-50 to-transparent' : 'from-orange-50 to-transparent';
+
+                const card = document.createElement('div');
+                card.className = `p-5 rounded-2xl shadow-sm border border-gray-100 cursor-pointer pos-grid-item flex flex-col justify-between min-h-[220px] relative group transition-all ${statusBg} hover:shadow-md`;
+                card.onclick = () => openBillDetails(bill);
+
+                const dateDisplay = isPaid && bill.paidAt ? new Date(bill.paidAt).toLocaleDateString() : bill.lastDate;
+
+                card.innerHTML = `
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl ${accentGradient} rounded-bl-[40px] -mr-0 -mt-0 transition-all pointer-events-none"></div>
+                    
+                    <!-- Header -->
+                    <div class="relative z-10 flex justify-between items-start mb-4">
+                        <div class="flex items-center gap-3">
+                             <div class="w-12 h-12 rounded-full bg-white border border-gray-100 flex items-center justify-center font-bold text-gray-400 text-lg shadow-sm">
+                                ${bill.petName.charAt(0)}
+                             </div>
+                             <div>
+                                <h3 class="font-bold text-gray-800 text-lg leading-tight group-hover:text-blue-600 transition-colors">${bill.petName}</h3>
+                                <p class="text-xs text-gray-500 font-medium">${bill.owner}</p>
+                             </div>
+                        </div>
+                        <span class="px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border ${isPaid ? 'bg-green-100 text-green-700 border-green-200' : 'bg-orange-100 text-orange-700 border-orange-200'}">
+                            ${bill.status}
+                        </span>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="relative z-10 flex-grow space-y-2">
+                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                            <i class="bi bi-calendar-event opacity-70"></i>
+                            <span>${dateDisplay}</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                             <i class="bi bi-receipt opacity-70"></i>
+                             <span>${bill.itemCount} Items</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500">
+                             <i class="bi bi-upc-scan opacity-70"></i>
+                             <span class="font-mono">${bill.petId}</span>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="relative z-10 mt-4 pt-3 border-t border-gray-200/50 flex justify-between items-end">
+                        <div class="text-xs text-gray-400 font-medium">Total Amount</div>
+                        <div class="text-right">
+                             <span class="block text-2xl font-bold text-gray-800 tracking-tight">
+                                ${bill.totalAmount.toFixed(2)}
+                             </span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // --- Interaction ---
+        function toggleAdvanceSearch() {
+            const panel = document.getElementById('advanceSearchPanel');
+            panel.classList.toggle('hidden');
+        }
+
+        function handleSearch() {
+            renderGrid();
+        }
+
+        function clearFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('filterClientOrPhone').value = '';
+            document.getElementById('filterStatus').value = 'all';
+            document.getElementById('filterDateFrom').value = '';
+            document.getElementById('filterDateTo').value = '';
+            renderGrid();
+        }
+
+        // --- View Details Modal ---
+        let currentViewBill = null;
+
+        function openBillDetails(bill) {
+            currentViewBill = bill;
+            const modal = document.getElementById('billDetailsModal');
+
+            // Populate Data
+            document.getElementById('modalBillId').textContent = "Ref: " + (bill.groupKey.replace('PENDING_', '').replace('PAID_', '').substring(0, 20) + "...");
+            document.getElementById('modalPetName').textContent = bill.petName;
+            document.getElementById('modalPetId').textContent = "ID: " + bill.petId;
+            document.getElementById('modalPetAvatar').textContent = bill.petName.charAt(0);
+            document.getElementById('modalOwnerName').textContent = bill.owner;
+            document.getElementById('modalOwnerPhone').textContent = bill.phone;
+
+            // Status Banner
+            const banner = document.getElementById('modalStatusBanner');
+            const icon = document.getElementById('modalStatusIcon');
+            const text = document.getElementById('modalStatusText');
+            const dateText = document.getElementById('modalStatusDate');
+
+            if (bill.status === 'Paid') {
+                banner.className = "p-4 rounded-xl flex justify-between items-center text-white shadow-sm bg-green-500";
+                icon.className = "bi bi-check-lg";
+                text.textContent = "PAYMENT COMPLETED";
+                dateText.textContent = "Paid on " + new Date(bill.paidAt).toLocaleString();
+            } else {
+                banner.className = "p-4 rounded-xl flex justify-between items-center text-white shadow-sm bg-orange-400";
+                icon.className = "bi bi-clock-history";
+                text.textContent = "PAYMENT PENDING";
+                dateText.textContent = "Last Activity: " + bill.lastDate;
+            }
+
+            // Items Table
+            const tbody = document.getElementById('modalItemsTable');
+            tbody.innerHTML = '';
+
+            bill.items.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="px-4 py-3">
+                        <p class="font-medium text-gray-800">${item.desc}</p>
+                        <span class="text-[10px] px-1.5 py-0.5 rounded ${item.typeClass}">${item.typeLabel}</span>
+                    </td>
+                    <td class="px-4 py-3 text-right font-mono text-gray-600">${item.amount.toFixed(2)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('modalTotalAmount').textContent = bill.totalAmount.toFixed(2);
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeBillModal() {
+            document.getElementById('billDetailsModal').classList.add('hidden');
+        }
+
+        function printBillFromModal() {
+            alert("Sending command to thermal printer for receipt...");
+        }
+
+        // Run Init
+        init();
+
+    </script>
+    <footer class="mt-auto bg-basic py-4 text-center text-white text-xs w-full">
+        <p>2026 © All Rights Reserved | Royal Pets Animal Hospital | Designed and Developed by Silicon Radon
+            Networks (Pvt) Ltd</p>
+    </footer>
+</body>
+
+</html>
