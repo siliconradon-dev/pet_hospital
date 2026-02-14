@@ -29,106 +29,106 @@
             /* Ensure minimum usable height */
         }
 
-        /* Row 1 (Top): 7, 8, 9, 10 */
-        .cage-7 {
+        /* Row 1 (Top): 13, 14, 15, 16 */
+        .cage-13 {
             grid-column: 2;
             grid-row: 1;
         }
 
-        .cage-8 {
+        .cage-14 {
             grid-column: 3;
             grid-row: 1;
         }
 
-        .cage-9 {
+        .cage-15 {
             grid-column: 4;
             grid-row: 1;
         }
 
-        .cage-10 {
+        .cage-16 {
             grid-column: 5;
             grid-row: 1;
         }
 
-        /* Row 2 (Middle): 1, 2, 3, 4, 5, 6 */
-        .cage-1 {
+        /* Row 2 (Middle): 7, 8, 9, 10, 11, 12 */
+        .cage-7 {
             grid-column: 1;
             grid-row: 2;
+        }
+
+        .cage-8 {
+            grid-column: 2;
+            grid-row: 2;
+        }
+
+        .cage-9 {
+            grid-column: 3;
+            grid-row: 2;
+        }
+
+        .cage-10 {
+            grid-column: 4;
+            grid-row: 2;
+        }
+
+        .cage-11 {
+            grid-column: 5;
+            grid-row: 2;
+        }
+
+        .cage-12 {
+            grid-column: 6;
+            grid-row: 2;
+        }
+
+        /* Row 3 (Bottom): 1, 2, 3, 4, 5, 6 */
+        .cage-1 {
+            grid-column: 1;
+            grid-row: 3;
         }
 
         .cage-2 {
             grid-column: 2;
-            grid-row: 2;
+            grid-row: 3;
         }
 
         .cage-3 {
             grid-column: 3;
-            grid-row: 2;
+            grid-row: 3;
         }
 
         .cage-4 {
             grid-column: 4;
-            grid-row: 2;
+            grid-row: 3;
         }
 
         .cage-5 {
             grid-column: 5;
-            grid-row: 2;
+            grid-row: 3;
         }
 
         .cage-6 {
             grid-column: 6;
-            grid-row: 2;
-        }
-
-        /* Row 3 (Bottom): 11, 12, 13, 14, 15, 16 */
-        .cage-11 {
-            grid-column: 1;
             grid-row: 3;
         }
 
-        .cage-12 {
-            grid-column: 2;
-            grid-row: 3;
-        }
-
-        .cage-13 {
-            grid-column: 3;
-            grid-row: 3;
-        }
-
-        .cage-14 {
-            grid-column: 4;
-            grid-row: 3;
-        }
-
-        .cage-15 {
-            grid-column: 5;
-            grid-row: 3;
-        }
-
-        .cage-16 {
-            grid-column: 6;
-            grid-row: 3;
-        }
-
-        /* Double Cage Spanning */
-        /* If 11 is double, it merges with 12 */
-        .cage-double-11 {
+        /* Double Cage Spanning (Now for 1, 3, 5) */
+        /* If 1 is double, it merges with 2 */
+        .cage-double-1 {
             grid-column: 1 / span 2;
             grid-row: 3;
             aspect-ratio: 2 / 1;
         }
 
-        /* If 13 is double, it merges with 14 */
-        .cage-double-13 {
+        /* If 3 is double, it merges with 4 */
+        .cage-double-3 {
             grid-column: 3 / span 2;
             grid-row: 3;
             aspect-ratio: 2 / 1;
         }
 
-        /* If 15 is double, it merges with 16 */
-        .cage-double-15 {
+        /* If 5 is double, it merges with 6 */
+        .cage-double-5 {
             grid-column: 5 / span 2;
             grid-row: 3;
             aspect-ratio: 2 / 1;
@@ -395,13 +395,13 @@
     <script src="../../scripts/common.js"></script>
     <script>
         // --- Data ---
-        // Pairs for Double Cabins: 11-12, 13-14, 15-16
+        // Pairs for Double Cabins: 1-2, 3-4, 5-6 (Bottom Row)
         const DOUBLE_PAIRS = {
-            11: 12, 12: 11,
-            13: 14, 14: 13,
-            15: 16, 16: 15
+            1: 2, 2: 1,
+            3: 4, 4: 3,
+            5: 6, 6: 5
         };
-        const FLEXIBLE_CAGES = [11, 12, 13, 14, 15, 16];
+        const FLEXIBLE_CAGES = [1, 2, 3, 4, 5, 6];
 
         // Filter State
         let currentFilter = 'all'; // all, single, double
@@ -409,7 +409,7 @@
         let cages = JSON.parse(localStorage.getItem('hospital_cages')) || [];
 
         // Initialize if empty or force seed for demo
-        if (cages.length === 0 || !localStorage.getItem('ward_demo_v2')) {
+        if (cages.length === 0 || !localStorage.getItem('ward_demo_v4')) {
             cages = [];
             for (let i = 1; i <= 16; i++) {
                 cages.push({
@@ -426,26 +426,26 @@
             }
             // Seed Demo Data
             // Single Occupied
-            cages[4].status = 'occupied'; // Cage 5
-            cages[4].petName = 'Roxy';
-            cages[4].admitDate = new Date().toISOString().split('T')[0];
-            cages[4].food = 'with_food';
+            cages[8].status = 'occupied'; // Cage 9 (Middle Row)
+            cages[8].petName = 'Roxy';
+            cages[8].admitDate = new Date().toISOString().split('T')[0];
+            cages[8].food = 'with_food';
 
-            // Double Occupied (11 & 12)
-            cages[10].status = 'occupied';
-            cages[10].type = 'double';
-            cages[10].petName = 'Bruno';
-            cages[10].admitDate = new Date().toISOString().split('T')[0];
-            cages[10].joinedWith = 12;
+            // Double Occupied (1 & 2)
+            cages[0].status = 'occupied';
+            cages[0].type = 'double';
+            cages[0].petName = 'Bruno';
+            cages[0].admitDate = new Date().toISOString().split('T')[0];
+            cages[0].joinedWith = 2;
 
-            cages[11].status = 'occupied';
-            cages[11].type = 'double';
-            cages[11].petName = 'Bruno';
-            cages[11].admitDate = new Date().toISOString().split('T')[0];
-            cages[11].joinedWith = 11;
+            cages[1].status = 'occupied';
+            cages[1].type = 'double';
+            cages[1].petName = 'Bruno';
+            cages[1].admitDate = new Date().toISOString().split('T')[0];
+            cages[1].joinedWith = 1;
 
             saveData();
-            localStorage.setItem('ward_demo_v2', 'true');
+            localStorage.setItem('ward_demo_v4', 'true');
         }
 
         // --- Render ---
@@ -454,9 +454,9 @@
             container.innerHTML = '';
 
             const visualOrder = [
-                7, 8, 9, 10,
-                1, 2, 3, 4, 5, 6,
-                11, 12, 13, 14, 15, 16
+                13, 14, 15, 16,
+                7, 8, 9, 10, 11, 12,
+                1, 2, 3, 4, 5, 6
             ];
 
             const processedIds = new Set();
