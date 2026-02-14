@@ -29,85 +29,85 @@
             /* Ensure minimum usable height */
         }
 
-        /* Row 1 (Top): 13, 14, 15, 16 */
-        .cage-13 {
+        /* Row 1 (Top): 7, 8, 9, 10 */
+        .cage-7 {
             grid-column: 2;
             grid-row: 1;
-        }
-
-        .cage-14 {
-            grid-column: 3;
-            grid-row: 1;
-        }
-
-        .cage-15 {
-            grid-column: 4;
-            grid-row: 1;
-        }
-
-        .cage-16 {
-            grid-column: 5;
-            grid-row: 1;
-        }
-
-        /* Row 2 (Middle): 7, 8, 9, 10, 11, 12 */
-        .cage-7 {
-            grid-column: 1;
-            grid-row: 2;
         }
 
         .cage-8 {
-            grid-column: 2;
-            grid-row: 2;
+            grid-column: 3;
+            grid-row: 1;
         }
 
         .cage-9 {
-            grid-column: 3;
-            grid-row: 2;
+            grid-column: 4;
+            grid-row: 1;
         }
 
         .cage-10 {
-            grid-column: 4;
-            grid-row: 2;
-        }
-
-        .cage-11 {
             grid-column: 5;
-            grid-row: 2;
+            grid-row: 1;
         }
 
-        .cage-12 {
-            grid-column: 6;
-            grid-row: 2;
-        }
-
-        /* Row 3 (Bottom): 1, 2, 3, 4, 5, 6 */
+        /* Row 2 (Middle): 1, 2, 3, 4, 5, 6 */
         .cage-1 {
             grid-column: 1;
-            grid-row: 3;
+            grid-row: 2;
         }
 
         .cage-2 {
             grid-column: 2;
-            grid-row: 3;
+            grid-row: 2;
         }
 
         .cage-3 {
             grid-column: 3;
-            grid-row: 3;
+            grid-row: 2;
         }
 
         .cage-4 {
             grid-column: 4;
-            grid-row: 3;
+            grid-row: 2;
         }
 
         .cage-5 {
             grid-column: 5;
-            grid-row: 3;
+            grid-row: 2;
         }
 
         .cage-6 {
+            grid-column: 6;
+            grid-row: 2;
+        }
+
+        /* Row 3 (Bottom): 11, 12, 13, 14, 15, 16 */
+        .cage-11 {
+            grid-column: 1;
+            grid-row: 3;
+        }
+
+        .cage-12 {
+            grid-column: 2;
+            grid-row: 3;
+        }
+
+        .cage-13 {
+            grid-column: 3;
+            grid-row: 3;
+        }
+
+        .cage-14 {
+            grid-column: 4;
+            grid-row: 3;
+        }
+
+        .cage-15 {
+            grid-column: 5;
+            grid-row: 3;
+        }
+
+        .cage-16 {
             grid-column: 6;
             grid-row: 3;
         }
@@ -115,22 +115,22 @@
         /* Double Cage Spanning */
         /* If 11 is double, it merges with 12 */
         .cage-double-11 {
-            grid-column: 5 / span 2;
-            grid-row: 2;
+            grid-column: 1 / span 2;
+            grid-row: 3;
             aspect-ratio: 2 / 1;
         }
 
         /* If 13 is double, it merges with 14 */
         .cage-double-13 {
-            grid-column: 2 / span 2;
-            grid-row: 1;
+            grid-column: 3 / span 2;
+            grid-row: 3;
             aspect-ratio: 2 / 1;
         }
 
         /* If 15 is double, it merges with 16 */
         .cage-double-15 {
-            grid-column: 4 / span 2;
-            grid-row: 1;
+            grid-column: 5 / span 2;
+            grid-row: 3;
             aspect-ratio: 2 / 1;
         }
 
@@ -454,9 +454,9 @@
             container.innerHTML = '';
 
             const visualOrder = [
-                13, 14, 15, 16,
-                7, 8, 9, 10, 11, 12,
-                1, 2, 3, 4, 5, 6
+                7, 8, 9, 10,
+                1, 2, 3, 4, 5, 6,
+                11, 12, 13, 14, 15, 16
             ];
 
             const processedIds = new Set();
@@ -734,7 +734,8 @@
         setInterval(updateDateTime, 60000);
     </script>
     <footer class="mt-auto bg-basic py-4 text-center text-white text-xs w-full">
-        <p>2026 © All Rights Reserved | Royal Pets Animal Hospital | Designed and Developed by Silicon Radon Networks (Pvt) Ltd</p>
+        <p>2026 © All Rights Reserved | Royal Pets Animal Hospital | Designed and Developed by Silicon Radon Networks
+            (Pvt) Ltd</p>
     </footer>
 </body>
 
